@@ -67,7 +67,9 @@
       "title": "WordPress site build",
       "type": "digital",
       "blurb": "Design, build and manage.",
-      "need": true
+      "need": true,
+      "href": "https://cvccharity.org",
+      "img": "assets/cvc-logo-02.png.webp"
     },
     {
       "type": "film",
