@@ -1,2 +1,7 @@
 [build]
   publish = "portfolio"
+
+[[headers]]
+  for = "/admin/config.yml"
+  [headers.values]
+    Cache-Control = "no-cache, no-store, must-revalidate"
