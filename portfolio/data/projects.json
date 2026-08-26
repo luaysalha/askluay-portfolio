@@ -81,6 +81,24 @@
       "blurb": "Short-form social video content created for Vue Cinemas Netherlands.",
       "img": "assets/c9d865c56d91407c16027ceaafc87dbb~tplv-tiktokx-cropcenter-1080-1080.jpeg",
       "href": "https://www.tiktok.com/@vuecinemasnl"
+    },
+    {
+      "type": "film",
+      "title": "This Morning: the Syrian beekeeper",
+      "blurb": "Al Jazeera 'This Morning' — a beekeeper's success in the Netherlands",
+      "yt": "TY8YixX-iW8"
+    },
+    {
+      "type": "film",
+      "title": "Dido Wiegert: cinematic light",
+      "blurb": "A profile of the cinematic-lighting expert (with George Kadr)",
+      "yt": "aCBxsPL5AgA"
+    },
+    {
+      "type": "film",
+      "title": "This Morning: festival days",
+      "blurb": "Al Jazeera 'This Morning' — a festival in the Netherlands",
+      "yt": "q5qWvQGf3es"
     }
   ]
 }
