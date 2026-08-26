@@ -1,0 +1,732 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Luay Salha — Design & stories across borders</title>
+<meta name="description" content="Luay Salha, visual designer and editor. Video, motion, brand and digital for social-first, international communication." />
+
+<!-- Social preview (TODO: replace image URL once deployed) -->
+<meta property="og:title" content="Luay Salha — Design & stories across borders" />
+<meta property="og:description" content="Visual designer & editor. Film, brand, motion and digital across Syria, Lebanon and the Netherlands." />
+<meta property="og:type" content="website" />
+<!-- <meta property="og:image" content="https://YOURDOMAIN/assets/og-cover.jpg" /> -->
+
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Newsreader:ital,opsz,wght@0,6..72,300..600;1,6..72,300..500&family=Archivo:wght@400;500;600;700&display=swap" rel="stylesheet" />
+
+<!-- Netlify Identity: lets the /admin dashboard log you in. Harmless if you host elsewhere. -->
+<script src="https://identity.netlify.com/v1/netlify-identity-widget.js"></script>
+<script>
+  if (window.netlifyIdentity) {
+    window.netlifyIdentity.on("init", user => {
+      if (!user) window.netlifyIdentity.on("login", () => { document.location.href = "/admin/"; });
+    });
+  }
+</script>
+
+<style>
+  /* ===================================================================
+     LUAY SALHA — PORTFOLIO SCAFFOLD  ("Journey across borders")
+     Single self-contained file. No build step. Drop into a GitHub repo.
+     Search for "TODO" to find every place you add your own content.
+     =================================================================== */
+
+  :root{
+    /* light theme over the BG image */
+    --ink:#18212B;          /* dark text */
+    --navy:#14222E;         /* dark band (reel) */
+    --sand:transparent;     /* sections let the BG image show */
+    --cream:rgba(255,255,255,.55); /* soft translucent panel */
+    --amber:#C9743A;        /* warm accent */
+    --amber-soft:#E0A374;
+    --muted:#5B6068;        /* secondary text */
+    --line:rgba(0,0,0,.10);
+    --white:#ffffff;        /* card surface */
+    --maxw:1180px;
+    --serif:"Newsreader", Georgia, "Times New Roman", serif;
+    --sans:"Archivo", system-ui, -apple-system, Segoe UI, Roboto, sans-serif;
+  }
+
+  *{box-sizing:border-box;}
+  html{scroll-behavior:smooth;}
+  body{
+    margin:0;
+    font-family:var(--sans);
+    color:var(--ink);
+    background:linear-gradient(rgba(250,248,244,.74), rgba(250,248,244,.84)), url('assets/BG.jpg') center/cover fixed no-repeat;
+    background-color:#EDE7DE;
+    line-height:1.6;
+    -webkit-font-smoothing:antialiased;
+    overflow-x:hidden;
+  }
+  a{color:inherit;text-decoration:none;}
+  img{max-width:100%;display:block;}
+  h1,h2,h3{font-family:var(--serif);font-weight:400;line-height:1.05;letter-spacing:-0.02em;margin:0;}
+  .wrap{max-width:var(--maxw);margin:0 auto;padding:0 28px;}
+
+  /* ---------- scroll progress bar ---------- */
+  #progress{position:fixed;top:0;left:0;height:3px;width:0;background:var(--amber);z-index:200;transition:width .1s linear;}
+
+  /* ---------- nav ---------- */
+  header.nav{position:fixed;top:0;left:0;right:0;z-index:100;
+    display:flex;align-items:center;justify-content:space-between;
+    padding:16px 28px;mix-blend-mode:normal;
+    background:rgba(13,16,20,0);transition:background .3s ease, box-shadow .3s ease, padding .3s ease;}
+  header.nav.scrolled{background:rgba(255,255,255,.85);backdrop-filter:blur(8px);box-shadow:0 1px 0 var(--line);padding:12px 28px;}
+  .nav .brand{font-family:var(--serif);font-size:20px;letter-spacing:-.02em;}
+  .nav nav{display:flex;gap:26px;align-items:center;font-size:14px;font-weight:500;}
+  .nav nav a{color:var(--muted);transition:color .2s;}
+  .nav nav a:hover{color:var(--ink);}
+  .nav .cta{border:1px solid var(--amber);color:var(--amber);padding:8px 16px;border-radius:100px;font-weight:600;transition:all .2s;}
+  .nav .cta:hover{background:var(--amber);color:#0D1014;}
+  .nav .menu-toggle{display:none;background:none;border:0;font-size:22px;cursor:pointer;color:var(--ink);}
+  @media(max-width:760px){
+    .nav nav{display:none;}
+    .nav.open nav{display:flex;position:absolute;top:100%;right:0;left:0;flex-direction:column;background:var(--cream);padding:18px 28px;gap:16px;box-shadow:0 8px 24px rgba(0,0,0,.08);}
+    .nav .menu-toggle{display:block;}
+  }
+
+  /* ---------- hero ---------- */
+  .hero{min-height:100vh;display:flex;align-items:center;position:relative;padding:120px 0 80px;overflow:hidden;}
+  .hero .eyebrow{font-size:13px;letter-spacing:.18em;text-transform:uppercase;color:var(--amber);font-weight:600;margin-bottom:22px;}
+  .hero h1{font-size:clamp(42px,8vw,92px);max-width:14ch;}
+  .hero h1 em{font-style:italic;color:var(--amber);}
+  .hero p.lead{font-size:clamp(17px,2.2vw,21px);color:var(--muted);max-width:52ch;margin:28px 0 0;}
+  .hero .meta{display:flex;flex-wrap:wrap;gap:10px 22px;margin-top:34px;font-size:14px;color:var(--muted);}
+  .hero .meta span{display:inline-flex;align-items:center;gap:8px;}
+  .hero .meta span::before{content:"";width:6px;height:6px;border-radius:50%;background:var(--amber);}
+  .scroll-cue{position:absolute;bottom:28px;left:50%;transform:translateX(-50%);font-size:12px;letter-spacing:.15em;text-transform:uppercase;color:var(--muted);display:flex;flex-direction:column;align-items:center;gap:8px;}
+  .scroll-cue .line{width:1px;height:40px;background:var(--muted);animation:cue 1.8s ease-in-out infinite;transform-origin:top;}
+  @keyframes cue{0%,100%{transform:scaleY(.3);opacity:.4;}50%{transform:scaleY(1);opacity:1;}}
+
+  /* faint world-route backdrop in hero */
+  .hero .backdrop{position:absolute;inset:0;z-index:-1;opacity:.5;}
+  .hero .backdrop svg{width:100%;height:100%;}
+
+  /* ---------- section shells ---------- */
+  section{padding:100px 0;}
+  .section-head{max-width:60ch;margin-bottom:56px;}
+  .section-head .kicker{font-size:13px;letter-spacing:.16em;text-transform:uppercase;color:var(--amber);font-weight:600;margin-bottom:14px;}
+  .section-head h2{font-size:clamp(30px,5vw,48px);}
+  .section-head p{color:var(--muted);font-size:18px;margin-top:16px;}
+
+  /* ---------- reveal animation ---------- */
+  .reveal{opacity:0;transform:translateY(28px);transition:opacity .7s ease, transform .7s ease;}
+  .reveal.in{opacity:1;transform:none;}
+  @media(prefers-reduced-motion:reduce){
+    .reveal{opacity:1;transform:none;transition:none;}
+    .scroll-cue .line{animation:none;}
+    html{scroll-behavior:auto;}
+  }
+
+  /* ---------- journey ---------- */
+  .journey{background:var(--cream);}
+  .timeline{position:relative;display:grid;gap:90px;}
+  /* the drawn route line */
+  .route{position:absolute;left:19px;top:8px;bottom:8px;width:2px;background:var(--line);}
+  .route .fill{position:absolute;top:0;left:0;width:100%;height:0;background:var(--amber);transition:height .2s linear;}
+  @media(min-width:860px){ .route{left:50%;transform:translateX(-1px);} }
+
+  .chapter{position:relative;padding-left:56px;}
+  .chapter .dot{position:absolute;left:11px;top:6px;width:18px;height:18px;border-radius:50%;background:var(--cream);border:2px solid var(--line);z-index:2;transition:all .3s;}
+  .chapter.in .dot{border-color:var(--amber);background:var(--amber);box-shadow:0 0 0 6px rgba(201,116,58,.15);}
+  .chapter .place{font-size:13px;letter-spacing:.14em;text-transform:uppercase;color:var(--amber);font-weight:600;}
+  .chapter h3{font-size:clamp(26px,4vw,38px);margin:10px 0 6px;}
+  .chapter .years{color:var(--muted);font-size:15px;margin-bottom:16px;}
+  .chapter .narrative{color:var(--ink);max-width:56ch;font-size:17px;}
+  .chapter .feats{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:16px;margin-top:26px;}
+
+  @media(min-width:860px){
+    .timeline{gap:0;}
+    .chapter{width:50%;padding:60px 48px;}
+    .chapter:nth-child(odd){margin-left:auto;text-align:left;}
+    .chapter:nth-child(even){text-align:right;}
+    .chapter:nth-child(odd) .dot{left:-9px;}
+    .chapter:nth-child(even) .dot{right:-9px;left:auto;}
+    .chapter:nth-child(even){padding-right:48px;}
+    .chapter:nth-child(even) .feats{}
+  }
+
+  /* media placeholder tiles (swap for <img>/<video>) */
+  .tile{position:relative;aspect-ratio:4/3;border-radius:10px;overflow:hidden;background:
+      linear-gradient(135deg,var(--navy),#2c5266);
+      color:#fff;display:flex;align-items:flex-end;padding:14px;font-size:13px;font-weight:500;
+      box-shadow:0 6px 20px rgba(20,26,36,.10);}
+  .tile.alt{background:linear-gradient(135deg,#8a4a29,var(--amber));}
+  .tile .ph-label{position:relative;z-index:2;line-height:1.3;}
+  .tile::after{content:"▶ media";position:absolute;top:12px;left:12px;font-size:11px;letter-spacing:.1em;text-transform:uppercase;opacity:.7;}
+
+  /* ---------- work grid ---------- */
+  .filters{display:flex;flex-wrap:wrap;gap:10px;margin-bottom:34px;}
+  .filters button{font-family:var(--sans);font-size:14px;font-weight:600;border:1px solid var(--line);
+    background:transparent;color:var(--muted);padding:9px 18px;border-radius:100px;cursor:pointer;transition:all .2s;}
+  .filters button:hover{border-color:var(--navy);color:var(--navy);}
+  .filters button.active{background:var(--navy);border-color:var(--navy);color:var(--cream);}
+
+  .grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(280px,1fr));gap:22px;}
+  .card{background:var(--white);border-radius:12px;overflow:hidden;border:1px solid var(--line);box-shadow:0 6px 22px rgba(20,26,36,.06);
+    cursor:pointer;transition:transform .25s ease, box-shadow .25s ease;}
+  .card:hover{transform:translateY(-4px);box-shadow:0 14px 30px rgba(20,26,36,.12);}
+  .card .thumb{aspect-ratio:16/10;background:linear-gradient(135deg,var(--navy),#356179);position:relative;}
+  .card:nth-child(3n) .thumb{background:linear-gradient(135deg,#8a4a29,var(--amber));}
+  .card:nth-child(3n+2) .thumb{background:linear-gradient(135deg,#33484f,#5b7d86);}
+  .card .thumb::after{content:"▶ media";position:absolute;top:12px;left:12px;color:#fff;font-size:11px;letter-spacing:.1em;text-transform:uppercase;opacity:.75;}
+  .card .thumb.ext::after{content:"watch ↗";}
+  /* centered play button on video thumbnails */
+  .card .thumb.play::before, .card .thumb.ext::before{content:"▶";position:absolute;top:50%;left:50%;
+    transform:translate(-50%,-50%);width:56px;height:56px;border-radius:50%;
+    background:rgba(232,137,74,.92);color:#0D1014;display:flex;align-items:center;justify-content:center;
+    font-size:18px;padding-left:3px;box-shadow:0 8px 24px rgba(0,0,0,.4);transition:transform .2s;}
+  .card:hover .thumb.play::before, .card:hover .thumb.ext::before{transform:translate(-50%,-50%) scale(1.08);}
+  .card .thumb.play::after{content:"";}
+  .card .thumb.need{display:flex;align-items:center;justify-content:center;}
+  .card .thumb.need::after{content:"▶ film";position:static;color:rgba(255,255,255,.5);font-size:13px;}
+  .card .body{padding:16px 18px 20px;}
+  .card .tag{font-size:12px;letter-spacing:.1em;text-transform:uppercase;color:var(--amber);font-weight:600;}
+  .card h3{font-size:21px;margin:8px 0 4px;}
+  .card p{margin:0;color:var(--muted);font-size:14px;}
+
+  /* ---------- reel ---------- */
+  .reel{background:var(--navy);color:#F5F1EA;}
+  .reel .section-head h2{color:#F5F1EA;}
+  .reel .section-head .kicker{color:#e6a374;}
+  .reel .frame{aspect-ratio:16/9;border-radius:14px;overflow:hidden;background:#0f1c25;
+    display:flex;align-items:center;justify-content:center;border:1px solid rgba(255,255,255,.12);}
+  .reel .frame .play{width:74px;height:74px;border-radius:50%;background:var(--amber);display:flex;align-items:center;justify-content:center;color:#fff;font-size:26px;box-shadow:0 10px 30px rgba(0,0,0,.3);}
+  .reel .frame .note{position:absolute;color:rgba(255,255,255,.6);font-size:13px;margin-top:120px;}
+
+  /* ---------- about ---------- */
+  .about-grid{display:grid;grid-template-columns:1fr;gap:44px;align-items:start;}
+  @media(min-width:860px){.about-grid{grid-template-columns:1fr 1.3fr;}}
+  .portrait{aspect-ratio:4/5;border-radius:14px;background:linear-gradient(135deg,#33484f,#5b7d86);
+    display:flex;align-items:flex-end;padding:16px;color:#fff;font-size:13px;}
+  .about-grid p{font-size:18px;color:var(--ink);}
+  .about-grid p + p{margin-top:18px;}
+  .facts{display:flex;flex-wrap:wrap;gap:10px 12px;margin-top:26px;}
+  .facts span{font-size:13px;border:1px solid var(--line);border-radius:100px;padding:7px 14px;color:var(--muted);}
+
+  /* ---------- contact / footer ---------- */
+  .contact{background:transparent;text-align:center;}
+  .contact h2{font-size:clamp(32px,6vw,64px);max-width:16ch;margin:0 auto;}
+  .contact .email{display:inline-block;margin-top:26px;font-family:var(--serif);font-size:clamp(20px,3vw,30px);color:var(--amber);border-bottom:2px solid var(--amber);padding-bottom:4px;}
+  .contact .socials{display:flex;gap:22px;justify-content:center;margin-top:34px;font-weight:500;font-size:15px;}
+  .contact .socials a{color:var(--muted);}
+  .contact .socials a:hover{color:var(--ink);}
+  footer{padding:34px 0;text-align:center;color:var(--muted);font-size:13px;border-top:1px solid var(--line);}
+
+  /* ---------- hero multilingual hello ---------- */
+  .hello-pill{display:inline-flex;align-items:center;gap:10px;background:var(--white);border:1px solid var(--line);
+    border-radius:100px;padding:8px 16px;font-size:15px;font-weight:600;margin-bottom:22px;box-shadow:0 4px 14px rgba(20,26,36,.06);}
+  .hello-pill .wave{animation:wave 2.4s ease-in-out infinite;transform-origin:70% 70%;display:inline-block;}
+  .hello-pill #helloWord{min-width:80px;color:var(--navy);transition:opacity .3s;}
+  @keyframes wave{0%,60%,100%{transform:rotate(0);}10%{transform:rotate(16deg);}20%{transform:rotate(-8deg);}30%{transform:rotate(16deg);}40%{transform:rotate(-4deg);}50%{transform:rotate(10deg);}}
+
+  /* ---------- journey pass / stamps ---------- */
+  .passport-track{display:inline-flex;align-items:center;gap:12px;background:var(--white);border:1px dashed var(--amber);
+    border-radius:12px;padding:12px 18px;margin-bottom:40px;font-size:14px;color:var(--muted);}
+  .passport-track .pt-label{font-weight:600;color:var(--ink);letter-spacing:.04em;}
+  .passport-track .count{font-family:var(--serif);font-size:22px;color:var(--amber);}
+  .stamp-badge{display:inline-block;margin-top:14px;font-size:12px;letter-spacing:.12em;text-transform:uppercase;
+    font-weight:700;color:var(--amber);border:1.5px solid var(--amber);border-radius:6px;padding:5px 10px;
+    transform:rotate(-5deg) scale(.6);opacity:0;transition:all .5s cubic-bezier(.2,1.4,.4,1);}
+  .chapter.in .stamp-badge{transform:rotate(-5deg) scale(1);opacity:.9;}
+
+  /* ---------- postcard generator ---------- */
+  .postcard{background:var(--cream);}
+  .pc-grid{display:grid;grid-template-columns:1fr;gap:40px;align-items:start;}
+  @media(min-width:900px){.pc-grid{grid-template-columns:0.9fr 1.1fr;}}
+  .pc-controls label{display:block;font-size:13px;font-weight:600;letter-spacing:.04em;color:var(--ink);margin:20px 0 10px;}
+  .pc-controls input[type=text], .pc-controls select{width:100%;font-family:var(--sans);font-size:16px;
+    padding:12px 14px;border:1px solid var(--line);border-radius:10px;background:var(--white);color:var(--ink);}
+  .pc-controls input:focus, .pc-controls select:focus{outline:2px solid var(--amber);border-color:var(--amber);}
+  .chip-row{display:flex;flex-wrap:wrap;gap:8px;}
+  .chip-row button{font-family:var(--sans);font-size:14px;font-weight:600;border:1px solid var(--line);background:var(--white);
+    color:var(--muted);padding:8px 15px;border-radius:100px;cursor:pointer;transition:all .2s;}
+  .chip-row button:hover{border-color:var(--navy);color:var(--navy);}
+  .chip-row button.active{background:var(--amber);border-color:var(--amber);color:#fff;}
+  .pc-canvas-wrap{position:relative;}
+  #postcard{width:100%;height:auto;border-radius:14px;box-shadow:0 18px 50px rgba(20,26,36,.18);display:block;}
+  .pc-actions{display:flex;flex-wrap:wrap;gap:12px;margin-top:18px;}
+  .btn-solid{background:var(--navy);color:var(--cream);border:0;font-family:var(--sans);font-weight:600;font-size:15px;
+    padding:12px 22px;border-radius:100px;cursor:pointer;transition:all .2s;}
+  .btn-solid:hover{background:var(--amber);}
+  .pc-note{font-size:13px;color:var(--muted);margin-top:12px;}
+
+  /* ---------- hero video background ---------- */
+  .hero-video{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;z-index:-3;}
+  .hero-overlay{position:absolute;inset:0;z-index:-2;
+    background:linear-gradient(90deg, rgba(250,248,244,.96) 0%, rgba(250,248,244,.9) 30%, rgba(250,248,244,.5) 62%, rgba(250,248,244,.1) 100%);}
+  @media(max-width:760px){
+    .hero-overlay{background:linear-gradient(180deg, rgba(250,248,244,.7) 0%, rgba(250,248,244,.85) 60%, rgba(250,248,244,.96) 100%);}
+  }
+
+  /* image inside a tile or thumb */
+  .tile img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;}
+  .tile.has-img::after{display:none;}
+  .tile.has-img .ph-label{display:none;}
+  .thumb.has-img::after{display:none;}
+
+  /* ---------- lightbox ---------- */
+  .lightbox{position:fixed;inset:0;background:rgba(15,20,28,.92);z-index:300;display:none;align-items:center;justify-content:center;padding:24px;}
+  .lightbox.open{display:flex;}
+  .lightbox .inner{max-width:900px;width:100%;}
+  .lightbox .media{aspect-ratio:16/9;background:#0f1c25;border-radius:12px;display:flex;align-items:center;justify-content:center;color:rgba(255,255,255,.6);font-size:14px;}
+  .lightbox h3{color:#fff;margin-top:18px;font-size:26px;}
+  .lightbox p{color:rgba(255,255,255,.7);}
+  .lightbox .close{position:absolute;top:22px;right:26px;color:#fff;font-size:30px;background:none;border:0;cursor:pointer;}
+</style>
+</head>
+<body>
+
+<div id="progress"></div>
+
+<!-- ================= NAV ================= -->
+<header class="nav" id="nav">
+  <a class="brand" href="#top">Luay Salha</a>
+  <button class="menu-toggle" aria-label="Menu" id="menuToggle">☰</button>
+  <nav>
+    <a href="#journey">Journey</a>
+    <a href="#work">Work</a>
+    <a href="#reel">Reel</a>
+    <a href="#about">About</a>
+    <a class="cta" href="#contact">Get in touch</a>
+  </nav>
+</header>
+
+<!-- ================= HERO ================= -->
+<section class="hero" id="top">
+  <video class="hero-video" autoplay muted loop playsinline poster="assets/hero-poster.jpg" aria-hidden="true">
+    <source src="assets/Hero.mp4" type="video/mp4" />
+  </video>
+  <div class="hero-overlay" aria-hidden="true"></div>
+  <div class="backdrop" aria-hidden="true">
+    <!-- faint dotted route: Damascus -> Beirut -> The Hague -->
+    <svg viewBox="0 0 1200 600" preserveAspectRatio="xMidYMid slice" fill="none">
+      <path d="M120 470 C 400 520, 520 360, 690 300 C 860 240, 1000 150, 1120 110"
+            stroke="#c9743a" stroke-width="2" stroke-dasharray="2 10" stroke-linecap="round" opacity=".55"/>
+      <circle cx="120" cy="470" r="6" fill="#1f3b4d"/>
+      <circle cx="690" cy="300" r="6" fill="#1f3b4d"/>
+      <circle cx="1120" cy="110" r="6" fill="#c9743a"/>
+    </svg>
+  </div>
+  <div class="wrap">
+    <div class="hello-pill reveal"><span class="wave">👋</span> <span id="helloWord">مرحبا</span></div>
+    <div class="eyebrow reveal">Visual designer &amp; editor</div>
+    <h1 class="reveal">Design and stories that <em>cross borders.</em></h1>
+    <p class="lead reveal">I turn strategy and human stories into film, brand systems, motion and digital, for social-first communication. From Damascus to Beirut to The Hague.</p>
+    <div class="meta reveal">
+      <span>Film &amp; motion</span>
+      <span>Brand systems</span>
+      <span>Digital &amp; AI tools</span>
+      <span>Arabic · English · Dutch</span>
+    </div>
+  </div>
+  <div class="scroll-cue" aria-hidden="true"><span>Scroll</span><span class="line"></span></div>
+</section>
+
+<!-- ================= JOURNEY ================= -->
+<section class="journey" id="journey">
+  <div class="wrap">
+    <div class="section-head reveal">
+      <div class="kicker">The journey</div>
+      <h2>One craft, carried across three countries.</h2>
+      <p>The same instinct in every place: give a message a clear, honest, memorable form. Here is where it has taken me.</p>
+    </div>
+
+    <div class="passport-track reveal">
+      <span class="pt-label">Your journey pass</span>
+      <span><span class="count" id="stampCount">0</span> / 3 stamps collected as you scroll</span>
+    </div>
+
+    <div class="timeline" id="timeline">
+      <div class="route" aria-hidden="true"><div class="fill" id="routeFill"></div></div>
+
+      <!-- CHAPTER 1 -->
+      <article class="chapter reveal">
+        <span class="dot"></span>
+        <div class="place">Damascus, Syria</div>
+        <span class="stamp-badge">✓ Damascus stamp</span>
+        <h3>Where the craft began</h3>
+        <div class="years">2008 – 2013 · print, colour, graphic design</div>
+        <p class="narrative">A graphic design diploma and years in print production: colour separation, rotogravure and flexo plates. This is where I learned that precision and colour are the backbone of everything visual.</p>
+        <div class="feats">
+          <!-- TODO: replace .tile blocks with <img src="assets/…"> or a video thumbnail -->
+          <div class="tile"><span class="ph-label">Early design &amp; print work<br><em>add image</em></span></div>
+          <div class="tile alt"><span class="ph-label">Colour &amp; production<br><em>add image</em></span></div>
+        </div>
+      </article>
+
+      <!-- CHAPTER 2 -->
+      <article class="chapter reveal">
+        <span class="dot"></span>
+        <div class="place">Beirut, Lebanon</div>
+        <span class="stamp-badge">✓ Beirut stamp</span>
+        <h3>Storytelling with a purpose</h3>
+        <div class="years">2015 – 2020 · journalism, humanitarian, NGO brand</div>
+        <p class="narrative">Newsrooms and NGOs: lead video editor at Daraj Media, brand and communications for URDA, and humanitarian films with Al Jazeera and award-winning directors. I learned to hold difficult human stories with care.</p>
+        <div class="feats">
+          <div class="tile"><span class="ph-label">Al Jazeera film<br><em>add still</em></span></div>
+          <div class="tile alt has-img"><img src="assets/logo%20animation.gif" alt="URDA NGO logo animation" /></div>
+        </div>
+      </article>
+
+      <!-- CHAPTER 3 -->
+      <article class="chapter reveal">
+        <span class="dot"></span>
+        <div class="place">The Hague, Netherlands</div>
+        <span class="stamp-badge">✓ The Hague stamp</span>
+        <h3>Brand, at agency pace</h3>
+        <div class="years">2021 – present · SuperRebel, social-first &amp; digital</div>
+        <p class="narrative">Visual designer at SUPERREBEL.AGENCY: full campaigns end to end, reusable brand systems and asset libraries, and now part of the digital team, building WordPress sites and AI-powered tools that go beyond design and video.</p>
+        <div class="feats">
+          <div class="tile has-img"><img src="assets/HR%20and%20More.jpeg" alt="HR&amp;MORE brand identity" /></div>
+          <div class="tile alt has-img"><img src="assets/HR%20and%20More%2001.jpg" alt="HR&amp;MORE typography system" /></div>
+        </div>
+      </article>
+    </div>
+  </div>
+</section>
+
+<!-- ================= WORK GRID ================= -->
+<section id="work">
+  <div class="wrap">
+    <div class="section-head reveal">
+      <div class="kicker">Selected work</div>
+      <h2>A closer look.</h2>
+      <p>Filter by what you are looking for. Click any project to open it.</p>
+    </div>
+
+    <div class="filters reveal" id="filters">
+      <button class="active" data-filter="all">All</button>
+      <button data-filter="film">Film</button>
+      <button data-filter="brand">Brand</button>
+      <button data-filter="motion">Motion</button>
+      <button data-filter="digital">Digital</button>
+    </div>
+
+    <div class="grid" id="grid"><!-- cards injected by JS from PROJECTS --></div>
+  </div>
+</section>
+
+<!-- ================= REEL ================= -->
+<section class="reel" id="reel">
+  <div class="wrap">
+    <div class="section-head reveal">
+      <div class="kicker">Showreel</div>
+      <h2>Ninety seconds of the work in motion.</h2>
+      <p>"Stories have to be told or they die, and when they die, we can't remember who we are or why we're here." — Sue Monk Kidd</p>
+    </div>
+    <div class="frame reveal" style="position:relative;padding:0;overflow:hidden;">
+      <video src="assets/reel-web.mp4" poster="assets/reel-poster.jpg" controls preload="metadata" playsinline style="width:100%;height:100%;object-fit:cover;background:#000;border-radius:14px;"></video>
+    </div>
+  </div>
+</section>
+
+<!-- ================= ABOUT ================= -->
+<section id="about">
+  <div class="wrap">
+    <div class="about-grid">
+      <div class="portrait reveal" style="padding:0;overflow:hidden;background:#F0455B;display:flex;align-items:center;justify-content:center;">
+        <img src="assets/eye%20gif.gif" alt="Humans" style="width:100%;height:auto;object-fit:contain;" />
+      </div>
+      <div class="reveal">
+        <div class="section-head" style="margin-bottom:24px;">
+          <div class="kicker">About</div>
+          <h2>Hello, I'm Luay.</h2>
+        </div>
+        <p>I'm a visual designer and editor with more than ten years across video, motion and graphic design. I keep brands consistent everywhere they appear, and build the templates and asset libraries that let a whole team stay on brand without me in the room.</p>
+        <p>I've edited humanitarian and journalistic films for Al Jazeera and the BBC, run brand and communications for an international NGO, and now design social-first campaigns and build digital tools in The Hague. I work happily across cultures, in Arabic, English and improving Dutch.</p>
+        <div class="facts">
+          <span>Based in The Hague</span>
+          <span>Valid NL work permit</span>
+          <span>Adobe CC · Figma</span>
+          <span>WordPress · AI tools</span>
+          <span>Film · Brand · Motion · Digital</span>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ================= POSTCARD GENERATOR ================= -->
+<section class="postcard" id="postcard-section">
+  <div class="wrap">
+    <div class="section-head reveal">
+      <div class="kicker">Carry a story with you</div>
+      <h2>A postcard across borders.</h2>
+      <p>You've travelled the journey. Now make it yours: add your name, choose a word that matters to you and a language, and take a postcard with you. Because every message can cross a border.</p>
+    </div>
+
+    <div class="pc-grid">
+      <div class="pc-controls reveal">
+        <label for="pcName">Your name</label>
+        <input type="text" id="pcName" maxlength="24" placeholder="e.g. Maria" value="friend" />
+
+        <label>A word that matters to you</label>
+        <div class="chip-row" id="pcWords">
+          <button class="active" data-word="Hope">Hope</button>
+          <button data-word="Home">Home</button>
+          <button data-word="Belonging">Belonging</button>
+          <button data-word="Peace">Peace</button>
+          <button data-word="Family">Family</button>
+        </div>
+
+        <label for="pcLang">Say hello in</label>
+        <select id="pcLang">
+          <option value="Arabic">Arabic — مرحبا</option>
+          <option value="English" selected>English — Hello</option>
+          <option value="Dutch">Dutch — Hallo</option>
+          <option value="French">French — Bonjour</option>
+          <option value="Spanish">Spanish — Hola</option>
+          <option value="Ukrainian">Ukrainian — Привіт</option>
+          <option value="Swahili">Swahili — Habari</option>
+          <option value="Japanese">Japanese — こんにちは</option>
+        </select>
+
+        <div class="pc-actions">
+          <button class="btn-solid" id="pcDownload">Download my postcard</button>
+        </div>
+        <p class="pc-note">It updates live as you type. Downloads as a PNG you can keep or share.</p>
+      </div>
+
+      <div class="pc-canvas-wrap reveal">
+        <canvas id="postcard" width="1000" height="650" role="img" aria-label="Your personalised postcard across borders"></canvas>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ================= CONTACT ================= -->
+<section class="contact" id="contact">
+  <div class="wrap">
+    <div class="section-head reveal" style="margin:0 auto 0;text-align:center;max-width:none;">
+      <div class="kicker" style="text-align:center;">Get in touch</div>
+      <h2>Let's tell a story worth remembering.</h2>
+    </div>
+    <!-- TODO: confirm which email you want public -->
+    <a class="email reveal" href="mailto:luaysalha@gmail.com">luaysalha@gmail.com</a>
+    <div class="socials reveal">
+      <a href="https://www.linkedin.com/in/luaysalha" target="_blank" rel="noopener">LinkedIn</a>
+      <a href="tel:+31648748135">+31 6 48 748 135</a>
+    </div>
+  </div>
+  <footer>© <span id="year"></span> Luay Salha · Designed &amp; built in The Hague</footer>
+</section>
+
+<!-- ================= LIGHTBOX ================= -->
+<div class="lightbox" id="lightbox">
+  <button class="close" id="lbClose" aria-label="Close">×</button>
+  <div class="inner">
+    <div class="media" id="lbMedia">Media / embed goes here</div>
+    <h3 id="lbTitle"></h3>
+    <p id="lbDesc"></p>
+  </div>
+</div>
+
+<script>
+/* ===================================================================
+   PROJECTS  —  edit this list to add / change your work.
+   type: one of "film" | "brand" | "motion" | "digital"
+   media/link: add a real embed URL or external link when you have it.
+   =================================================================== */
+/* ---------------------------------------------------------------------------
+   HOW EACH CARD BEHAVES (this is YOUR site — nothing links back to Adobe):
+     img:  "assets/x.jpg"                     → image opens in the on-page lightbox
+     file: "assets/x.mp4"                     → your OWN video, plays inline in the lightbox
+     yt:   "https://www.youtube.com/embed/ID" → YouTube video, plays inline (if the video allows embedding)
+     href: "https://…"                        → opens the source in a new tab (use for TikTok, or a YT that blocks embedding)
+     need: true                               → placeholder: you still need to add a link or a file
+   Fill the `need:true` ones by giving them a `yt`, `file`, or `href`.
+   --------------------------------------------------------------------------- */
+// Default list (fallback). The DASHBOARD edits data/projects.json, which overrides this at load.
+let PROJECTS = [
+  { title:"Storytelling reel",      type:"film",   blurb:"The full reel: documentaries, campaigns and social.", file:"assets/reel-web.mp4", poster:"assets/reel-poster.jpg" },
+  { title:"Morning Show series",    type:"film",   blurb:"Modernising morning TV across the Netherlands, ordinary people's stories.", yt:"1TQYoG44o5A" },
+  { title:"Disney+ NL & Vue Cinemas NL", type:"film", blurb:"Social content made at The Best Social Studio.", href:"https://www.tiktok.com/@disneynl" },
+  { title:"HR&MORE brand identity", type:"brand",  blurb:"Full identity: logo, system and 'Recreate yourself' line.", img:"assets/HR%20and%20More.jpeg" },
+  { title:"HR&MORE type system",    type:"brand",  blurb:"Typographic foundations and brand patterns.", img:"assets/HR%20and%20More%2001.jpg" },
+  { title:"180 Agency logos",       type:"brand",  blurb:"Logo concepts and artwork gallery.", img:"assets/180%2001.gif" },
+  { title:"URDA logo animation",    type:"motion", blurb:"Refreshed NGO logo, animated.", img:"assets/logo%20animation.gif" },
+  { title:"Social-first campaign",  type:"brand",  blurb:"Concept to delivery at SuperRebel.", img:"assets/hero-poster.jpg" },
+  { title:"Syrian refugee stories", type:"film",   blurb:"Series of short films for Al Jazeera.", need:true },
+  { title:"The Madness of Aleppo",  type:"film",   blurb:"Editing for BBC director Lina Sanjab.", need:true },
+  { title:"WordPress site build",   type:"digital",blurb:"Design, build and manage.", need:true }
+];
+
+/* ---- render grid ---- */
+const grid = document.getElementById('grid');
+function renderCards(filter){
+  grid.innerHTML = '';
+  PROJECTS.filter(p => filter==='all' || p.type===filter).forEach(p => {
+    const el = document.createElement('div');
+    el.className = 'card reveal in';
+    let cls = 'thumb', style = '';
+    if(p.img){ cls += ' has-img'; style = ` style="background:url('${p.img}') center/cover no-repeat"`; }
+    else if(p.yt){ cls += ' play'; style = ` style="background:url('https://img.youtube.com/vi/${p.yt}/hqdefault.jpg') center/cover no-repeat"`; }
+    else if(p.file){ cls += ' play'; if(p.poster) style = ` style="background:url('${p.poster}') center/cover no-repeat"`; }
+    else if(p.href){ cls += ' ext'; }
+    else if(p.need){ cls += ' need'; }
+    el.innerHTML = `<div class="${cls}"${style}></div>
+      <div class="body"><div class="tag">${p.type}</div><h3>${p.title}</h3><p>${p.blurb}</p></div>`;
+    el.addEventListener('click', ()=>{
+      if(p.href) window.open(p.href,'_blank','noopener');   // external source, new tab
+      else openLightbox(p);                                 // inline: video file, YouTube, image, or note
+    });
+    grid.appendChild(el);
+  });
+}
+/* Load projects from the dashboard-managed data file; fall back to the list above. */
+fetch('data/projects.json', {cache:'no-store'})
+  .then(r => r.ok ? r.json() : null)
+  .then(d => { if(d && Array.isArray(d.projects) && d.projects.length) PROJECTS = d.projects; })
+  .catch(()=>{})
+  .finally(()=> renderCards('all'));
+
+/* ---- filters ---- */
+document.getElementById('filters').addEventListener('click', e=>{
+  if(e.target.tagName!=='BUTTON') return;
+  document.querySelectorAll('#filters button').forEach(b=>b.classList.remove('active'));
+  e.target.classList.add('active');
+  renderCards(e.target.dataset.filter);
+});
+
+/* ---- lightbox ---- */
+const lb=document.getElementById('lightbox');
+function openLightbox(p){
+  document.getElementById('lbTitle').textContent=p.title;
+  document.getElementById('lbDesc').textContent=p.blurb;
+  const media=document.getElementById('lbMedia');
+  media.innerHTML =
+      p.file ? `<video src="${p.file}" controls autoplay playsinline style="width:100%;height:100%;background:#000"></video>`
+    : p.yt   ? `<iframe src="https://www.youtube.com/embed/${p.yt}?autoplay=1&rel=0" style="width:100%;height:100%;border:0" allow="autoplay; fullscreen" allowfullscreen></iframe>`
+    : p.img  ? `<img src="${p.img}" alt="${p.title}" style="width:100%;height:100%;object-fit:contain;background:#000" />`
+    :          'Add a YouTube link (yt:) or drop the file in assets/ (file:) for this project — edit PROJECTS in index.html.';
+  const desc=document.getElementById('lbDesc');
+  if(p.yt){ desc.innerHTML = p.blurb + ` &nbsp;·&nbsp; <a href="https://www.youtube.com/watch?v=${p.yt}" target="_blank" rel="noopener" style="color:#E8894A;border-bottom:1px solid #E8894A">Watch on YouTube ↗</a>`; }
+  lb.classList.add('open');
+}
+document.getElementById('lbClose').addEventListener('click',()=>lb.classList.remove('open'));
+lb.addEventListener('click',e=>{if(e.target===lb)lb.classList.remove('open');});
+document.addEventListener('keydown',e=>{if(e.key==='Escape')lb.classList.remove('open');});
+
+/* ---- nav scrolled state + mobile menu ---- */
+const nav=document.getElementById('nav');
+addEventListener('scroll',()=>nav.classList.toggle('scrolled', scrollY>40));
+document.getElementById('menuToggle').addEventListener('click',()=>nav.classList.toggle('open'));
+document.querySelectorAll('.nav nav a').forEach(a=>a.addEventListener('click',()=>nav.classList.remove('open')));
+
+/* ---- scroll progress bar ---- */
+const bar=document.getElementById('progress');
+addEventListener('scroll',()=>{
+  const h=document.documentElement;
+  bar.style.width=(h.scrollTop/(h.scrollHeight-h.clientHeight)*100)+'%';
+});
+
+/* ---- reveal on scroll ---- */
+const io=new IntersectionObserver((entries)=>{
+  entries.forEach(en=>{ if(en.isIntersecting){ en.target.classList.add('in'); }});
+},{threshold:.15});
+document.querySelectorAll('.reveal').forEach(el=>io.observe(el));
+
+/* ---- journey chapters + route fill ---- */
+const chapters=[...document.querySelectorAll('.chapter')];
+const routeFill=document.getElementById('routeFill');
+const cio=new IntersectionObserver((entries)=>{
+  entries.forEach(en=>{ if(en.isIntersecting) en.target.classList.add('in'); });
+  const activeCount=document.querySelectorAll('.chapter.in').length;
+  routeFill.style.height=(activeCount/chapters.length*100)+'%';
+  const sc=document.getElementById('stampCount'); if(sc) sc.textContent=activeCount;
+},{threshold:.45});
+chapters.forEach(c=>cio.observe(c));
+
+/* ---- hero multilingual hello ---- */
+const HELLOS=["مرحبا","Hello","Hallo","Bonjour","Hola","Привіт","こんにちは","Habari","Ciao","Olá"];
+let hi=0; const helloEl=document.getElementById('helloWord');
+setInterval(()=>{ hi=(hi+1)%HELLOS.length; helloEl.style.opacity=0;
+  setTimeout(()=>{helloEl.textContent=HELLOS[hi];helloEl.style.opacity=1;},300);
+},2200);
+
+/* ===================================================================
+   POSTCARD GENERATOR — personalised keepsake, drawn on <canvas>.
+   =================================================================== */
+const GREETINGS={Arabic:"مرحبا",English:"Hello",Dutch:"Hallo",French:"Bonjour",
+  Spanish:"Hola",Ukrainian:"Привіт",Swahili:"Habari",Japanese:"こんにちは"};
+const cv=document.getElementById('postcard');
+const ctx=cv.getContext('2d');
+const state={name:"friend",word:"Hope",lang:"English"};
+
+function roundRect(x,y,w,h,r){ctx.beginPath();ctx.moveTo(x+r,y);ctx.arcTo(x+w,y,x+w,y+h,r);
+  ctx.arcTo(x+w,y+h,x,y+h,r);ctx.arcTo(x,y+h,x,y,r);ctx.arcTo(x,y,x+w,y,r);ctx.closePath();}
+
+function drawPostcard(){
+  const W=cv.width,H=cv.height;
+  // background
+  ctx.fillStyle="#FBF8F3";ctx.fillRect(0,0,W,H);
+  // inner frame
+  ctx.strokeStyle="#1F3B4D";ctx.lineWidth=3;roundRect(24,24,W-48,H-48,18);ctx.stroke();
+  // top-right stamp box
+  ctx.strokeStyle="#C9743A";ctx.lineWidth=2;ctx.setLineDash([4,5]);
+  roundRect(W-150,52,96,120,8);ctx.stroke();ctx.setLineDash([]);
+  ctx.fillStyle="#C9743A";ctx.font="600 13px Archivo, sans-serif";ctx.textAlign="center";
+  ctx.fillText("ACROSS",W-102,100);ctx.fillText("BORDERS",W-102,118);
+  ctx.font="26px Newsreader, serif";ctx.fillText("✎",W-102,150);
+  ctx.textAlign="left";
+  // kicker
+  ctx.fillStyle="#C9743A";ctx.font="600 15px Archivo, sans-serif";
+  ctx.save();
+  try{ctx.letterSpacing="4px";}catch(e){}
+  ctx.fillText("POSTCARD",60,86);
+  ctx.restore();
+  // greeting (serif, large)
+  const hello=GREETINGS[state.lang]||"Hello";
+  ctx.fillStyle="#141A24";ctx.font="400 62px Newsreader, serif";
+  const greet=hello+", "+ (state.name.trim()||"friend");
+  ctx.fillText(greet,60,175);
+  // route line with 3 stamps
+  const ry=300;
+  ctx.strokeStyle="#C9743A";ctx.lineWidth=2;ctx.setLineDash([2,9]);
+  ctx.beginPath();ctx.moveTo(80,ry);ctx.lineTo(W-90,ry);ctx.stroke();ctx.setLineDash([]);
+  const stops=[{x:110,c:"#1F3B4D",t:"DAMASCUS"},{x:W/2,c:"#1F3B4D",t:"BEIRUT"},{x:W-120,c:"#C9743A",t:"THE HAGUE"}];
+  stops.forEach(s=>{ctx.fillStyle=s.c;ctx.beginPath();ctx.arc(s.x,ry,7,0,7);ctx.fill();
+    ctx.fillStyle="#5B6068";ctx.font="600 12px Archivo, sans-serif";ctx.textAlign="center";
+    ctx.fillText(s.t,s.x,ry+26);});
+  ctx.textAlign="left";
+  // the word
+  ctx.fillStyle="#5B6068";ctx.font="400 20px Archivo, sans-serif";
+  ctx.fillText("The word you carry:",60,400);
+  ctx.fillStyle="#1F3B4D";ctx.font="italic 400 52px Newsreader, serif";
+  ctx.fillText(state.word,60,458);
+  // message line
+  ctx.fillStyle="#141A24";ctx.font="400 22px Newsreader, serif";
+  ctx.fillText("Every message can cross a border.",60,520);
+  // signature
+  ctx.fillStyle="#5B6068";ctx.font="500 15px Archivo, sans-serif";
+  ctx.fillText("from Luay Salha  ·  askluay.nl",60,H-58);
+}
+
+/* redraw once webfonts are ready, then wire inputs */
+function refresh(){ if(document.fonts && document.fonts.ready){document.fonts.ready.then(drawPostcard);} else {drawPostcard();} }
+refresh();
+
+document.getElementById('pcName').addEventListener('input',e=>{state.name=e.target.value;drawPostcard();});
+document.getElementById('pcLang').addEventListener('change',e=>{state.lang=e.target.value;drawPostcard();});
+document.getElementById('pcWords').addEventListener('click',e=>{
+  if(e.target.tagName!=='BUTTON')return;
+  document.querySelectorAll('#pcWords button').forEach(b=>b.classList.remove('active'));
+  e.target.classList.add('active');state.word=e.target.dataset.word;drawPostcard();
+});
+document.getElementById('pcDownload').addEventListener('click',()=>{
+  drawPostcard();
+  const a=document.createElement('a');
+  a.download='postcard-across-borders.png';
+  a.href=cv.toDataURL('image/png');
+  document.body.appendChild(a);a.click();a.remove();
+});
+
+/* ---- year ---- */
+document.getElementById('year').textContent=new Date().getFullYear();
+</script>
+</body>
+</html>

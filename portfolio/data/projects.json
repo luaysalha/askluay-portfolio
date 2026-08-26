@@ -1,0 +1,15 @@
+{
+  "projects": [
+    { "title": "Storytelling reel", "type": "film", "blurb": "The full reel: documentaries, campaigns and social.", "file": "assets/reel-web.mp4", "poster": "assets/reel-poster.jpg" },
+    { "title": "Morning Show series", "type": "film", "blurb": "Modernising morning TV across the Netherlands, ordinary people's stories.", "yt": "1TQYoG44o5A" },
+    { "title": "Disney+ NL & Vue Cinemas NL", "type": "film", "blurb": "Social content made at The Best Social Studio.", "href": "https://www.tiktok.com/@disneynl" },
+    { "title": "HR&MORE brand identity", "type": "brand", "blurb": "Full identity: logo, system and 'Recreate yourself' line.", "img": "assets/HR%20and%20More.jpeg" },
+    { "title": "HR&MORE type system", "type": "brand", "blurb": "Typographic foundations and brand patterns.", "img": "assets/HR%20and%20More%2001.jpg" },
+    { "title": "180 Agency logos", "type": "brand", "blurb": "Logo concepts and artwork gallery.", "img": "assets/180%2001.gif" },
+    { "title": "URDA logo animation", "type": "motion", "blurb": "Refreshed NGO logo, animated.", "img": "assets/logo%20animation.gif" },
+    { "title": "Social-first campaign", "type": "brand", "blurb": "Concept to delivery at SuperRebel.", "img": "assets/hero-poster.jpg" },
+    { "title": "Syrian refugee stories", "type": "film", "blurb": "Series of short films for Al Jazeera.", "need": true },
+    { "title": "The Madness of Aleppo", "type": "film", "blurb": "Editing for BBC director Lina Sanjab.", "need": true },
+    { "title": "WordPress site build", "type": "digital", "blurb": "Design, build and manage.", "need": true }
+  ]
+}
