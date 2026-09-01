@@ -1,12 +1,16 @@
 backend:
-  name: git-gateway
+  name: github
+  repo: luaysalha/askluay-portfolio
   branch: main
+  base_url: https://askluay-cms-auth.luaysalha.workers.dev
 
+# Media you upload in the dashboard lands here and is referenced from the site.
+# Paths are relative to the REPO ROOT — the site lives in the portfolio/ folder.
 media_folder: "portfolio/assets"
 public_folder: "assets"
 
-site_url: https://askluay-portfolio.netlify.app
-display_url: https://askluay-portfolio.netlify.app
+site_url: https://luaysalha.github.io/askluay-portfolio/
+display_url: https://luaysalha.github.io/askluay-portfolio/
 
 collections:
   - name: "work"
@@ -26,8 +30,8 @@ collections:
               - { label: "Title", name: "title", widget: "string" }
               - { label: "Category", name: "type", widget: "select", options: ["film", "brand", "motion", "digital"], default: "film" }
               - { label: "One-line description", name: "blurb", widget: "string" }
-              - { label: "Image", name: "img", widget: "image", required: false }
-              - { label: "YouTube ID", name: "yt", widget: "string", required: false }
-              - { label: "Video file", name: "file", widget: "file", required: false }
+              - { label: "Image", name: "img", widget: "image", required: false, hint: "Upload a picture/GIF. Use this for design & brand work." }
+              - { label: "YouTube ID", name: "yt", widget: "string", required: false, hint: "Just the ID from the URL, e.g. 1TQYoG44o5A — plays inline on the site." }
+              - { label: "Video file", name: "file", widget: "file", required: false, hint: "Upload your own small video (keep under ~20MB). Plays inline." }
               - { label: "Poster image (for a video file)", name: "poster", widget: "image", required: false }
-              - { label: "External link", name: "href", widget: "string", required: false }
+              - { label: "External link", name: "href", widget: "string", required: false, hint: "For TikTok or a YouTube that blocks embedding — opens in a new tab." }
