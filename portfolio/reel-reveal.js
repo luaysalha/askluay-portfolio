@@ -1,5 +1,5 @@
 (() => {
- const stage=document.querySelector('.reel-orbit'),button=document.getElementById('revealReel'),status=document.getElementById('revealStatus');
+ const stage=document.querySelector('.reel-screen'),button=document.getElementById('revealReel'),status=document.getElementById('revealStatus');
  if(!stage||matchMedia('(prefers-reduced-motion: reduce)').matches)return;
  const canvas=document.createElement('canvas'),ctx=canvas.getContext('2d');if(!ctx)return;
  canvas.className='reel-mist';canvas.setAttribute('aria-hidden','true');
@@ -11,8 +11,8 @@
  if(poster.complete&&poster.naturalWidth){ctx.filter='blur(28px)';const scale=Math.max(w/poster.naturalWidth,h/poster.naturalHeight);ctx.drawImage(poster,(w-poster.naturalWidth*scale)/2,(h-poster.naturalHeight*scale)/2,poster.naturalWidth*scale,poster.naturalHeight*scale);ctx.filter='none';}
  ctx.fillStyle='#171b20a8';ctx.fillRect(0,0,w,h);
  const glow=ctx.createRadialGradient(w*.3,h*.4,0,w*.3,h*.4,w*.65);glow.addColorStop(0,'#8e244466');glow.addColorStop(1,'#8e244400');ctx.fillStyle=glow;ctx.fillRect(0,0,w,h);
- ctx.fillStyle='#f3f4ef';ctx.textAlign='center';ctx.font='400 24px Nohemi, sans-serif';ctx.fillText('A little curiosity goes a long way.',w/2,h/2,Math.max(100,w-40));ctx.font='16px "Source Sans 3", sans-serif';ctx.fillText('Brush here to see what’s underneath',w/2,h/2+36,Math.max(100,w-40));marked.clear();last=null;}
- function reveal(){if(done)return;done=true;canvas.remove();stage.inert=false;button.hidden=true;status.textContent='Revealed. Choose a circle to explore.';}
+ ctx.fillStyle='#f3f4ef';ctx.textAlign='center';ctx.font='400 24px Nohemi, sans-serif';ctx.fillText('Behind the blur.',w/2,h/2,Math.max(100,w-40));ctx.font='16px "Source Sans 3", sans-serif';ctx.fillText('Move your mouse or swipe sideways',w/2,h/2+36,Math.max(100,w-40));marked.clear();last=null;}
+ function reveal(){if(done)return;done=true;canvas.remove();stage.inert=false;button.hidden=true;status.textContent='Ready when you are. Press play.';}
  function scratch(e){if(done||e.pointerType!=='mouse'&&!down)return;const r=canvas.getBoundingClientRect(),x=e.clientX-r.left,y=e.clientY-r.top;
  ctx.globalCompositeOperation='destination-out';ctx.lineWidth=100;ctx.lineCap='round';ctx.lineJoin='round';ctx.beginPath();ctx.moveTo(last?.x??x,last?.y??y);ctx.lineTo(x,y);ctx.stroke();ctx.beginPath();ctx.arc(x,y,50,0,Math.PI*2);ctx.fill();last={x,y};
  marked.add(Math.floor(x/w*12)+','+Math.floor(y/h*12));if(marked.size>26)reveal();}
