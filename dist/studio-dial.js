@@ -1,7 +1,7 @@
 (() => {
  const dialog=document.getElementById('studioDial'),open=document.getElementById('openDial');
  if(!dialog||typeof dialog.showModal!=='function')return;
- open.hidden=false;open.addEventListener('click',()=>dialog.showModal());
+ open.hidden=false;open.addEventListener('click',event=>{event.preventDefault();dialog.showModal();});
  document.getElementById('skipDial').addEventListener('click',()=>dialog.close());
  dialog.addEventListener('close',()=>open.focus());
  dialog.querySelectorAll('[data-dial]').forEach(choice=>choice.addEventListener('click',()=>{
