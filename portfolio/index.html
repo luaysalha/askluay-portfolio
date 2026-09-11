@@ -267,7 +267,7 @@
   .lightbox p{color:rgba(255,255,255,.7);}
   .lightbox .close{position:absolute;top:22px;right:26px;color:#fff;font-size:30px;background:none;border:0;cursor:pointer;}
 </style>
-<link rel="stylesheet" href="redesign.css?v=visual-20260911" />
+<link rel="stylesheet" href="redesign.css?v=desk-1" />
 </head>
 <body>
 
@@ -304,7 +304,7 @@
     <div class="eyebrow reveal">Visual designer, director &amp; editor</div>
     <h1 class="reveal">Different worlds.<br><em>One curious mind.</em></h1>
     <p class="lead reveal">I’m Luay—a designer, director and editor. From Damascus to Beirut to The Hague, I work across film, identity and digital experiences.</p>
-    <div class="hero-actions"><a class="hero-button" id="openDial" href="#work">Explore my work <span>↗</span></a><a class="text-link" href="#reel">Watch the reel ↗</a></div><div class="meta reveal">
+    <div class="hero-actions"><a class="hero-button" id="openDial" href="#work">Explore my work <span>↗</span></a><a class="text-link" href="#studio">Explore the studio ↓</a></div><div class="meta reveal">
       <span>Film &amp; motion</span>
       <span>Brand systems</span>
       <span>Digital &amp; AI tools</span>
@@ -312,6 +312,18 @@
     </div>
   </div>
   <div class="scroll-cue" aria-hidden="true"><span>Scroll</span><span class="line"></span></div>
+</section>
+
+<section class="studio-desk" id="studio" aria-labelledby="deskTitle">
+ <div class="wrap"><div class="desk-heading"><div><p class="desk-kicker">A few things from my desk</p><h2 id="deskTitle">Pull up a chair.</h2><p>Move through a film. Turn over an idea. See where it takes you.</p></div><button id="deskLight" type="button" aria-pressed="false"><span aria-hidden="true"></span>Ruby light</button></div>
+ <div class="desk-surface">
+  <div class="desk-film"><div class="desk-label"><span>01 / THE EDITING TABLE</span><a href="#reel">Watch my reel ↗</a></div><div class="desk-strip" id="deskStrip" tabindex="0" aria-label="Film selection. Scroll sideways to explore.">
+   <a href="#khayarat"><img src="assets/khayarat-poster.jpg" alt="Khayarat film still" loading="lazy"><span>Khayarat <small>Original idea & direction</small></span></a>
+   <a href="#reel"><img src="assets/reel-2026-poster.jpg" alt="Showreel still" loading="lazy"><span>The showreel <small>Film, motion & stories</small></span></a>
+   <a href="projects/vue-cinemas-nl.html"><img src="assets/vue-tiktok-1.jpg" alt="Vue social video" loading="lazy"><span>Vue Cinemas <small>Social video production</small></span></a>
+  </div><div class="desk-film-controls"><button id="filmPrevious" type="button" aria-label="Previous film">←</button><span>Drag the strip or use the arrows</span><button id="filmNext" type="button" aria-label="Next film">→</button></div></div>
+  <div class="desk-design"><div class="desk-label">02 / IDEAS IN HAND</div><div class="desk-stack" id="deskStack"><article class="desk-paper" id="deskPaper"><img id="deskCardImage" src="assets/HR%20and%20More.jpeg" alt="HR&MORE brand identity" loading="lazy" draggable="false"><div><span id="deskCardNumber">01 / 03</span><h3 id="deskCardTitle">HR&MORE</h3><p id="deskCardRole">Brand identity & visual system</p><a id="deskCardLink" href="projects/hr-more-brand-identity.html">Explore this project ↗</a></div></article></div><button id="deskNext" class="desk-next" type="button">Next card ↗</button><p class="desk-hint">Swipe a card sideways to see another idea.</p><p id="deskCardStatus" class="sr-only" role="status"></p></div>
+ </div></div>
 </section>
 
 <!-- ================= FEATURED FILM ================= -->
@@ -711,5 +723,6 @@ document.getElementById('year').textContent=new Date().getFullYear();
 <script src="reel-reveal.js?v=visual-20260911"></script>
 <dialog id="studioDial" aria-labelledby="dialTitle"><button id="skipDial" type="button" aria-label="Close studio selector">Close ×</button><p class="dial-eyebrow">LUAY SALHA / THE STUDIO</p><h2 id="dialTitle">Follow your curiosity.</h2><p class="selector-intro">Choose a part of my practice to explore.</p><div class="studio-choices"><button type="button" data-dial="film"><img src="assets/khayarat-poster.jpg" alt=""><div><strong>Film & stories</strong><small>Documentary, directing and social video</small></div><i aria-hidden="true">↗</i></button><button type="button" data-dial="brand"><img src="assets/HR%20and%20More.jpeg" alt=""><div><strong>Identity & design</strong><small>Brands, visual systems and campaigns</small></div><i aria-hidden="true">↗</i></button><button type="button" data-dial="digital"><img src="assets/cvc-logo-02.png.jpg" alt=""><div><strong>Digital & ideas</strong><small>Websites, chatbots and useful tools</small></div><i aria-hidden="true">↗</i></button></div><button type="button" class="selector-all" data-dial="all">See all selected work →</button></dialog>
 <script src="studio-dial.js?v=visual-20260911"></script>
+<script src="studio-desk.js?v=desk-1"></script>
 </body>
 </html>
