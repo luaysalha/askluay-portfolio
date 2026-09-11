@@ -37,3 +37,7 @@ collections:
               - { label: "External link", name: "href", widget: "string", required: false, hint: "For TikTok or a YouTube that blocks embedding — opens in a new tab." }
 
               - { label: "Hide until ready", name: "hidden", widget: "boolean", default: false, required: false }
+              - { label: "My role", name: "role", widget: "string", required: false }
+              - { label: "External link label", name: "linkLabel", widget: "string", required: false }
+              - { label: "Image fit", name: "fit", widget: "select", options: ["cover", "contain"], default: "cover", required: false }
+              - { label: "Loop video", name: "loop", widget: "boolean", default: false, required: false }

@@ -19,10 +19,42 @@
       "yt": "TY8YixX-iW8"
     },
     {
+      "title": "CVC Charity Syria",
+      "type": "digital",
+      "blurb": "Website creation for CVC Charity’s work in Syria.",
+      "href": "https://sy.cvccharity.org/language/en/home/",
+      "img": "assets/cvc-logo-02.png.jpg",
+      "fit": "contain",
+      "role": "Website creation",
+      "linkLabel": "Visit website"
+    },
+    {
+      "title": "VGP × REWE",
+      "type": "motion",
+      "blurb": "AI animation for the opening of SuperRebel’s VGP × REWE film. Film by SuperRebel.Agency, in collaboration with VideoAgency.",
+      "href": "https://www.linkedin.com/posts/vgp-rewe-superrebelagency-ugcPost-7502760282386264064-ixqf/",
+      "img": "https://media.licdn.com/dms/image/v2/D4E05AQEnE7oanmDTEA/videocover-low/B4EaB8o17bHkBI-/0/1788797488805?e=2147483647&v=beta&t=j2HR4qABwAU0oxhDTGntVSNVlVTcai-kA_O7K4LLPo0",
+      "role": "AI animation · Intro",
+      "linkLabel": "Watch on LinkedIn"
+    },
+    {
       "title": "URDA logo animation",
       "type": "motion",
-      "blurb": "Refreshed NGO logo, animated.",
-      "img": "assets/logo%20animation.gif"
+      "blurb": "The URDA bird brought to life through motion.",
+      "file": "assets/urda-bird-animation.mp4",
+      "poster": "assets/urda-bird-poster.jpg",
+      "fit": "contain",
+      "role": "Logo animation",
+      "loop": true
+    },
+    {
+      "title": "180 Agency logos",
+      "type": "brand",
+      "blurb": "Animated logo explorations for 180 Agency.",
+      "hidden": false,
+      "img": "assets/04.gif",
+      "fit": "contain",
+      "role": "Logo design & animation"
     },
     {
       "title": "Storytelling reel",
@@ -75,12 +107,6 @@
       "type": "brand",
       "blurb": "Concept to delivery at SuperRebel.",
       "img": "assets/hero-poster.jpg"
-    },
-    {
-      "title": "180 Agency logos",
-      "type": "brand",
-      "blurb": "Logo concepts and artwork gallery.",
-      "hidden": true
     },
     {
       "title": "Syrian refugee stories",
