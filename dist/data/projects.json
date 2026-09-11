@@ -20,6 +20,24 @@
       "linkLabel": "Explore the website"
     },
     {
+      "title": "The Best Social Media NL",
+      "type": "brand",
+      "categories": [
+        "brand",
+        "digital"
+      ],
+      "blurb": "A refreshed visual style across the logo, Instagram feed posts and Stories. Shown here: examples of the feed design system in use.",
+      "role": "Visual identity · Feed & Stories design · Logo",
+      "href": "https://www.instagram.com/thebestsocialmedianl/",
+      "img": "assets/tbsm-feed-1.jpg",
+      "gallery": [
+        "assets/tbsm-feed-1.jpg",
+        "assets/tbsm-feed-2.jpg",
+        "assets/tbsm-feed-3.jpg"
+      ],
+      "linkLabel": "See the Instagram page"
+    },
+    {
       "title": "HR&MORE brand identity",
       "type": "brand",
       "blurb": "Full identity: logo, system and 'Recreate yourself' line.",
