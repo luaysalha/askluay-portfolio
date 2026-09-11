@@ -304,7 +304,7 @@
     <div class="eyebrow reveal">Visual designer, director &amp; editor</div>
     <h1 class="reveal">Different worlds.<br><em>One curious mind.</em></h1>
     <p class="lead reveal">I’m Luay. My work has taken me from print studios in Damascus to editing rooms in Beirut and creative agencies in the Netherlands. Today, I bring those experiences to design, film and digital work.</p>
-    <button class="open-dial" type="button" id="openDial" hidden>Dial into my studio</button><div class="hero-actions"><a class="hero-button" href="#work">Step inside <span>↓</span></a><a class="text-link" href="#reel">Watch the reel ↗</a></div><div class="meta reveal">
+    <button class="open-dial" type="button" id="openDial" hidden>Find your way into the work</button><div class="hero-actions"><a class="hero-button" href="#work">Step inside <span>↓</span></a><a class="text-link" href="#reel">Watch the reel ↗</a></div><div class="meta reveal">
       <span>Film &amp; motion</span>
       <span>Brand systems</span>
       <span>Digital &amp; AI tools</span>
@@ -568,7 +568,7 @@ fetch('data/projects.json', {cache:'no-store'})
   .then(r => r.ok ? r.json() : null)
   .then(d => { if(d && Array.isArray(d.projects) && d.projects.length) PROJECTS = d.projects; })
   .catch(()=>{})
-  .finally(()=> renderCards('all'));
+  .finally(()=> renderCards(activeWorkFilter));
 
 /* ---- filters ---- */
 document.getElementById('filters').addEventListener('click', e=>{
@@ -709,7 +709,7 @@ document.getElementById('year').textContent=new Date().getFullYear();
 <script src="world-intro.js"></script>
 <script src="reel-player.js"></script>
 <script src="reel-reveal.js"></script>
-<dialog id="studioDial" aria-labelledby="dialTitle"><div class="dial-layout"><div><p class="dial-eyebrow">DAMASCUS / BEIRUT / THE HAGUE</p><h2 id="dialTitle">A different way<br>to connect.</h2><p>Three places. A practice that keeps changing.<br>Pick a number and come on in.</p><button type="button" id="skipDial">Explore directly ↗</button></div><div class="dial-control"><div class="dial-face" aria-label="Choose a creative discipline"><span class="dial-centre" aria-hidden="true">hello.<br><small>مرحبا</small></span><button type="button" data-dial="film" style="--turn:-65deg"><span>1</span><small>Film</small></button><button type="button" data-dial="brand" style="--turn:25deg"><span>2</span><small>Design</small></button><button type="button" data-dial="digital" style="--turn:115deg"><span>3</span><small>Digital</small></button></div><p id="dialStatus" role="status">Choose your connection</p></div></div></dialog>
+<dialog id="studioDial" aria-labelledby="dialTitle"><button id="skipDial" type="button" aria-label="Close studio selector">Close ×</button><p class="dial-eyebrow">LUAY SALHA / THE STUDIO</p><h2 id="dialTitle">What brings you here?</h2><p class="selector-intro">Choose a part of my practice to explore.</p><div class="studio-choices"><button type="button" data-dial="film"><span>01</span><div><strong>Film & stories</strong><small>Documentary, directing and social video</small></div><i aria-hidden="true">↗</i></button><button type="button" data-dial="brand"><span>02</span><div><strong>Identity & design</strong><small>Brands, visual systems and campaigns</small></div><i aria-hidden="true">↗</i></button><button type="button" data-dial="digital"><span>03</span><div><strong>Digital & ideas</strong><small>Websites, chatbots and useful tools</small></div><i aria-hidden="true">↗</i></button></div><button type="button" class="selector-all" data-dial="all">See all selected work →</button></dialog>
 <script src="studio-dial.js"></script>
 </body>
 </html>

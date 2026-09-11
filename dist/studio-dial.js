@@ -1,1 +1,13 @@
-(() => {const dialog=document.getElementById('studioDial'),open=document.getElementById('openDial'),status=document.getElementById('dialStatus');if(!dialog.showModal)return;open.hidden=false;let timer;function close(){clearTimeout(timer);dialog.close();dialog.classList.remove('dial-turning');}document.getElementById('skipDial').onclick=close;open.onclick=()=>dialog.showModal();dialog.addEventListener('cancel',()=>clearTimeout(timer));dialog.querySelectorAll('[data-dial]').forEach(b=>b.onclick=()=>{if(dialog.classList.contains('dial-turning'))return;dialog.classList.add('dial-turning');status.textContent='Connecting to '+b.textContent.trim().replace(/^\d/,'')+'…';timer=setTimeout(()=>{close();const filter=document.querySelector('#filters button[data-filter="'+b.dataset.dial+'"]');filter?.click();document.getElementById('work').scrollIntoView({behavior:matchMedia('(prefers-reduced-motion: reduce)').matches?'instant':'smooth'});},matchMedia('(prefers-reduced-motion: reduce)').matches?0:650);});try{if(!sessionStorage.getItem('studio-visited')&&!location.hash){dialog.showModal();sessionStorage.setItem('studio-visited','1');}}catch{}})();
+(() => {
+ const dialog=document.getElementById('studioDial'),open=document.getElementById('openDial');
+ if(!dialog||typeof dialog.showModal!=='function')return;
+ open.hidden=false;open.addEventListener('click',()=>dialog.showModal());
+ document.getElementById('skipDial').addEventListener('click',()=>dialog.close());
+ dialog.addEventListener('close',()=>open.focus());
+ dialog.querySelectorAll('[data-dial]').forEach(choice=>choice.addEventListener('click',()=>{
+ const filter=document.querySelector('#filters button[data-filter="'+choice.dataset.dial+'"]');
+ if(!filter)return;
+ dialog.close();filter.click();
+ requestAnimationFrame(()=>{filter.focus({preventScroll:true});document.getElementById('work').scrollIntoView({behavior:'instant',block:'start'});});
+ }));
+})();
