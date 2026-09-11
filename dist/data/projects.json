@@ -26,6 +26,27 @@
       "img": "assets/HR%20and%20More.jpeg"
     },
     {
+      "title": "The Madness of Aleppo",
+      "type": "film",
+      "blurb": "Supporting Lina Sanjab’s documentary through footage preparation and editing work in Lebanon.",
+      "hidden": false,
+      "caseStudy": true,
+      "role": "Editing support · Footage preparation",
+      "director": "Lina Sanjab",
+      "details": "In Lebanon, I collaborated with director Lina Sanjab on The Madness of Aleppo, helping prepare and cut material from hundreds of hours of footage. My contribution supported the editing process.",
+      "synopsis": "The documentary follows medical workers and civilians around Al-Quds Hospital during the siege of Aleppo in 2016.",
+      "coverage": [
+        {
+          "label": "Read the Al-Araby review (Arabic)",
+          "url": "https://www.alaraby.co.uk/\"مجانين-حلب\"-للينا-سنجاب-مرايا-الوثائقيّ"
+        },
+        {
+          "label": "Read the Al Jazeera feature (Arabic)",
+          "url": "https://www.aljazeera.net/arts/2021/9/2/مجانين-حلب-شهادة-سينمائية-واقعية-عن"
+        }
+      ]
+    },
+    {
       "type": "film",
       "title": "This Morning: the Syrian beekeeper",
       "blurb": "Al Jazeera 'This Morning' — a beekeeper's success in the Netherlands",
@@ -125,13 +146,6 @@
       "title": "Syrian refugee stories",
       "type": "film",
       "blurb": "Series of short films for Al Jazeera.",
-      "need": true,
-      "hidden": true
-    },
-    {
-      "title": "The Madness of Aleppo",
-      "type": "film",
-      "blurb": "Editing for BBC director Lina Sanjab.",
       "need": true,
       "hidden": true
     },
