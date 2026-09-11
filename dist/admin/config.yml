@@ -58,3 +58,4 @@ collections:
                 widget: "list"
                 required: false
                 field: { label: "Image", name: "image", widget: "image" }
+              - { label: "Typographic cover label", name: "titleCard", widget: "string", required: false }
