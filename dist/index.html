@@ -420,10 +420,15 @@
     <div class="section-head reveal">
       <div class="kicker">Showreel</div>
       <h2>Made to<br><em>move you.</em></h2>
-      <p>A selection of documentary, campaign and social work.</p>
+      <p>Start with the reel. Follow a circle into a different part of my work.</p>
     </div>
-    <div class="frame reveal" style="position:relative;padding:0;overflow:hidden;">
-      <video src="assets/reel-2026-16x9.mp4" poster="assets/reel-2026-poster.jpg" controls loop preload="metadata" playsinline style="width:100%;height:100%;object-fit:cover;background:#000;border-radius:14px;"></video>
+    <div class="reel-orbit" aria-label="Explore films, motion and social work">
+      <div class="orbit-ring" aria-hidden="true"></div>
+      <button class="orbit-centre" type="button" data-reel-project="main"><img src="assets/reel-2026-poster.jpg" alt="" loading="lazy"><span><i aria-hidden="true">▶</i><strong>Play the showreel</strong><small>A little of everything</small></span></button>
+      <a class="orbit-item orbit-one" href="#khayarat"><span class="orbit-image"><img src="assets/khayarat-poster.jpg" alt="" loading="lazy"></span><strong>Khayarat</strong><small>Directing · Explore the film ↓</small></a>
+      <button class="orbit-item orbit-two" type="button" data-reel-project="URDA logo animation"><span class="orbit-image"><img src="assets/urda-bird-poster.jpg" alt="" loading="lazy"></span><strong>A mark in motion</strong><small>URDA · Play animation</small></button>
+      <button class="orbit-item orbit-three" type="button" data-reel-project="Vue Cinemas NL"><span class="orbit-image"><img src="assets/vue-tiktok-1.jpg" alt="" loading="lazy"></span><strong>Big screen, small screen</strong><small>Vue · Explore TikToks</small></button>
+      <button class="orbit-item orbit-four" type="button" data-reel-project="PostNL"><span class="orbit-image"><img src="assets/postnl-tiktok-2.jpg" alt="" loading="lazy"></span><strong>A little unexpected</strong><small>PostNL · Explore TikToks</small></button>
     </div>
   </div>
 </section>
@@ -696,5 +701,6 @@ filmVideo.addEventListener('error',()=>{filmStatus.textContent='The film could n
 document.getElementById('year').textContent=new Date().getFullYear();
 </script>
 <script src="world-intro.js"></script>
+<script src="reel-orbit.js"></script>
 </body>
 </html>
