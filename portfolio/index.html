@@ -643,23 +643,23 @@ const editionCanvas=document.getElementById('editionCanvas'),editionContext=edit
 function drawEdition(){
  const e=editions[selectedEdition],c=editionContext,W=1440,H=2560;
  c.fillStyle=e.bg;c.fillRect(0,0,W,H);c.textAlign='left';c.textBaseline='alphabetic';
- c.fillStyle=e.muted;c.font='500 27px Archivo, sans-serif';c.fillText('LUAY SALHA / STUDIO EDITIONS',110,340);
+ c.fillStyle=e.muted;c.font='500 27px Source Sans 3, sans-serif';c.fillText('LUAY SALHA / STUDIO EDITIONS',110,340);
  c.textAlign='right';c.fillText('0'+(selectedEdition+1),W-110,340);c.textAlign='left';
  c.strokeStyle=e.muted;c.lineWidth=2;c.beginPath();c.moveTo(110,385);c.lineTo(W-110,385);c.stroke();
  const size=selectedEdition===0?310:240;let y=selectedEdition===0?1130:1000;
  e.lines.forEach((line,i)=>{
-  let fs=size;c.font=(i===e.lines.length-1?'italic ':'')+'400 '+fs+'px Newsreader, Georgia, serif';
-  while(c.measureText(line).width>W-220){fs-=2;c.font=(i===e.lines.length-1?'italic ':'')+'400 '+fs+'px Newsreader, Georgia, serif';}
+  let fs=size;c.font=(i===e.lines.length-1?'italic ':'')+'400 '+fs+'px Lora, Georgia, serif';
+  while(c.measureText(line).width>W-220){fs-=2;c.font=(i===e.lines.length-1?'italic ':'')+'400 '+fs+'px Lora, Georgia, serif';}
   c.fillStyle=e.ink;c.fillText(line,105,y);y+=size*1.03;
  });
- c.fillStyle=e.muted;c.font='400 34px Archivo, sans-serif';c.fillText(e.note,110,1930);
+ c.fillStyle=e.muted;c.font='400 34px Source Sans 3, sans-serif';c.fillText(e.note,110,1930);
  c.strokeStyle=e.muted;c.beginPath();c.moveTo(110,2150);c.lineTo(W-110,2150);c.stroke();
- c.font='400 25px Archivo, sans-serif';c.fillText('DESIGN & STORIES ACROSS BORDERS',110,2220);
- c.font='italic 400 44px Newsreader, Georgia, serif';c.fillStyle=e.ink;c.fillText('A small reminder. Yours to keep.',110,2310);
+ c.font='400 25px Source Sans 3, sans-serif';c.fillText('DESIGN & STORIES ACROSS BORDERS',110,2220);
+ c.font='italic 400 44px Lora, Georgia, serif';c.fillStyle=e.ink;c.fillText('A small reminder. Yours to keep.',110,2310);
  editionCanvas.setAttribute('aria-label','Edition 0'+(selectedEdition+1)+': '+e.title+' '+e.note);
  document.getElementById('editionCaption').textContent='0'+(selectedEdition+1)+' / '+e.caption;
 }
-const editionFonts=Promise.all([document.fonts.load('400 240px Newsreader'),document.fonts.load('italic 400 240px Newsreader'),document.fonts.load('400 34px Archivo')]).catch(()=>{});
+const editionFonts=Promise.all([document.fonts.load('400 240px Lora'),document.fonts.load('italic 400 240px Lora'),document.fonts.load('400 34px Source Sans 3')]).catch(()=>{});
 drawEdition();editionFonts.then(drawEdition);
 document.querySelectorAll('[data-edition]').forEach(button=>button.addEventListener('click',()=>{
  selectedEdition=Number(button.dataset.edition);document.querySelectorAll('[data-edition]').forEach(b=>b.setAttribute('aria-pressed',b===button?'true':'false'));
