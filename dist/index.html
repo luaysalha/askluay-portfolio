@@ -420,9 +420,10 @@
   <div class="wrap">
     <div class="section-head reveal">
       <div class="kicker">Showreel</div>
-      <h2>Made to<br><em>move you.</em></h2>
-      <p>Start with the reel. Follow a circle into a different part of my work.</p>
+      <h2>Look a little<br><em>closer.</em></h2>
+      <p>Clear the mist with your mouse or a sideways swipe. There’s a story underneath.</p>
     </div>
+    <div class="reveal-tools"><button id="revealReel" type="button" hidden>Reveal the work</button><span id="revealStatus" role="status"></span></div>
     <div class="reel-orbit" aria-label="Explore films, motion and social work">
       <div class="orbit-ring" aria-hidden="true"></div>
       <button class="orbit-centre" type="button" data-reel-project="main"><img src="assets/reel-2026-poster.jpg" alt="" loading="lazy"><span><i aria-hidden="true">▶</i><strong>Play the showreel</strong><small>A little of everything</small></span></button>
@@ -656,20 +657,22 @@ function drawEdition(){
  c.fillStyle=e.muted;c.font='500 27px Source Sans 3, sans-serif';c.fillText('LUAY SALHA / STUDIO EDITIONS',110,340);
  c.textAlign='right';c.fillText('0'+(selectedEdition+1),W-110,340);c.textAlign='left';
  c.strokeStyle=e.muted;c.lineWidth=2;c.beginPath();c.moveTo(110,385);c.lineTo(W-110,385);c.stroke();
- const size=selectedEdition===0?310:240;let y=selectedEdition===0?1130:1000;
- e.lines.forEach((line,i)=>{
-  let fs=size;c.font=(i===e.lines.length-1?'italic ':'')+'400 '+fs+'px Nohemi, Georgia, serif';
-  while(c.measureText(line).width>W-220){fs-=2;c.font=(i===e.lines.length-1?'italic ':'')+'400 '+fs+'px Nohemi, Georgia, serif';}
-  c.fillStyle=e.ink;c.fillText(line,105,y);y+=size*1.03;
- });
- c.fillStyle=e.muted;c.font='400 34px Source Sans 3, sans-serif';c.fillText(e.note,110,1930);
- c.strokeStyle=e.muted;c.beginPath();c.moveTo(110,2150);c.lineTo(W-110,2150);c.stroke();
- c.font='400 25px Source Sans 3, sans-serif';c.fillText('DESIGN & STORIES ACROSS BORDERS',110,2220);
- c.font='italic 400 44px Nohemi, Georgia, serif';c.fillStyle=e.ink;c.fillText('A small reminder. Yours to keep.',110,2310);
+ // One shared size keeps every line in the edition visually consistent.
+ let size=selectedEdition===0?300:240;
+ const setType=()=>{c.font='400 '+size+'px Nohemi, sans-serif';};setType();
+ while(Math.max(...e.lines.map(line=>c.measureText(line).width))>W-240){size-=2;setType();}
+ const leading=size*1.12,total=(e.lines.length-1)*leading;
+ let y=1260-total/2;
+ c.fillStyle=e.ink;
+ e.lines.forEach(line=>{c.fillText(line,120,y);y+=leading;});
+ c.fillStyle=e.muted;c.font='400 32px "Source Sans 3", sans-serif';c.fillText(e.note,120,1860);
+ c.strokeStyle=e.muted;c.beginPath();c.moveTo(120,2090);c.lineTo(W-120,2090);c.stroke();
+ c.font='400 26px "Source Sans 3", sans-serif';c.fillText('LUAY SALHA',120,2180);
+ c.textAlign='right';c.fillText('YOURS TO KEEP',W-120,2180);c.textAlign='left';
  editionCanvas.setAttribute('aria-label','Edition 0'+(selectedEdition+1)+': '+e.title+' '+e.note);
  document.getElementById('editionCaption').textContent='0'+(selectedEdition+1)+' / '+e.caption;
 }
-const editionFonts=Promise.all([document.fonts.load('400 240px Nohemi'),document.fonts.load('italic 400 240px Nohemi'),document.fonts.load('400 34px Source Sans 3')]).catch(()=>{});
+const editionFonts=Promise.all([document.fonts.load('400 240px Nohemi'),document.fonts.load('400 34px Source Sans 3')]).catch(()=>{});
 drawEdition();editionFonts.then(drawEdition);
 document.querySelectorAll('[data-edition]').forEach(button=>button.addEventListener('click',()=>{
  selectedEdition=Number(button.dataset.edition);document.querySelectorAll('[data-edition]').forEach(b=>b.setAttribute('aria-pressed',b===button?'true':'false'));
@@ -712,5 +715,6 @@ document.getElementById('year').textContent=new Date().getFullYear();
 </script>
 <script src="world-intro.js"></script>
 <script src="reel-orbit.js"></script>
+<script src="reel-reveal.js"></script>
 </body>
 </html>
