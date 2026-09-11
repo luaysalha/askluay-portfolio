@@ -14,7 +14,7 @@
 
 <link rel="preconnect" href="https://fonts.googleapis.com" />
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-<link href="https://fonts.googleapis.com/css2?family=Lora:ital,wght@0,400;0,500;0,600;1,400;1,500&family=Source+Sans+3:wght@400;500;600;700&display=swap" rel="stylesheet" />
+<link href="https://fonts.googleapis.com/css2?family=Source+Sans+3:wght@400;500;600;700&display=swap" rel="stylesheet" />
 
 <!-- Netlify Identity: lets the /admin dashboard log you in. Harmless if you host elsewhere. -->
 
@@ -38,7 +38,7 @@
     --line:rgba(0,0,0,.10);
     --white:#ffffff;        /* card surface */
     --maxw:1180px;
-    --serif:"Lora", Georgia, "Times New Roman", serif;
+    --serif:"Nohemi", "Source Sans 3", sans-serif;
     --sans:"Source Sans 3", system-ui, -apple-system, Segoe UI, Roboto, sans-serif;
   }
 
@@ -348,6 +348,7 @@
     </div>
 
     <div class="grid" id="grid"><!-- cards injected by JS from PROJECTS --></div>
+    <div class="work-more"><p id="workCount" role="status"></p><button id="workMore" type="button" aria-controls="grid" aria-expanded="false">Show more work</button></div>
   </div>
 </section>
 
@@ -497,7 +498,7 @@
       <a href="tel:+31648748135">+31 6 48 748 135</a>
     </div>
   </div>
-  <footer>© <span id="year"></span> Luay Salha · Designed &amp; built in The Hague</footer>
+  <footer>© <span id="year"></span> Luay Salha · Designed &amp; built in The Hague <span class="font-credit"> · Nohemi by Rajesh Rajput / <a href="https://www.onlinewebfonts.com/fonts" target="_blank" rel="noopener">Web Fonts</a></span></footer>
 </section>
 
 <!-- ================= LIGHTBOX ================= -->
@@ -530,9 +531,18 @@ let PROJECTS = [{"type": "film", "title": "She Matters × URDA: New beginnings",
 
 /* ---- render grid ---- */
 const grid = document.getElementById('grid');
+let activeWorkFilter='all', workExpanded=false;
+const workMore=document.getElementById('workMore');
+workMore.addEventListener('click',()=>{workExpanded=!workExpanded;renderCards(activeWorkFilter);if(!workExpanded)document.getElementById('work').scrollIntoView({behavior:'instant'});});
 function renderCards(filter){
+  if(filter!==activeWorkFilter){workExpanded=false;activeWorkFilter=filter;}
   grid.replaceChildren();
-  PROJECTS.filter(p => (filter==='all' || p.type===filter || (p.categories||[]).includes(filter)) && (p.img||p.yt||p.file||p.href||p.caseStudy) && !p.hidden).forEach((p,i) => {
+  const matches=PROJECTS.filter(p => (filter==='all' || p.type===filter || (p.categories||[]).includes(filter)) && (p.img||p.yt||p.file||p.href||p.caseStudy) && !p.hidden);
+  const shown=workExpanded?matches:matches.slice(0,8);
+  workMore.hidden=matches.length<=8;workMore.setAttribute('aria-expanded',String(workExpanded));
+  workMore.textContent=workExpanded?'Show fewer projects':'Show '+(matches.length-shown.length)+' more projects';
+  document.getElementById('workCount').textContent='Showing '+shown.length+' of '+matches.length+' projects';
+  shown.forEach((p,i) => {
     if(p.socialVideos?.length){
  const card=document.createElement('article');card.className='card social-video-card reveal in';
  const header=document.createElement('div');header.className='social-video-header';
@@ -648,18 +658,18 @@ function drawEdition(){
  c.strokeStyle=e.muted;c.lineWidth=2;c.beginPath();c.moveTo(110,385);c.lineTo(W-110,385);c.stroke();
  const size=selectedEdition===0?310:240;let y=selectedEdition===0?1130:1000;
  e.lines.forEach((line,i)=>{
-  let fs=size;c.font=(i===e.lines.length-1?'italic ':'')+'400 '+fs+'px Lora, Georgia, serif';
-  while(c.measureText(line).width>W-220){fs-=2;c.font=(i===e.lines.length-1?'italic ':'')+'400 '+fs+'px Lora, Georgia, serif';}
+  let fs=size;c.font=(i===e.lines.length-1?'italic ':'')+'400 '+fs+'px Nohemi, Georgia, serif';
+  while(c.measureText(line).width>W-220){fs-=2;c.font=(i===e.lines.length-1?'italic ':'')+'400 '+fs+'px Nohemi, Georgia, serif';}
   c.fillStyle=e.ink;c.fillText(line,105,y);y+=size*1.03;
  });
  c.fillStyle=e.muted;c.font='400 34px Source Sans 3, sans-serif';c.fillText(e.note,110,1930);
  c.strokeStyle=e.muted;c.beginPath();c.moveTo(110,2150);c.lineTo(W-110,2150);c.stroke();
  c.font='400 25px Source Sans 3, sans-serif';c.fillText('DESIGN & STORIES ACROSS BORDERS',110,2220);
- c.font='italic 400 44px Lora, Georgia, serif';c.fillStyle=e.ink;c.fillText('A small reminder. Yours to keep.',110,2310);
+ c.font='italic 400 44px Nohemi, Georgia, serif';c.fillStyle=e.ink;c.fillText('A small reminder. Yours to keep.',110,2310);
  editionCanvas.setAttribute('aria-label','Edition 0'+(selectedEdition+1)+': '+e.title+' '+e.note);
  document.getElementById('editionCaption').textContent='0'+(selectedEdition+1)+' / '+e.caption;
 }
-const editionFonts=Promise.all([document.fonts.load('400 240px Lora'),document.fonts.load('italic 400 240px Lora'),document.fonts.load('400 34px Source Sans 3')]).catch(()=>{});
+const editionFonts=Promise.all([document.fonts.load('400 240px Nohemi'),document.fonts.load('italic 400 240px Nohemi'),document.fonts.load('400 34px Source Sans 3')]).catch(()=>{});
 drawEdition();editionFonts.then(drawEdition);
 document.querySelectorAll('[data-edition]').forEach(button=>button.addEventListener('click',()=>{
  selectedEdition=Number(button.dataset.edition);document.querySelectorAll('[data-edition]').forEach(b=>b.setAttribute('aria-pressed',b===button?'true':'false'));
