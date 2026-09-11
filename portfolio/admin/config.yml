@@ -59,3 +59,11 @@ collections:
                 required: false
                 field: { label: "Image", name: "image", widget: "image" }
               - { label: "Typographic cover label", name: "titleCard", widget: "string", required: false }
+              - label: "TikTok video previews"
+                name: "socialVideos"
+                widget: "list"
+                required: false
+                fields:
+                  - { label: "Title", name: "title", widget: "string" }
+                  - { label: "Video cover", name: "image", widget: "image" }
+                  - { label: "TikTok URL", name: "url", widget: "string" }
