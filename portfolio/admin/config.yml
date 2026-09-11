@@ -41,3 +41,4 @@ collections:
               - { label: "External link label", name: "linkLabel", widget: "string", required: false }
               - { label: "Image fit", name: "fit", widget: "select", options: ["cover", "contain"], default: "cover", required: false }
               - { label: "Loop video", name: "loop", widget: "boolean", default: false, required: false }
+              - { label: "Additional categories", name: "categories", widget: "select", multiple: true, options: ["film", "brand", "motion", "digital"], required: false }
