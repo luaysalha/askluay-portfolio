@@ -292,26 +292,22 @@
 
 <!-- ================= HERO ================= -->
 <section class="hero" id="top">
-  <video class="hero-video" autoplay muted loop playsinline poster="assets/hero-poster.jpg" aria-hidden="true">
-    <source src="assets/Hero.mp4" type="video/mp4" />
-  </video>
-  <div class="hero-overlay" aria-hidden="true"></div>
-  <div class="backdrop" aria-hidden="true">
-    <!-- faint dotted route: Damascus -> Beirut -> The Hague -->
-    <svg viewBox="0 0 1200 600" preserveAspectRatio="xMidYMid slice" fill="none">
-      <path d="M120 470 C 400 520, 520 360, 690 300 C 860 240, 1000 150, 1120 110"
-            stroke="#c9743a" stroke-width="2" stroke-dasharray="2 10" stroke-linecap="round" opacity=".55"/>
-      <circle cx="120" cy="470" r="6" fill="#1f3b4d"/>
-      <circle cx="690" cy="300" r="6" fill="#1f3b4d"/>
-      <circle cx="1120" cy="110" r="6" fill="#c9743a"/>
-    </svg>
+  <div class="world-stage" aria-hidden="true">
+    <div class="world-tile world-film" data-depth="0.7"><video class="hero-video" muted loop playsinline preload="none" poster="assets/hero-poster.jpg" tabindex="-1"><source src="assets/Hero.mp4" type="video/mp4"></video><span>FILM / STORIES IN MOTION</span></div>
+    <div class="world-tile world-brand" data-depth="0.4"><img src="assets/HR%20and%20More.jpeg" alt=""><span>IDENTITY / HR&MORE</span></div>
+    <div class="world-tile world-social" data-depth="1"><img src="assets/vue-tiktok-1.jpg" alt=""><span>VUE / SOCIAL</span></div>
+    <div class="world-tile world-feed" data-depth="0.6"><img src="assets/tbsm-feed-1.jpg" alt=""><span>THE BEST SOCIAL MEDIA</span></div>
+    <div class="world-tile world-post" data-depth="1.3"><img src="assets/postnl-tiktok-2.jpg" alt=""><span>POSTNL / PLAY</span></div>
+    <div class="world-tile world-motion" data-depth="0.3"><img src="assets/urda-bird-poster.jpg" alt=""><span>URDA / MOTION</span></div>
   </div>
+  <div class="world-shade" aria-hidden="true"></div>
+  <button class="world-pause" type="button" aria-pressed="false">Pause motion</button>
   <div class="wrap">
     <div class="hello-pill reveal"><span class="hello-label">SAY HELLO /</span> <span id="helloWord">مرحبا</span></div>
     <div class="eyebrow reveal">Visual designer, director &amp; editor</div>
-    <h1 class="reveal">Stories cross<br><em>borders.</em><br>So does design.</h1>
+    <h1 class="reveal">Different worlds.<br><em>One curious mind.</em></h1>
     <p class="lead reveal">I’m Luay, a visual designer, director and film editor in The Hague. I give human stories and ambitious brands a form that moves people.</p>
-    <div class="hero-actions"><a class="hero-button" href="#work">Explore selected work <span>↗</span></a><a class="text-link" href="#reel">Watch the reel ↗</a></div><div class="meta reveal">
+    <div class="hero-actions"><a class="hero-button" href="#work">Step inside <span>↓</span></a><a class="text-link" href="#reel">Watch the reel ↗</a></div><div class="meta reveal">
       <span>Film &amp; motion</span>
       <span>Brand systems</span>
       <span>Digital &amp; AI tools</span>
@@ -699,5 +695,6 @@ filmVideo.addEventListener('error',()=>{filmStatus.textContent='The film could n
 /* ---- year ---- */
 document.getElementById('year').textContent=new Date().getFullYear();
 </script>
+<script src="world-intro.js"></script>
 </body>
 </html>
