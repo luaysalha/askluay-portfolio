@@ -444,52 +444,27 @@
   </div>
 </section>
 
-<!-- ================= POSTCARD GENERATOR ================= -->
-<section class="postcard postcard-section" id="postcard-section">
-  <div class="wrap">
-    <div class="section-head reveal">
-      <div class="kicker">Carry a story with you</div>
-      <h2>A postcard across borders.</h2>
-      <p>You've travelled the journey. Now make it yours: add your name, choose a word that matters to you and a language, and take a postcard with you. Because every message can cross a border.</p>
-    </div>
-
-    <div class="pc-grid">
-      <div class="pc-controls reveal">
-        <label for="pcName">Your name</label>
-        <input type="text" id="pcName" maxlength="24" placeholder="e.g. Maria" value="friend" />
-
-        <label>A word that matters to you</label>
-        <div class="chip-row" id="pcWords">
-          <button class="active" data-word="Hope">Hope</button>
-          <button data-word="Home">Home</button>
-          <button data-word="Belonging">Belonging</button>
-          <button data-word="Peace">Peace</button>
-          <button data-word="Family">Family</button>
-        </div>
-
-        <label for="pcLang">Say hello in</label>
-        <select id="pcLang">
-          <option value="Arabic">Arabic — مرحبا</option>
-          <option value="English" selected>English — Hello</option>
-          <option value="Dutch">Dutch — Hallo</option>
-          <option value="French">French — Bonjour</option>
-          <option value="Spanish">Spanish — Hola</option>
-          <option value="Ukrainian">Ukrainian — Привіт</option>
-          <option value="Swahili">Swahili — Habari</option>
-          <option value="Japanese">Japanese — こんにちは</option>
-        </select>
-
-        <div class="pc-actions">
-          <button class="btn-solid" id="pcDownload">Download my postcard</button>
-        </div>
-        <p class="pc-note">It updates live as you type. Downloads as a PNG you can keep or share.</p>
-      </div>
-
-      <div class="pc-canvas-wrap reveal">
-        <canvas id="postcard" width="1000" height="650" role="img" aria-label="Your personalised postcard across borders"></canvas>
-      </div>
-    </div>
+<!-- ================= STUDIO EDITIONS ================= -->
+<section class="studio-editions" id="postcard-section">
+ <div class="wrap editions-grid">
+  <div class="edition-copy">
+   <div class="edition-kicker">A little something to keep</div>
+   <h2>Good things<br>are meant<br><em>to be shared.</em></h2>
+   <p>Three typographic wallpapers about the things that connect us. A small gift from my studio to your screen.</p>
+   <fieldset class="edition-picker"><legend>Choose your edition</legend>
+    <button type="button" data-edition="0" aria-pressed="true"><span>01</span> Stay curious. <span>↗</span></button>
+    <button type="button" data-edition="1" aria-pressed="false"><span>02</span> Find common ground. <span>↗</span></button>
+    <button type="button" data-edition="2" aria-pressed="false"><span>03</span> Make room for wonder. <span>↗</span></button>
+   </fieldset>
+   <button type="button" class="edition-download" id="editionDownload">Download wallpaper <span>↓</span></button>
+   <p class="edition-note">Free PNG · 1440 × 2560 · No email needed.</p>
+   <p id="editionStatus" class="edition-status" role="status" aria-live="polite"></p>
   </div>
+  <div class="edition-display">
+   <div class="edition-preview"><canvas id="editionCanvas" width="1440" height="2560" role="img" aria-label="Edition 01: Stay curious. Lime typography on charcoal."></canvas></div>
+   <div class="edition-caption"><span id="editionCaption">01 / STAY CURIOUS</span><span>LUAY SALHA — STUDIO EDITIONS</span></div>
+  </div>
+ </div>
 </section>
 
 <!-- ================= CONTACT ================= -->
@@ -628,81 +603,45 @@ setInterval(()=>{ hi=(hi+1)%HELLOS.length; helloEl.style.opacity=0;
   setTimeout(()=>{helloEl.textContent=HELLOS[hi];helloEl.style.opacity=1;},300);
 },2200);
 
-/* ===================================================================
-   POSTCARD GENERATOR — personalised keepsake, drawn on <canvas>.
-   =================================================================== */
-const GREETINGS={Arabic:"مرحبا",English:"Hello",Dutch:"Hallo",French:"Bonjour",
-  Spanish:"Hola",Ukrainian:"Привіт",Swahili:"Habari",Japanese:"こんにちは"};
-const cv=document.getElementById('postcard');
-const ctx=cv.getContext('2d');
-const state={name:"friend",word:"Hope",lang:"English"};
-
-function roundRect(x,y,w,h,r){ctx.beginPath();ctx.moveTo(x+r,y);ctx.arcTo(x+w,y,x+w,y+h,r);
-  ctx.arcTo(x+w,y+h,x,y+h,r);ctx.arcTo(x,y+h,x,y,r);ctx.arcTo(x,y,x+w,y,r);ctx.closePath();}
-
-function drawPostcard(){
-  const W=cv.width,H=cv.height;
-  // background
-  ctx.fillStyle="#FBF8F3";ctx.fillRect(0,0,W,H);
-  // inner frame
-  ctx.strokeStyle="#1F3B4D";ctx.lineWidth=3;roundRect(24,24,W-48,H-48,18);ctx.stroke();
-  // top-right stamp box
-  ctx.strokeStyle="#C9743A";ctx.lineWidth=2;ctx.setLineDash([4,5]);
-  roundRect(W-150,52,96,120,8);ctx.stroke();ctx.setLineDash([]);
-  ctx.fillStyle="#C9743A";ctx.font="600 13px Archivo, sans-serif";ctx.textAlign="center";
-  ctx.fillText("ACROSS",W-102,100);ctx.fillText("BORDERS",W-102,118);
-  ctx.font="26px Newsreader, serif";ctx.fillText("✎",W-102,150);
-  ctx.textAlign="left";
-  // kicker
-  ctx.fillStyle="#C9743A";ctx.font="600 15px Archivo, sans-serif";
-  ctx.save();
-  try{ctx.letterSpacing="4px";}catch(e){}
-  ctx.fillText("POSTCARD",60,86);
-  ctx.restore();
-  // greeting (serif, large)
-  const hello=GREETINGS[state.lang]||"Hello";
-  ctx.fillStyle="#141A24";ctx.font="400 62px Newsreader, serif";
-  const greet=hello+", "+ (state.name.trim()||"friend");
-  ctx.fillText(greet,60,175);
-  // route line with 3 stamps
-  const ry=300;
-  ctx.strokeStyle="#C9743A";ctx.lineWidth=2;ctx.setLineDash([2,9]);
-  ctx.beginPath();ctx.moveTo(80,ry);ctx.lineTo(W-90,ry);ctx.stroke();ctx.setLineDash([]);
-  const stops=[{x:110,c:"#1F3B4D",t:"DAMASCUS"},{x:W/2,c:"#1F3B4D",t:"BEIRUT"},{x:W-120,c:"#C9743A",t:"THE HAGUE"}];
-  stops.forEach(s=>{ctx.fillStyle=s.c;ctx.beginPath();ctx.arc(s.x,ry,7,0,7);ctx.fill();
-    ctx.fillStyle="#5B6068";ctx.font="600 12px Archivo, sans-serif";ctx.textAlign="center";
-    ctx.fillText(s.t,s.x,ry+26);});
-  ctx.textAlign="left";
-  // the word
-  ctx.fillStyle="#5B6068";ctx.font="400 20px Archivo, sans-serif";
-  ctx.fillText("The word you carry:",60,400);
-  ctx.fillStyle="#1F3B4D";ctx.font="italic 400 52px Newsreader, serif";
-  ctx.fillText(state.word,60,458);
-  // message line
-  ctx.fillStyle="#141A24";ctx.font="400 22px Newsreader, serif";
-  ctx.fillText("Every message can cross a border.",60,520);
-  // signature
-  ctx.fillStyle="#5B6068";ctx.font="500 15px Archivo, sans-serif";
-  ctx.fillText("from Luay Salha  ·  askluay.nl",60,H-58);
+/* Studio editions: the preview is the actual full-resolution download. */
+const editions=[
+ {title:'Stay curious.',lines:['Stay','curious.'],bg:'#161d19',ink:'#c5f77c',muted:'#a6b69d',caption:'STAY CURIOUS',slug:'stay-curious',note:'There is always another way to see.'},
+ {title:'Find common ground.',lines:['Find','common','ground.'],bg:'#c5f77c',ink:'#18231a',muted:'#455a39',caption:'COMMON GROUND',slug:'common-ground',note:'Different stories. Shared humanity.'},
+ {title:'Make room for wonder.',lines:['Make room','for','wonder.'],bg:'#472dce',ink:'#f3eeff',muted:'#d5c9ff',caption:'ROOM FOR WONDER',slug:'room-for-wonder',note:'Look a little closer.'}
+];
+let selectedEdition=0;
+const editionCanvas=document.getElementById('editionCanvas'),editionContext=editionCanvas.getContext('2d');
+function drawEdition(){
+ const e=editions[selectedEdition],c=editionContext,W=1440,H=2560;
+ c.fillStyle=e.bg;c.fillRect(0,0,W,H);c.textAlign='left';c.textBaseline='alphabetic';
+ c.fillStyle=e.muted;c.font='500 27px Archivo, sans-serif';c.fillText('LUAY SALHA / STUDIO EDITIONS',110,340);
+ c.textAlign='right';c.fillText('0'+(selectedEdition+1),W-110,340);c.textAlign='left';
+ c.strokeStyle=e.muted;c.lineWidth=2;c.beginPath();c.moveTo(110,385);c.lineTo(W-110,385);c.stroke();
+ const size=selectedEdition===0?310:240;let y=selectedEdition===0?1130:1000;
+ e.lines.forEach((line,i)=>{
+  let fs=size;c.font=(i===e.lines.length-1?'italic ':'')+'400 '+fs+'px Newsreader, Georgia, serif';
+  while(c.measureText(line).width>W-220){fs-=2;c.font=(i===e.lines.length-1?'italic ':'')+'400 '+fs+'px Newsreader, Georgia, serif';}
+  c.fillStyle=e.ink;c.fillText(line,105,y);y+=size*1.03;
+ });
+ c.fillStyle=e.muted;c.font='400 34px Archivo, sans-serif';c.fillText(e.note,110,1930);
+ c.strokeStyle=e.muted;c.beginPath();c.moveTo(110,2150);c.lineTo(W-110,2150);c.stroke();
+ c.font='400 25px Archivo, sans-serif';c.fillText('DESIGN & STORIES ACROSS BORDERS',110,2220);
+ c.font='italic 400 44px Newsreader, Georgia, serif';c.fillStyle=e.ink;c.fillText('A small reminder. Yours to keep.',110,2310);
+ editionCanvas.setAttribute('aria-label','Edition 0'+(selectedEdition+1)+': '+e.title+' '+e.note);
+ document.getElementById('editionCaption').textContent='0'+(selectedEdition+1)+' / '+e.caption;
 }
-
-/* redraw once webfonts are ready, then wire inputs */
-function refresh(){ if(document.fonts && document.fonts.ready){document.fonts.ready.then(drawPostcard);} else {drawPostcard();} }
-refresh();
-
-document.getElementById('pcName').addEventListener('input',e=>{state.name=e.target.value;drawPostcard();});
-document.getElementById('pcLang').addEventListener('change',e=>{state.lang=e.target.value;drawPostcard();});
-document.getElementById('pcWords').addEventListener('click',e=>{
-  if(e.target.tagName!=='BUTTON')return;
-  document.querySelectorAll('#pcWords button').forEach(b=>b.classList.remove('active'));
-  e.target.classList.add('active');state.word=e.target.dataset.word;drawPostcard();
-});
-document.getElementById('pcDownload').addEventListener('click',()=>{
-  drawPostcard();
-  const a=document.createElement('a');
-  a.download='postcard-across-borders.png';
-  a.href=cv.toDataURL('image/png');
-  document.body.appendChild(a);a.click();a.remove();
+const editionFonts=Promise.all([document.fonts.load('400 240px Newsreader'),document.fonts.load('italic 400 240px Newsreader'),document.fonts.load('400 34px Archivo')]).catch(()=>{});
+drawEdition();editionFonts.then(drawEdition);
+document.querySelectorAll('[data-edition]').forEach(button=>button.addEventListener('click',()=>{
+ selectedEdition=Number(button.dataset.edition);document.querySelectorAll('[data-edition]').forEach(b=>b.setAttribute('aria-pressed',b===button?'true':'false'));
+ document.getElementById('editionStatus').textContent='';drawEdition();
+}));
+document.getElementById('editionDownload').addEventListener('click',async()=>{
+ await editionFonts;drawEdition();const e=editions[selectedEdition];
+ editionCanvas.toBlob(blob=>{if(!blob){document.getElementById('editionStatus').textContent='The download could not be prepared. Please try again.';return;}
+ const url=URL.createObjectURL(blob),a=document.createElement('a');a.href=url;a.download='luay-salha-'+e.slug+'-1440x2560.png';document.body.append(a);a.click();a.remove();setTimeout(()=>URL.revokeObjectURL(url),30000);
+ document.getElementById('editionStatus').textContent='Your wallpaper is ready. Thank you for stopping by.';
+ },'image/png');
 });
 
 /* ---- year ---- */
