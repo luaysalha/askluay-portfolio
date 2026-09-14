@@ -267,7 +267,7 @@
   .lightbox p{color:rgba(255,255,255,.7);}
   .lightbox .close{position:absolute;top:22px;right:26px;color:#fff;font-size:30px;background:none;border:0;cursor:pointer;}
 </style>
-<link rel="stylesheet" href="redesign.css?v=studio-2" />
+<link rel="stylesheet" href="redesign.css?v=swipe-3" />
 </head>
 <body>
 
@@ -321,8 +321,8 @@
    <a href="#khayarat"><img src="assets/khayarat-poster.jpg" alt="Khayarat film still" loading="lazy"><span>Khayarat <small>Original idea & direction</small></span></a>
    <a href="#reel"><img src="assets/reel-2026-poster.jpg" alt="Showreel still" loading="lazy"><span>The showreel <small>Film, motion & stories</small></span></a>
    <a href="projects/vue-cinemas-nl.html"><img src="assets/vue-tiktok-1.jpg" alt="Vue social video" loading="lazy"><span>Vue Cinemas <small>Social video production</small></span></a>
-  <a href="projects/postnl.html"><img src="assets/postnl-tiktok-2.jpg" alt="PostNL" loading="lazy"><span>PostNL<small>Editing & creative ideas</small></span></a><a href="projects/urda-logo-animation.html"><img src="assets/urda-bird-poster.jpg" alt="URDA" loading="lazy"><span>URDA<small>Logo animation</small></span></a><a href="projects/storytelling-reel.html"><img src="assets/reel-poster.jpg" alt="Storytelling reel" loading="lazy"><span>Storytelling reel<small>Documentary & campaigns</small></span></a></div><div class="desk-film-controls"><button id="filmPrevious" type="button" aria-label="Previous film">←</button><span>Drag the strip or use the arrows</span><button id="filmNext" type="button" aria-label="Next film">→</button></div></div>
-  <div class="desk-design"><div class="desk-label">02 / IDEAS IN HAND</div><div class="desk-stack" id="deskStack"><article class="desk-paper" id="deskPaper"><img id="deskCardImage" src="assets/HR%20and%20More.jpeg" alt="HR&MORE brand identity" loading="lazy" draggable="false"><div><span id="deskCardNumber">01 / 06</span><h3 id="deskCardTitle">HR&MORE</h3><p id="deskCardRole">Brand identity & visual system</p><a id="deskCardLink" href="projects/hr-more-brand-identity.html">Explore this project ↗</a></div></article></div><button id="deskNext" class="desk-next" type="button">Next card ↗</button><p class="desk-hint">Swipe a card sideways to see another idea.</p><p id="deskCardStatus" class="sr-only" role="status"></p></div>
+  <a href="projects/postnl.html"><img src="assets/postnl-tiktok-2.jpg" alt="PostNL" loading="lazy"><span>PostNL<small>Editing & creative ideas</small></span></a><a href="projects/urda-logo-animation.html"><img src="assets/urda-bird-poster.jpg" alt="URDA" loading="lazy"><span>URDA<small>Logo animation</small></span></a><a href="projects/storytelling-reel.html"><img src="assets/reel-poster.jpg" alt="Storytelling reel" loading="lazy"><span>Storytelling reel<small>Documentary & campaigns</small></span></a></div><div class="desk-film-controls"><button id="filmPrevious" type="button" aria-label="Previous film">←</button><span><span aria-hidden="true">↔</span> Swipe to explore <span id="filmPosition">01 / 06</span></span><button id="filmNext" type="button" aria-label="Next film">→</button></div></div>
+  <div class="desk-design"><div class="desk-label">02 / IDEAS IN HAND</div><div class="desk-stack" id="deskStack"><article class="desk-paper" id="deskPaper"><img id="deskCardImage" src="assets/HR%20and%20More.jpeg" alt="HR&MORE brand identity" loading="lazy" draggable="false"><div><span id="deskCardNumber">01 / 06</span><h3 id="deskCardTitle">HR&MORE</h3><p id="deskCardRole">Brand identity & visual system</p><a id="deskCardLink" href="projects/hr-more-brand-identity.html">Explore this project ↗</a></div></article></div><button id="deskNext" class="desk-next" type="button">Next card ↗</button><p class="desk-hint"><span aria-hidden="true">↔</span> Swipe the card · or tap Next card</p><p id="deskCardStatus" class="sr-only" role="status"></p></div>
  </div></div>
 </section>
 
@@ -723,7 +723,7 @@ document.getElementById('year').textContent=new Date().getFullYear();
 <script src="reel-reveal.js?v=visual-20260911"></script>
 <dialog id="studioDial" aria-labelledby="dialTitle"><button id="skipDial" type="button" aria-label="Close studio selector">Close ×</button><p class="dial-eyebrow">LUAY SALHA / THE STUDIO</p><h2 id="dialTitle">Follow your curiosity.</h2><p class="selector-intro">Choose a part of my practice to explore.</p><div class="studio-choices"><button type="button" data-dial="film"><img src="assets/khayarat-poster.jpg" alt=""><div><strong>Film & stories</strong><small>Documentary, directing and social video</small></div><i aria-hidden="true">↗</i></button><button type="button" data-dial="brand"><img src="assets/HR%20and%20More.jpeg" alt=""><div><strong>Identity & design</strong><small>Brands, visual systems and campaigns</small></div><i aria-hidden="true">↗</i></button><button type="button" data-dial="digital"><img src="assets/cvc-logo-02.png.jpg" alt=""><div><strong>Digital & ideas</strong><small>Websites, chatbots and useful tools</small></div><i aria-hidden="true">↗</i></button></div><button type="button" class="selector-all" data-dial="all">See all selected work →</button></dialog>
 <script src="studio-dial.js?v=visual-20260911"></script>
-<script src="studio-desk.js?v=studio-2"></script>
+<script src="studio-desk.js?v=swipe-3"></script>
 <script src="navigation.js?v=studio-2"></script>
 </body>
 </html>
