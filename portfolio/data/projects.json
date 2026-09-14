@@ -4,7 +4,8 @@
       "type": "film",
       "title": "She Matters × URDA: New beginnings",
       "blurb": "Rawda's success story — female newcomers finding work in the Netherlands",
-      "yt": "ASXXyVpzyiM"
+      "yt": "ASXXyVpzyiM",
+      "projectPage": "projects/she-matters-urda-new-beginnings.html"
     },
     {
       "title": "The Best Social Awards",
@@ -17,7 +18,8 @@
       "role": "Head of Design · Website & event design",
       "href": "https://thebestsocialawards.nl/",
       "img": "https://thebestsocialawards.nl/assets/theme/img/home-album-1.png",
-      "linkLabel": "Explore the website"
+      "linkLabel": "Explore the website",
+      "projectPage": "projects/the-best-social-awards.html"
     },
     {
       "title": "The Best Social Media NL",
@@ -35,7 +37,8 @@
         "assets/tbsm-feed-2.jpg",
         "assets/tbsm-feed-3.jpg"
       ],
-      "linkLabel": "See the Instagram page"
+      "linkLabel": "See the Instagram page",
+      "projectPage": "projects/the-best-social-media-nl.html"
     },
     {
       "title": "The Agency B.O.S.S.",
@@ -44,13 +47,15 @@
       "role": "Chatbot design & development · Conversation design",
       "href": "https://superrebelagency.com/the-agency-boss",
       "linkLabel": "Explore Agency B.O.S.S.",
-      "titleCard": "CM.com HALO / AI AGENT"
+      "titleCard": "CM.com HALO / AI AGENT",
+      "projectPage": "projects/the-agency-b-o-s-s.html"
     },
     {
       "title": "HR&MORE brand identity",
       "type": "brand",
       "blurb": "Full identity: logo, system and 'Recreate yourself' line.",
-      "img": "assets/HR%20and%20More.jpeg"
+      "img": "assets/HR%20and%20More.jpeg",
+      "projectPage": "projects/hr-more-brand-identity.html"
     },
     {
       "title": "The Madness of Aleppo",
@@ -71,7 +76,8 @@
           "label": "Read the Al Jazeera feature (Arabic)",
           "url": "https://www.aljazeera.net/arts/2021/9/2/مجانين-حلب-شهادة-سينمائية-واقعية-عن"
         }
-      ]
+      ],
+      "projectPage": "projects/the-madness-of-aleppo.html"
     },
     {
       "type": "film",
@@ -96,7 +102,8 @@
           "url": "https://www.tiktok.com/@vuecinemasnl/video/7627543815242485024",
           "title": "3… 2… 1… Super Mario Galaxy"
         }
-      ]
+      ],
+      "projectPage": "projects/vue-cinemas-nl.html"
     },
     {
       "title": "PostNL",
@@ -121,13 +128,15 @@
           "url": "https://www.tiktok.com/@postnl/video/7525428749483937057",
           "title": "OOH BABY A TRIPLE"
         }
-      ]
+      ],
+      "projectPage": "projects/postnl.html"
     },
     {
       "type": "film",
       "title": "This Morning: the Syrian beekeeper",
       "blurb": "Al Jazeera 'This Morning' — a beekeeper's success in the Netherlands",
-      "yt": "TY8YixX-iW8"
+      "yt": "TY8YixX-iW8",
+      "projectPage": "projects/this-morning-the-syrian-beekeeper.html"
     },
     {
       "title": "CVC Charity Syria",
@@ -137,7 +146,8 @@
       "img": "assets/cvc-logo-02.png.jpg",
       "fit": "contain",
       "role": "Website creation",
-      "linkLabel": "Visit website"
+      "linkLabel": "Visit website",
+      "projectPage": "projects/cvc-charity-syria.html"
     },
     {
       "title": "VGP × REWE",
@@ -146,7 +156,8 @@
       "href": "https://www.linkedin.com/posts/vgp-rewe-superrebelagency-ugcPost-7502760282386264064-ixqf/",
       "img": "https://media.licdn.com/dms/image/v2/D4E05AQEnE7oanmDTEA/videocover-low/B4EaB8o17bHkBI-/0/1788797488805?e=2147483647&v=beta&t=j2HR4qABwAU0oxhDTGntVSNVlVTcai-kA_O7K4LLPo0",
       "role": "AI animation · Intro",
-      "linkLabel": "Watch on LinkedIn"
+      "linkLabel": "Watch on LinkedIn",
+      "projectPage": "projects/vgp-rewe.html"
     },
     {
       "title": "URDA logo animation",
@@ -156,7 +167,8 @@
       "poster": "assets/urda-bird-poster.jpg",
       "fit": "contain",
       "role": "Logo animation",
-      "loop": true
+      "loop": true,
+      "projectPage": "projects/urda-logo-animation.html"
     },
     {
       "title": "180 Agency logos",
@@ -165,59 +177,68 @@
       "hidden": false,
       "img": "assets/04.gif",
       "fit": "contain",
-      "role": "Logo design & animation"
+      "role": "Logo design & animation",
+      "projectPage": "projects/180-agency-logos.html"
     },
     {
       "title": "Storytelling reel",
       "type": "film",
       "blurb": "The full reel: documentaries, campaigns and social.",
       "file": "assets/reel-web.mp4",
-      "poster": "assets/reel-poster.jpg"
+      "poster": "assets/reel-poster.jpg",
+      "projectPage": "projects/storytelling-reel.html"
     },
     {
       "title": "HR&MORE type system",
       "type": "brand",
       "blurb": "Typographic foundations and brand patterns.",
-      "img": "assets/HR%20and%20More%2001.jpg"
+      "img": "assets/HR%20and%20More%2001.jpg",
+      "projectPage": "projects/hr-more-type-system.html"
     },
     {
       "title": "Morning Show series",
       "type": "film",
       "blurb": "Modernising morning TV across the Netherlands, ordinary people's stories.",
       "yt": "1TQYoG44o5A",
-      "href": "https://www.linkedin.com/in/luaysalha/"
+      "href": "https://www.linkedin.com/in/luaysalha/",
+      "projectPage": "projects/morning-show-series.html"
     },
     {
       "type": "film",
       "title": "Dido Wiegert: cinematic light",
       "blurb": "A profile of the cinematic-lighting expert (with George Kadr)",
-      "yt": "aCBxsPL5AgA"
+      "yt": "aCBxsPL5AgA",
+      "projectPage": "projects/dido-wiegert-cinematic-light.html"
     },
     {
       "title": "WordPress site build",
       "type": "digital",
       "blurb": "Website design and development for CVC Charity.",
       "href": "https://cvccharity.org",
-      "img": "assets/cvc-logo-02.png.jpg"
+      "img": "assets/cvc-logo-02.png.jpg",
+      "projectPage": "projects/wordpress-site-build.html"
     },
     {
       "title": "Disney+ NL",
       "type": "film",
       "blurb": "Social content made at The Best Social Studio.",
       "href": "https://www.tiktok.com/@disneynl",
-      "img": "assets/580c5c07976768c5b4dd17253c73036b~tplv-tiktokx-cropcenter-1080-1080.jpeg"
+      "img": "assets/580c5c07976768c5b4dd17253c73036b~tplv-tiktokx-cropcenter-1080-1080.jpeg",
+      "projectPage": "projects/disney-nl.html"
     },
     {
       "type": "film",
       "title": "This Morning: festival days",
       "blurb": "Al Jazeera 'This Morning' — a festival in the Netherlands",
-      "yt": "q5qWvQGf3es"
+      "yt": "q5qWvQGf3es",
+      "projectPage": "projects/this-morning-festival-days.html"
     },
     {
       "title": "Social-first campaign",
       "type": "brand",
       "blurb": "Concept to delivery at SuperRebel.",
-      "img": "assets/hero-poster.jpg"
+      "img": "assets/hero-poster.jpg",
+      "projectPage": "projects/social-first-campaign.html"
     },
     {
       "title": "Syrian refugee stories",
