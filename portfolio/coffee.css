@@ -1,0 +1,162 @@
+/* Coffee thread: rakweh pour (hero + contact), finjan cup game, scroll cup. */
+@property --level{syntax:'<number>';inherits:true;initial-value:1}
+#progress{display:none}
+.coffee-defs{position:absolute;width:0;height:0;overflow:hidden}
+
+/* ---------- shared cup art ---------- */
+.fj-coffee{transform-origin:60px 17px;transform:translateY(calc((1 - var(--level,1))*15px)) scale(calc(1 - (1 - var(--level,1))*.4));opacity:calc(var(--level,1)*40)}
+.fj-grounds{opacity:calc(1 - var(--level,1))}
+
+/* ---------- pour scene ---------- */
+.coffee-scene{--level:1;position:relative;width:460px;height:235px;margin:34px auto 0;zoom:1}
+.coffee-scene .finjan-art{position:absolute;left:60px;top:126px;width:120px;height:104px;overflow:visible}
+.coffee-scene .rakweh{position:absolute;left:165px;top:62px;width:240px;height:180px;overflow:visible;transform-origin:58px 44px;filter:drop-shadow(0 14px 14px #0006)}
+.coffee-scene .coffee-stream{position:absolute;left:115px;top:86px;width:7px;height:64px;border-radius:4px;background:linear-gradient(90deg,#1c0d06,#5a321a 45%,#2a140a);clip-path:inset(0 0 100% 0)}
+.coffee-scene .coffee-steam{position:absolute;left:84px;top:62px;width:72px;height:72px;overflow:visible;opacity:calc(var(--level)*.75);pointer-events:none}
+.coffee-steam path{fill:none;stroke:#f3f4ef;stroke-width:2.2;stroke-linecap:round;opacity:.5;animation:steam 3.6s ease-in-out infinite}
+.coffee-steam path:nth-child(2){animation-delay:-1.2s}
+.coffee-steam path:nth-child(3){animation-delay:-2.4s}
+.coffee-scene::after{content:'';position:absolute;left:30px;right:30px;top:226px;height:14px;border-radius:50%;background:radial-gradient(ellipse,#0007,transparent 70%);z-index:-1}
+.coffee-caption{margin:10px auto 0;font-size:14px;letter-spacing:.04em;color:#aeb6a9;display:flex;gap:14px;justify-content:center;align-items:center;flex-wrap:wrap}
+.coffee-replay{pointer-events:auto;font:inherit;color:#c5f77c;background:none;border:0;border-bottom:1px solid currentColor;padding:6px 0;min-height:32px;cursor:pointer}
+.coffee-replay:focus-visible{outline:2px solid #c5f77c;outline-offset:4px}
+
+.coffee-scene.is-pouring{animation:cup-fill 4.6s linear both}
+.coffee-scene.is-pouring .rakweh{animation:rakweh-pour 4.6s cubic-bezier(.45,.05,.3,1) both}
+.coffee-scene.is-pouring .coffee-stream{animation:stream 4.6s linear both}
+.coffee-scene.is-waiting{--level:0}
+.coffee-scene.is-waiting .rakweh{opacity:0}
+@keyframes rakweh-pour{
+  0%{translate:-105px -95px;rotate:7deg;opacity:0}
+  16%{translate:-105px -21px;rotate:0deg;opacity:1}
+  32%,70%{translate:-105px -21px;rotate:-32deg;opacity:1}
+  84%{translate:-105px -21px;rotate:0deg;opacity:1}
+  100%{translate:0 0;rotate:0deg;opacity:1}
+}
+@keyframes stream{
+  0%,31%{clip-path:inset(0 0 100% 0)}
+  37%,68%{clip-path:inset(0)}
+  74%,100%{clip-path:inset(100% 0 0 0)}
+}
+@keyframes cup-fill{0%,35%{--level:0}72%,100%{--level:1}}
+@keyframes steam{0%{transform:translateY(8px);opacity:0}40%{opacity:.55}100%{transform:translateY(-14px);opacity:0}}
+
+.hero{padding-bottom:84px}
+.contact .coffee-scene{margin:0 auto 26px}
+.contact .coffee-steam path{stroke:#26371c}
+.contact .coffee-scene::after{background:radial-gradient(ellipse,#26371c55,transparent 70%)}
+.coffee-ar{text-align:center;font-family:var(--sans);font-size:clamp(22px,3vw,34px);margin:14px auto 0!important;max-width:none!important;color:#26371c}
+
+/* ---------- scroll cup ---------- */
+.coffee-mini{--level:1;position:fixed;left:18px;bottom:18px;z-index:150;display:flex;align-items:center;gap:10px;padding:8px 16px 8px 8px;border-radius:999px;background:#141818;color:#f3f4ef;border:1px solid #ffffff30;box-shadow:0 10px 30px #0005;font:600 14px var(--sans);opacity:0;visibility:hidden;translate:0 16px;transition:opacity .3s,translate .3s,visibility .3s}
+.coffee-mini.is-on{opacity:1;visibility:visible;translate:0 0}
+.coffee-mini svg{width:46px;height:40px;overflow:visible}
+.coffee-mini:hover{border-color:#c5f77c}
+.coffee-mini:focus-visible{outline:3px solid #c5f77c;outline-offset:3px}
+
+/* ---------- finjan game ---------- */
+section.finjan-game{background:#141818;color:#f3f4ef;text-align:center;padding:70px 0 100px}
+.finjan-game .kicker{color:#efa8bd;font-size:13px;letter-spacing:.13em;text-transform:uppercase;margin:0 0 14px}
+.finjan-game h2{font-size:clamp(40px,5.3vw,76px);line-height:1.04}
+.finjan-game h2 em{font-style:normal;color:#c5f77c}
+.finjan-prompt{font-size:19px;color:#e0e5de;margin:18px auto 0;min-height:1.6em}
+.finjan-table{position:relative;height:190px;max-width:620px;margin:44px auto 0}
+.finjan-table::after{content:'';position:absolute;left:-4%;right:-4%;bottom:14px;height:1px;background:linear-gradient(90deg,transparent,#ffffff40 15%,#ffffff40 85%,transparent)}
+.finjan{position:absolute;top:0;left:calc(var(--slot)*25%);width:25%;height:100%;padding:0;border:0;background:none;color:inherit;cursor:pointer;transition:left .4s cubic-bezier(.5,0,.3,1),translate .4s cubic-bezier(.5,0,.3,1);-webkit-tap-highlight-color:transparent}
+.finjan svg{position:absolute;left:50%;top:70px;width:min(112px,88%);aspect-ratio:120/104;margin-left:calc(min(112px,88%)/-2);overflow:visible;transition:transform .45s cubic-bezier(.3,1.3,.5,1);z-index:1;filter:drop-shadow(0 10px 10px #0007)}
+.finjan-word{position:absolute;left:0;right:0;top:112px;font:400 clamp(17px,2.6vw,25px)/1 var(--serif);letter-spacing:-.02em;color:#c5f77c;opacity:0;transition:opacity .12s}
+.finjan.is-up .finjan-word{opacity:1;transition:opacity .2s .18s}
+.finjan.is-up svg{transform:translateY(-68px) rotate(-7deg)}
+.finjan.hop{translate:0 -20px;z-index:2}
+.finjan.dip{translate:0 12px}
+.finjan:focus-visible{outline:2px solid #c5f77c;outline-offset:-6px;border-radius:14px}
+.finjan:disabled{cursor:default}
+.finjan-table[data-phase=guess] .finjan:not(:disabled):hover svg{transform:translateY(-8px)}
+.finjan-table[data-phase=pick] .finjan:hover .finjan-word{text-decoration:underline;text-underline-offset:6px}
+.finjan-actions{display:flex;gap:22px;justify-content:center;align-items:center;flex-wrap:wrap;min-height:52px;margin:22px 0 0}
+.finjan-go{display:inline-flex;gap:26px;align-items:center;background:#b5ef52;color:#141818;padding:14px 22px;border-radius:2px;font-weight:600;font-size:15px}
+.finjan-again{font:inherit;font-size:15px;color:#f3f4ef;background:none;border:0;border-bottom:1px solid #ffffff80;padding:8px 0;cursor:pointer}
+.finjan-skip{font-size:15px;color:#aeb6a9;margin:26px 0 0}
+.finjan-skip a{color:#f3f4ef;text-decoration:underline;text-underline-offset:5px;padding:10px 6px;display:inline-block}
+.finjan-go[hidden],.finjan-again[hidden]{display:none}
+
+@media(max-width:760px){
+  .coffee-scene{zoom:.72}
+  .hero{padding-bottom:70px}
+  section.finjan-game{padding:50px 0 76px}
+  .finjan-table{height:160px;margin-top:30px}
+  .finjan svg{top:62px}
+  .finjan-word{top:104px}
+  .finjan.is-up svg{transform:translateY(-56px) rotate(-7deg)}
+  .coffee-mini{left:12px;bottom:12px;padding:6px 12px 6px 6px;font-size:13px}
+  .coffee-mini svg{width:38px;height:33px}
+}
+@media(prefers-reduced-motion:reduce){
+  .coffee-scene.is-pouring,.coffee-scene.is-pouring .rakweh,.coffee-scene.is-pouring .coffee-stream,.coffee-steam path{animation:none}
+  .finjan,.finjan svg,.coffee-mini{transition:none}
+}
+
+/* ---------- 3D travelling cup ---------- */
+.cup3d-canvas{position:fixed;inset:0;width:100%;height:100%;z-index:90;pointer-events:none}
+.cup3d .coffee-scene>*{visibility:hidden}
+.cup3d .coffee-scene::after{display:none}
+.cup3d .coffee-mini{display:none}
+.cup3d .finjan svg{visibility:hidden}
+section>.wrap{position:relative}
+.cup-slot{position:absolute;right:28px;top:4px;width:130px;height:130px;pointer-events:none}
+.cup-slot-game{position:static;display:block;width:84px;height:84px;margin:0 auto 26px}
+.cup-slot-studio{right:auto;left:56%;top:-6px;width:110px;height:110px}
+.cup-slot-khayarat{right:auto;left:50%;margin-left:-50px;top:-64px;width:100px;height:100px}
+.cup-slot-journey{right:8px;top:-58px;width:62px;height:62px}
+.chapter{position:relative}
+.cup-slot-about{right:0;top:-96px;width:92px;height:92px}
+#about .about-grid>div{position:relative}
+@media(max-width:760px){
+  .cup-slot{right:18px;top:-56px;width:60px;height:60px}
+  .cup-slot-game{width:64px;height:64px;margin-bottom:18px}
+  .cup-slot-studio{left:auto;right:18px;top:-52px;width:60px;height:60px}
+  .cup-slot-khayarat{left:auto;right:18px;margin:0;top:-54px;width:56px;height:56px}
+  .cup-slot-journey{right:0;top:-46px;width:48px;height:48px}
+  .cup-slot-about{top:-62px;width:56px;height:56px}
+}
+.cup3d .hero .coffee-scene{margin-top:120px}
+.cup3d .coffee-caption{margin-top:48px}
+.cup3d .contact .coffee-scene{margin-top:90px;margin-bottom:54px}
+
+/* ---------- sections flow into each other ---------- */
+section.finjan-game{padding-bottom:260px;background:linear-gradient(#141818 calc(100% - 190px),#e6e9e0)}
+section.studio-desk{padding-bottom:250px;background:linear-gradient(#e6e9e0 calc(100% - 190px),#1b201c)}
+section.featured-film{border-top:0;padding-bottom:270px;background:linear-gradient(#1b201c calc(100% - 200px),transparent)}
+section.journey{padding-bottom:270px;background:linear-gradient(#e6e9e0 calc(100% - 200px),#141818)}
+section.reel{padding-bottom:270px;background:linear-gradient(#141818 calc(100% - 200px),transparent)}
+section.studio-editions{padding-bottom:270px;background:linear-gradient(#e6e9e0 calc(100% - 200px),#c5f77c)}
+@media(max-width:760px){
+  .cup3d .hero .coffee-scene{margin-top:80px}
+  section.finjan-game,section.studio-desk,section.featured-film,section.journey,section.reel,section.studio-editions{padding-bottom:190px}
+}
+
+/* ---------- dive shot ---------- */
+.cup3d-veil{position:fixed;inset:0;z-index:91;pointer-events:none;opacity:0;background:#1d0e07}
+.cup3d section.finjan-game{padding-top:240px}
+@media(max-width:760px){.cup3d section.finjan-game{padding-top:170px}}
+
+/* ---------- social work served on saucers ---------- */
+#grid.saucers{grid-template-columns:repeat(auto-fit,minmax(240px,1fr));gap:56px 30px}
+#grid.saucers .card{display:block;grid-column:auto;text-align:center}
+#grid.saucers .card .body{padding:22px 0 0}
+#grid.saucers .card h3{font-size:25px}
+#grid.saucers .card p{font-size:15px;margin-left:auto;margin-right:auto}
+#grid.saucers .thumb{width:min(100%,320px);margin:22px auto 0;aspect-ratio:1;border-radius:50%;border:30px solid #f6f3ec;background:#e2e0e9!important;box-shadow:0 0 0 2px #c9a24b,0 0 0 9px #f6f3ec,0 0 0 11px #8e2444,0 0 0 20px #f6f3ec,0 0 0 21px #d9d4c8,0 26px 34px #17201938;overflow:hidden;padding:0;display:block}
+#grid.saucers .thumb>img{width:100%;height:100%;object-fit:cover}
+#grid.saucers .thumb.project-preview-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:0;padding:0}
+#grid.saucers .thumb.project-preview-grid img{height:100%;aspect-ratio:auto;object-fit:cover;transform:none!important;box-shadow:none}
+#grid.saucers .thumb::after{content:'';display:block!important;position:absolute;inset:0;border-radius:50%;box-shadow:inset 0 0 0 3px #c9a24b,inset 0 10px 22px #0005;pointer-events:none}
+#grid.saucers .project-open{display:none}
+#grid.saucers .card.has-ring .thumb::before{content:'';position:absolute;inset:17%;z-index:1;border-radius:50%;pointer-events:none;mix-blend-mode:multiply;background:radial-gradient(closest-side,transparent 74%,#5a2c10b0 79%,#2b1206d0 84%,#6b3a1890 88%,transparent 92%),radial-gradient(closest-side at 53% 48%,transparent 80%,#5a2c1070 86%,transparent 93%);transform:rotate(-18deg)}
+.ring-note{display:block;font-size:12px;letter-spacing:.1em;text-transform:uppercase;color:#8e2444;margin-bottom:8px}
+#grid:not(.saucers) .ring-note{display:none}
+.cup-slot-saucer{left:28%;right:auto;top:26%;width:44%;height:44%}
+@media(max-width:760px){
+  #grid.saucers{gap:44px}
+  #grid.saucers .thumb{width:min(78%,300px);border-width:24px}
+}

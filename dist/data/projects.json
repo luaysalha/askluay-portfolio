@@ -26,7 +26,8 @@
       "type": "brand",
       "categories": [
         "brand",
-        "digital"
+        "digital",
+        "social"
       ],
       "blurb": "A refreshed social identity and a reusable Figma system used by five team members, including interns.",
       "role": "Visual identity · Figma design system",
@@ -48,7 +49,11 @@
       "href": "https://superrebelagency.com/the-agency-boss",
       "linkLabel": "Explore Agency B.O.S.S.",
       "titleCard": "CM.com HALO / AI AGENT",
-      "projectPage": "projects/the-agency-b-o-s-s.html"
+      "projectPage": "projects/the-agency-b-o-s-s.html",
+      "categories": [
+        "digital",
+        "ai"
+      ]
     },
     {
       "title": "HR&MORE brand identity",
@@ -103,7 +108,11 @@
           "title": "3… 2… 1… Super Mario Galaxy"
         }
       ],
-      "projectPage": "projects/vue-cinemas-nl.html"
+      "projectPage": "projects/vue-cinemas-nl.html",
+      "categories": [
+        "film",
+        "social"
+      ]
     },
     {
       "title": "PostNL",
@@ -129,7 +138,11 @@
           "title": "OOH BABY A TRIPLE"
         }
       ],
-      "projectPage": "projects/postnl.html"
+      "projectPage": "projects/postnl.html",
+      "categories": [
+        "film",
+        "social"
+      ]
     },
     {
       "type": "film",
@@ -157,7 +170,11 @@
       "img": "https://media.licdn.com/dms/image/v2/D4E05AQEnE7oanmDTEA/videocover-low/B4EaB8o17bHkBI-/0/1788797488805?e=2147483647&v=beta&t=j2HR4qABwAU0oxhDTGntVSNVlVTcai-kA_O7K4LLPo0",
       "role": "AI animation · Intro",
       "linkLabel": "Watch on LinkedIn",
-      "projectPage": "projects/vgp-rewe.html"
+      "projectPage": "projects/vgp-rewe.html",
+      "categories": [
+        "motion",
+        "ai"
+      ]
     },
     {
       "title": "URDA logo animation",
@@ -224,7 +241,11 @@
       "blurb": "Social content made at The Best Social Studio.",
       "href": "https://www.tiktok.com/@disneynl",
       "img": "assets/580c5c07976768c5b4dd17253c73036b~tplv-tiktokx-cropcenter-1080-1080.jpeg",
-      "projectPage": "projects/disney-nl.html"
+      "projectPage": "projects/disney-nl.html",
+      "categories": [
+        "film",
+        "social"
+      ]
     },
     {
       "type": "film",
@@ -238,7 +259,11 @@
       "type": "brand",
       "blurb": "Concept to delivery at SuperRebel.",
       "img": "assets/hero-poster.jpg",
-      "projectPage": "projects/social-first-campaign.html"
+      "projectPage": "projects/social-first-campaign.html",
+      "categories": [
+        "brand",
+        "social"
+      ]
     },
     {
       "title": "Syrian refugee stories",
