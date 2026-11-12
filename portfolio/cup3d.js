@@ -156,6 +156,42 @@ function start() {
   const gameEls = [...document.querySelectorAll('.finjan svg')];
   const gameCups = gameEls.map(() => { const c = makeCup(false); c.body.rotation.x = Math.PI; c.body.position.y = 1; c.root.visible = false; return c; });
 
+  /* ---------- saucers: social projects served on real plates ---------- */
+  const plateMap = canvasTexture(1024, 512, (g, w, h) => {
+    g.fillStyle = '#f7f4ee'; g.fillRect(0, 0, w, h);
+    const y = v => (1 - v) * h;
+    g.fillStyle = '#8e2444'; g.fillRect(0, y(.47), w, y(.43) - y(.47));
+    g.fillStyle = '#c9a24b'; g.fillRect(0, y(.475), w, 4); g.fillRect(0, y(.43), w, 4); g.fillRect(0, y(.64), w, y(.6) - y(.64));
+  });
+  const plateMat = new THREE.MeshPhysicalMaterial({ color: 0xffffff, map: plateMap, roughness: .2, clearcoat: 1, clearcoatRoughness: .06, side: THREE.DoubleSide });
+  const plateGeo = lathe([[0, .03], [.2, .03], [.23, .037], [.36, .06], [.47, .09], [.5, .1], [.485, .082], [.3, .02], [.22, 0], [0, 0]], 96);
+  const loader = new THREE.TextureLoader();
+  let saucers = [];
+  function buildSaucers(on) {
+    saucers.forEach(s => { scene.remove(s.root); s.decal.material.map?.dispose(); s.decal.material.dispose(); });
+    saucers = [];
+    if (!on) return;
+    document.querySelectorAll('#grid .thumb').forEach(el => {
+      const img = el.querySelector('img');
+      const root = new THREE.Group();
+      const shadow = new THREE.Mesh(shadowGeo, shadowMat); shadow.scale.set(1.25, 1, 1.25); shadow.position.y = -.01; shadow.renderOrder = -1;
+      const decal = new THREE.Mesh(discGeo, new THREE.MeshPhysicalMaterial({ color: 0xe9e5dc, roughness: .3, clearcoat: .8, clearcoatRoughness: .1, envMapIntensity: .5 }));
+      decal.scale.setScalar(.205); decal.position.y = .037;
+      if (img) loader.load(img.currentSrc || img.src, tex => {
+        tex.colorSpace = THREE.SRGBColorSpace;
+        const a = tex.image.width / tex.image.height, rx = a > 1 ? 1 / a : 1, ry = a > 1 ? 1 : a;
+        tex.repeat.set(rx, ry); tex.offset.set((1 - rx) / 2, (1 - ry) / 2);
+        decal.material.map = tex; decal.material.color.set(0xffffff); decal.material.needsUpdate = true;
+      });
+      root.add(shadow, new THREE.Mesh(plateGeo, plateMat), decal);
+      root.visible = false;
+      scene.add(root);
+      saucers.push({ root, el, decal });
+    });
+  }
+  document.addEventListener('work:rendered', event => buildSaucers(event.detail === 'social'));
+  buildSaucers(document.getElementById('grid')?.classList.contains('saucers'));
+
   /* ---------- pour timeline ---------- */
   const ease = (a, b, x) => { const t = Math.min(1, Math.max(0, (x - a) / (b - a))); return t * t * (3 - 2 * t); };
   const POUR_MS = 4600;
@@ -296,6 +332,16 @@ function start() {
       cup.root.scale.setScalar(s);
       cup.root.rotation.set(.3 + lookDown(cup.root.position.y), 0, cup.lean);
       cup.body.rotation.y = n * 1.7;
+    });
+
+    saucers.forEach(s => {
+      const r = s.el.getBoundingClientRect();
+      s.root.visible = r.bottom > -60 && r.top < H + 60 && r.width > 0;
+      if (!s.root.visible) return;
+      const y = H / 2 - (r.top + r.height * .56);
+      s.root.position.set(r.left + r.width / 2 - W / 2, y, -r.width * .6);
+      s.root.scale.setScalar(r.width * 1.06);
+      s.root.rotation.set(.92 + lookDown(y), 0, 0);
     });
 
     renderer.toneMappingExposure = cur.dim;

@@ -92,9 +92,13 @@
     const clamp = v => Math.min(1, Math.max(0, v));
     let irisDone = !work || work.getBoundingClientRect().top < innerHeight * .25, flowFrame = 0;
     if (!irisDone) work.classList.add('iris-on');
+    const stained = [...document.querySelectorAll('.cup-slot-studio,.cup-slot-work,.cup-slot-about')];
+    stained.forEach(slot => { slot.insertAdjacentHTML('beforeend', '<i class="stain"></i><i class="cloth"></i>'); });
     const flow = () => {
       flowFrame = 0;
       const H = innerHeight;
+      const lift = innerWidth < 760 ? 124 : 140; // the cup leaves its station about here
+      stained.forEach(slot => { const r = slot.getBoundingClientRect(); slot.classList.toggle('cup-left', r.top + r.height / 2 < lift && r.bottom > -40); });
       spills.forEach(el => el.style.setProperty('--spill', clamp((H * .78 - el.getBoundingClientRect().top) / (H * .5)).toFixed(3)));
       if (!irisDone) {
         const r = workWrap.getBoundingClientRect(), s = workSlot.getBoundingClientRect();
@@ -128,14 +132,6 @@
   const grid = document.getElementById('grid');
   const SEEN = 'luay-seen-projects';
   const seen = () => { try { return JSON.parse(localStorage.getItem(SEEN)) || []; } catch (e) { return []; } };
-  function ring(card, note) {
-    if (card.classList.contains('has-ring')) return;
-    card.classList.add('has-ring');
-    const label = document.createElement('span');
-    label.className = 'ring-note';
-    label.textContent = note;
-    card.querySelector('.body').prepend(label);
-  }
   function dressGrid(filter) {
     const saucers = filter === 'social';
     grid.classList.toggle('saucers', saucers);
@@ -145,11 +141,10 @@
       if (i === 0) {
         const slot = document.createElement('span');
         slot.className = 'cup-slot cup-slot-saucer';
-        slot.dataset.cup = 'saucer'; slot.dataset.cupTilt = '.62';
+        slot.dataset.cup = 'saucer'; slot.dataset.cupTilt = '.8';
         card.querySelector('.thumb').append(slot);
-        ring(card, 'The cup was just here');
       }
-      if (visited.includes(card.dataset.page)) ring(card, 'You’ve seen this one');
+      card.classList.toggle('is-seen', visited.includes(card.dataset.page));
     });
     document.dispatchEvent(new CustomEvent('cup:slots'));
   }
