@@ -192,6 +192,21 @@ function start() {
   document.addEventListener('work:rendered', event => buildSaucers(event.detail === 'social'));
   buildSaucers(document.getElementById('grid')?.classList.contains('saucers'));
 
+  // plain plates that follow a DOM element (the saucer on the work table)
+  let plates = [];
+  function buildPlates() {
+    plates.forEach(p => scene.remove(p.root));
+    plates = [...document.querySelectorAll('[data-plate]')].map(el => {
+      const root = new THREE.Group();
+      const shadow = new THREE.Mesh(shadowGeo, shadowMat); shadow.scale.set(1.3, 1, 1.3); shadow.position.y = -.01; shadow.renderOrder = -1;
+      root.add(shadow, new THREE.Mesh(plateGeo, plateMat));
+      scene.add(root);
+      return { root, el };
+    });
+  }
+  document.addEventListener('cup:plates', buildPlates);
+  buildPlates();
+
   /* ---------- pour timeline ---------- */
   const ease = (a, b, x) => { const t = Math.min(1, Math.max(0, (x - a) / (b - a))); return t * t * (3 - 2 * t); };
   const POUR_MS = 4600;
@@ -334,7 +349,7 @@ function start() {
       cup.body.rotation.y = n * 1.7;
     });
 
-    saucers.forEach(s => {
+    [...saucers, ...plates].forEach(s => {
       const r = s.el.getBoundingClientRect();
       s.root.visible = r.bottom > -60 && r.top < H + 60 && r.width > 0;
       if (!s.root.visible) return;

@@ -268,7 +268,7 @@
   .lightbox .close{position:absolute;top:22px;right:26px;color:#fff;font-size:30px;background:none;border:0;cursor:pointer;}
 </style>
 <link rel="stylesheet" href="redesign.css?v=workflow-icons-1" />
-<link rel="stylesheet" href="coffee.css?v=13" />
+<link rel="stylesheet" href="coffee.css?v=14" />
 <script type="importmap">{"imports":{"three":"./vendor/three.module.min.js"}}</script>
 </head>
 <body>
@@ -376,6 +376,14 @@
       <div class="kicker">Selected work</div>
       <h2>Different mediums.<br><em>One point of view.</em></h2>
       <p>Film, identity and motion. Work shaped by people, places and purpose.</p>
+    </div>
+
+    <div class="work-table-block" id="tableBlock" hidden>
+      <div class="work-table-bar">
+        <p id="tableHint">Everything’s on the table. Drag things around, and move the saucer: there’s more underneath.</p>
+        <div><button type="button" id="tableSpread" aria-pressed="false">Spread them out</button><button type="button" id="tableShuffle">Shuffle</button></div>
+      </div>
+      <div class="work-table" id="workTable" aria-label="All projects, laid out on a table"></div>
     </div>
 
     <article class="team-impact" aria-labelledby="team-impact-title">
@@ -776,7 +784,7 @@ document.getElementById('year').textContent=new Date().getFullYear();
 <script src="studio-dial.js?v=visual-20260911"></script>
 <script src="studio-desk.js?v=swipe-3"></script>
 <script src="navigation.js?v=studio-2"></script>
-<script src="coffee.js?v=7"></script>
-<script type="module" src="cup3d.js?v=11"></script>
+<script src="coffee.js?v=8"></script>
+<script type="module" src="cup3d.js?v=13"></script>
 </body>
 </html>

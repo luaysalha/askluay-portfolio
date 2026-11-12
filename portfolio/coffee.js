@@ -84,6 +84,89 @@
     draw();
   }
 
+  /* ---------- the work table: every project as a print you can push around, some hidden under the saucer ---------- */
+  const tableEl = document.getElementById('workTable');
+  if (tableEl) {
+    const block = document.getElementById('tableBlock'), spreadBtn = document.getElementById('tableSpread'), shuffleBtn = document.getElementById('tableShuffle');
+    let items = [], saucer = null, top = 10, spread = false, turn = 0;
+    const place = (el, x, y, r) => { el._x = x; el._y = y; el.style.translate = x + 'px ' + y + 'px'; if (r !== undefined) el.style.rotate = r + 'deg'; };
+    function makeDraggable(el) {
+      let sx = 0, sy = 0, ox = 0, oy = 0, held = false;
+      el.addEventListener('pointerdown', event => {
+        if (event.button) return;
+        held = true; el._moved = false; sx = event.clientX; sy = event.clientY; ox = el._x; oy = el._y;
+        el.setPointerCapture(event.pointerId);
+        el.classList.add('dragging');
+        if (el !== saucer) el.style.zIndex = String(++top);
+      });
+      el.addEventListener('pointermove', event => {
+        if (!held) return;
+        const dx = event.clientX - sx, dy = event.clientY - sy;
+        if (Math.abs(dx) + Math.abs(dy) > 6) el._moved = true;
+        if (!el._moved) return;
+        const maxX = tableEl.clientWidth - el.offsetWidth, maxY = tableEl.clientHeight - el.offsetHeight;
+        place(el, Math.min(maxX, Math.max(0, ox + dx)), Math.min(maxY, Math.max(0, oy + dy)));
+      });
+      const drop = () => { held = false; el.classList.remove('dragging'); };
+      el.addEventListener('pointerup', drop);
+      el.addEventListener('pointercancel', drop);
+      el.addEventListener('click', event => { if (el._moved) { event.preventDefault(); el._moved = false; } });
+      el.addEventListener('dragstart', event => event.preventDefault());
+    }
+    function layout() {
+      const W = tableEl.clientWidth, small = W < 620;
+      const cw = small ? 104 : 158, ch = small ? 74 : 108, sz = small ? 150 : 230;
+      tableEl.style.setProperty('--cw', cw + 'px'); tableEl.style.setProperty('--ch', ch + 'px'); tableEl.style.setProperty('--sz', sz + 'px');
+      if (spread) {
+        const gap = small ? 10 : 16, cols = Math.max(2, Math.floor((W - gap) / (cw + gap))), rows = Math.ceil(items.length / cols);
+        const left = (W - cols * (cw + gap) + gap) / 2;
+        tableEl.style.height = (rows * (ch + gap) + sz + 60) + 'px';
+        items.forEach((el, i) => place(el, left + (i % cols) * (cw + gap), 20 + Math.floor(i / cols) * (ch + gap), 0));
+        place(saucer, (W - sz) / 2, rows * (ch + gap) + 34);
+      } else {
+        const H = small ? 560 : 640;
+        tableEl.style.height = H + 'px';
+        const cx = W / 2, cy = H / 2, rx = W / 2 - cw / 2 - 12, ry = H / 2 - ch / 2 - 12;
+        items.forEach((el, i) => {
+          const k = (i + turn * 5) % items.length, d = Math.sqrt((k + .35) / items.length), a = k * 2.39996 + turn;
+          place(el, cx + Math.cos(a) * d * rx - cw / 2, cy + Math.sin(a) * d * ry - ch / 2, ((k * 37 + turn * 11) % 27) - 13);
+          el.style.zIndex = String(items.length - k);
+        });
+        top = items.length + 1;
+        place(saucer, cx - sz / 2, cy - sz / 2);
+      }
+    }
+    function build() {
+      if (items.length || typeof PROJECTS === 'undefined') return;
+      const list = PROJECTS.filter(p => p.projectPage && !p.hidden);
+      if (!list.length) return;
+      list.forEach(p => {
+        const el = document.createElement('a');
+        el.className = 'print'; el.href = p.projectPage;
+        const src = p.img || (p.yt ? 'https://img.youtube.com/vi/' + p.yt + '/hqdefault.jpg' : p.poster);
+        if (src) { const img = document.createElement('img'); img.src = src; img.alt = ''; img.loading = 'lazy'; img.draggable = false; el.append(img); }
+        else el.classList.add('print-text');
+        const name = document.createElement('span'); name.textContent = p.title; el.append(name);
+        tableEl.append(el); items.push(el); makeDraggable(el);
+      });
+      saucer = document.createElement('div');
+      saucer.className = 'table-saucer'; saucer.dataset.plate = '';
+      saucer.setAttribute('role', 'img'); saucer.setAttribute('aria-label', 'Saucer. Drag it away to see the work underneath.');
+      saucer.innerHTML = '<span class="cup-slot cup-slot-saucer" data-cup="table" data-cup-tilt=".8"></span>';
+      tableEl.append(saucer); makeDraggable(saucer);
+      block.hidden = false;
+      layout();
+      document.dispatchEvent(new CustomEvent('cup:slots'));
+      document.dispatchEvent(new CustomEvent('cup:plates'));
+    }
+    spreadBtn.addEventListener('click', () => { spread = !spread; spreadBtn.setAttribute('aria-pressed', String(spread)); spreadBtn.textContent = spread ? 'Pile them up' : 'Spread them out'; layout(); });
+    shuffleBtn.addEventListener('click', () => { turn++; spread = false; spreadBtn.setAttribute('aria-pressed', 'false'); spreadBtn.textContent = 'Spread them out'; layout(); });
+    let resizeTimer = 0;
+    addEventListener('resize', () => { clearTimeout(resizeTimer); resizeTimer = setTimeout(() => { if (items.length) layout(); }, 200); });
+    document.addEventListener('work:rendered', build);
+    build();
+  }
+
   /* ---------- the cup makes the sections: spills, a ring that opens the work, a trail for the journey ---------- */
   if (!reduced.matches) {
     const spills = [...document.querySelectorAll('.spill')];
