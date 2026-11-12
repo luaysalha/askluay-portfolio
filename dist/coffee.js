@@ -216,22 +216,26 @@
         } else if (child.nodeType === 1 && child.tagName === 'EM') split(child);
       });
     };
-    lines.forEach(line => { split(line); line.classList.add('say'); line._words = [...line.querySelectorAll('.w')]; });
+    lines.forEach(line => { split(line); line.classList.add('say'); [...line.querySelectorAll('.w')].forEach((w, i) => w.style.setProperty('--i', i)); });
+    // kickers and the copy under a heading come in with the title, like a title sequence
+    const extras = [...document.querySelectorAll('.kicker, .desk-kicker, .film-kicker, .beat-kicker, .edition-kicker, .section-head p, .desk-heading p:not(.desk-kicker), .served-ar, .hero-served .lead, .hero-served .hero-actions')];
+    extras.forEach(el => el.classList.add('cine'));
+    const cast = [...lines, ...extras];
     let sayFrame = 0;
     const say = () => {
       sayFrame = 0;
       const H = innerHeight;
-      lines.forEach(line => {
-        const r = line.getBoundingClientRect();
-        if (r.bottom < -200 || r.top > H + 200) return;
-        const p = Math.min(1, Math.max(0, (H * .9 - r.top) / (H * .42)));
-        line._words.forEach((w, i) => w.classList.toggle('lit', p > (i + .5) / (line._words.length + .5)));
+      cast.forEach(el => {
+        if (el._on) return;
+        const r = el.getBoundingClientRect();
+        if (r.top < H * .84 && r.bottom > 0 && r.width > 0 && getComputedStyle(el.closest('.hero-served') || el).visibility !== 'hidden') { el._on = true; el.classList.add('on'); }
       });
     };
     const scheduleSay = () => { if (!sayFrame) sayFrame = requestAnimationFrame(say); };
     addEventListener('scroll', scheduleSay, { passive: true });
     addEventListener('resize', scheduleSay);
     say();
+    setInterval(say, 600); // also catches things revealed without a scroll (the hero after the pour)
   }
 
   /* ---------- finjan game ---------- */

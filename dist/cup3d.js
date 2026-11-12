@@ -275,19 +275,34 @@ function start() {
     const k = cur.ready ? 1 - Math.exp(-dt * 7) : 1; cur.ready = true;
     for (const key in goal) cur[key] += (goal[key] - cur[key]) * k;
 
+    // Phones: no travelling cup. The cup and rakweh simply stand at fixed stations in the page
+    // (hero, story beats, the work-table saucer, contact) and pour when you reach them.
+    const anchored = W < 760;
+    let station = null;
+    if (anchored) {
+      let best = Infinity;
+      pts.forEach(p => {
+        if (!(p.s.rakweh || p.s.name === 'table' || p.s.name === 'saucer')) return;
+        if (p.y < -p.size || p.y > H + p.size) return;
+        const d = Math.abs(p.y - H * .5); if (d < best) { best = d; station = p; }
+      });
+      if (station) Object.assign(cur, { x: station.x, y: station.y, size: station.size, tilt: station.s.tilt, dim: 1, rk: station.s.rakweh, lean: 0 });
+    }
+
     // pours: the station in play is the one the cup rests in or is arriving at
-    const ps = a.s.rakweh ? a : b.s.rakweh ? b : null;
+    const ps = anchored ? (station && station.s.rakweh ? station : null) : (a.s.rakweh ? a : b.s.rakweh ? b : null);
     const drained = fillY === null ? 0 : 1 - Math.min(1, Math.max(0, scrollY - fillY) / (H * 3.6));
     let pose = pourPose(2), level = drained;
     if (ps) {
       const st = pourOf(ps.s.el);
-      if (st.start < 0 && !st.done && ps === a && ps.s.el !== slotEls[0]) { st.start = now; st.from = drained; }
+      if (st.start < 0 && !st.done && (anchored ? ps.y < H * .68 : ps === a) && ps.s.el !== slotEls[0]) { st.start = now; st.from = anchored ? 0 : drained; }
       const p = st.done ? 2 : st.start < 0 ? -1 : (now - st.start) / POUR_MS;
       if (p >= 1 && !st.done) { st.done = true; fillY = scrollY; }
       pose = pourPose(p);
       if (p >= 0 && p < 1) level = st.from + (1 - st.from) * pose.level;
       else if (p >= 1) level = Math.max(drained, fillY === scrollY ? 1 : drained);
     }
+    if (anchored) { const st = ps ? pourOf(ps.s.el) : null; level = !station ? 0 : !ps ? .7 : st.done ? 1 : st.start >= 0 ? pose.level : 0; }
     setLevel(main, level);
 
     // main cup
@@ -300,7 +315,7 @@ function start() {
     // dive shot: between the hero and the game the camera pushes into the coffee,
     // the screen goes dark, and the next section comes up out of it
     let dive = 0;
-    if (game && heroPour.done) {
+    if (game && heroPour.done && !anchored) {
       const gTop = game.getBoundingClientRect().top;
       dive = Math.min(1, Math.max(0, (H * .98 - gTop) / (H * 1.1))); // from the game entering the screen to it reaching the top
       if (dive > 0 && dive < 1) {
@@ -324,6 +339,7 @@ function start() {
     }
     const diving = dive > 0 && dive < 1;
     main.root.scale.setScalar(size);
+    if (anchored) main.root.visible = !!station; else if (!diving) main.root.visible = true;
     main.body.rotation.y = scrollY * .0016 + diveSpin;
 
     // rakweh
