@@ -324,7 +324,7 @@ section.finjan-game{background:linear-gradient(#0000 calc(100% - 190px),#e6e9e0)
 @keyframes nudge{50%{translate:0 7px}}
 .table-prompt{position:relative;z-index:3;margin:0 auto 6px;font-size:19px;color:#e9dcc6;min-height:1.7em;text-align:center}
 .served-title{font:400 clamp(34px,4.6vw,64px)/1.05 var(--serif);letter-spacing:-.04em;margin:0 0 18px;color:#f3f4ef}
-.served-title span{display:block;font:400 24px var(--sans);letter-spacing:0;color:#efa8bd;margin-top:10px}
+.served-title .served-line{display:block}
 .story-beat{padding:110px 0 90px}
 .story-beat .wrap{display:flex;align-items:center;justify-content:space-between;gap:40px}
 .beat-kicker{font-size:13px;letter-spacing:.14em;text-transform:uppercase;color:#8e2444;margin:0 0 16px}
@@ -382,4 +382,29 @@ section.finjan-game{background:linear-gradient(#0000 calc(100% - 190px),#e6e9e0)
   .hero-table .world-post{left:37%;right:auto;top:auto;bottom:54px;width:44%}
   .hero-table .world-motion{left:auto;right:-14%;top:auto;bottom:-6px;width:58%}
   .work-table{height:760px}
+}
+
+/* ================= one type system for the whole story ================= */
+:root{--display:clamp(48px,6.2vw,100px);--accent-light:#8e2444;--accent-dark:#c5f77c}
+/* chapter headings: one face, one size, one rhythm */
+.beat-line,.section-head h2,.desk-heading h2,.finjan-game h2,.film-heading h2,.contact h2,.studio-editions h2,.served-title{font-family:var(--serif)!important;font-weight:400!important;font-size:var(--display)!important;line-height:1!important;letter-spacing:-.045em!important;max-width:none}
+.beat-line em,.section-head h2 em,.desk-heading h2 em,.finjan-game h2 em,.contact h2 em,.studio-editions h2 em,.served-title em{font-style:normal!important;font-family:inherit!important;color:var(--accent-light)}
+/* on dark surfaces the accent is the lime */
+.hero h1 em,.finjan-game h2 em,.served-title em,.reel .section-head h2 em,.featured-film h2 em{color:var(--accent-dark)!important}
+.served-title{color:#f3f4ef;margin:0 0 20px}
+.film-heading h2{color:#f3f4ef}
+/* kickers: one small voice */
+.kicker,.section-head .kicker,.desk-kicker,.film-kicker,.beat-kicker,.edition-kicker,.finjan-game .kicker,.hero-table .eyebrow{font:600 13px/1.4 var(--sans)!important;letter-spacing:.14em!important;text-transform:uppercase!important;color:var(--accent-light)!important;margin:0 0 16px!important}
+.hero-table .eyebrow,.finjan-game .kicker,.film-kicker,.reel .section-head .kicker{color:#efa8bd!important}
+/* arabic lines: one voice too */
+.served-ar,.coffee-ar,.film-heading h2 span[lang=ar]{display:block;font:400 clamp(22px,2.6vw,32px)/1.3 var(--sans)!important;letter-spacing:0!important;margin-top:12px}
+.served-ar{color:#efa8bd}
+.film-heading h2 span[lang=ar]{color:var(--accent-dark)}
+/* supporting copy under a heading */
+.section-head p,.desk-heading p:not(.desk-kicker),.hero-table .hero-served p.lead,.finjan-prompt,.table-prompt,.hero-prompt,.work-table-bar p{font:400 18px/1.55 var(--sans)!important;letter-spacing:0!important}
+/* nothing may push the page sideways on a phone */
+.hero.hero-table,.story-beat,section.finjan-game{overflow-x:clip}
+@media(max-width:760px){
+  :root{--display:clamp(46px,13.5vw,66px)}
+  .section-head p,.desk-heading p:not(.desk-kicker),.hero-table .hero-served p.lead,.finjan-prompt,.table-prompt,.hero-prompt,.work-table-bar p{font-size:17px!important}
 }

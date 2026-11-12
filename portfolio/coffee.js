@@ -203,7 +203,7 @@
 
   /* ---------- narration: big lines light up word by word as you scroll through them ---------- */
   if (!reduced.matches) {
-    const lines = [...document.querySelectorAll('.beat-line, .section-head h2, .finjan-game h2, .desk-heading h2, .film-heading h2, .served-title')];
+    const lines = [...document.querySelectorAll('.beat-line, .section-head h2, .finjan-game h2, .desk-heading h2, .studio-editions h2, .served-title > .served-line')];
     const split = node => {
       [...node.childNodes].forEach(child => {
         if (child.nodeType === 3) {
