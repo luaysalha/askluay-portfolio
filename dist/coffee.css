@@ -105,7 +105,7 @@ section.finjan-game{background:#141818;color:#f3f4ef;text-align:center;padding:7
 section>.wrap{position:relative}
 .cup-slot{position:absolute;right:28px;top:4px;width:130px;height:130px;pointer-events:none}
 .cup-slot-game{position:static;display:block;width:84px;height:84px;margin:0 auto 26px}
-.cup-slot-studio{right:auto;left:56%;top:-6px;width:110px;height:110px}
+.cup-slot-studio{right:auto;left:64%;top:-6px;width:110px;height:110px}
 .cup-slot-khayarat{right:auto;left:50%;margin-left:-50px;top:-64px;width:100px;height:100px}
 .cup-slot-journey{right:8px;top:-58px;width:62px;height:62px}
 .chapter{position:relative}
@@ -276,3 +276,70 @@ section.journey{background:#e6e9e0}
   .print.print-text span{font-size:12px;padding:7px 6px}
 }
 @media(prefers-reduced-motion:reduce){.print,.table-saucer,.work-table{transition:none}}
+
+/* ================= one material world: wood tables and printed paper ================= */
+:root{--walnut:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='900' height='900'%3E%3Cfilter id='w' x='0' y='0' width='100%25' height='100%25'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.009 0.17' numOctaves='5' seed='7' stitchTiles='stitch'/%3E%3CfeColorMatrix values='0 0 0 0 .34  0 0 0 0 .21  0 0 0 0 .12  1.2 .9 .5 0 -.95'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' fill='%231f120a'/%3E%3Crect width='100%25' height='100%25' filter='url%28%23w%29'/%3E%3C/svg%3E");--oak:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='900' height='900'%3E%3Cfilter id='w' x='0' y='0' width='100%25' height='100%25'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.009 0.17' numOctaves='5' seed='11' stitchTiles='stitch'/%3E%3CfeColorMatrix values='0 0 0 0 .42  0 0 0 0 .27  0 0 0 0 .15  1.2 .9 .5 0 -.95'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' fill='%23ad8456'/%3E%3Crect width='100%25' height='100%25' filter='url%28%23w%29'/%3E%3C/svg%3E")}
+/* hero + game sit on the same dark walnut table */
+.hero.hero-table{background:radial-gradient(ellipse 60% 30% at 50% 72%,#ffe2b826,transparent 72%),linear-gradient(#0a0503d9,#0a050399 34%,#0a050340 62%,#0a050380),var(--walnut);background-size:auto,auto,900px 900px}
+section.finjan-game{background:linear-gradient(#0000 calc(100% - 190px),#e6e9e0),radial-gradient(ellipse 60% 40% at 50% 46%,#ffe2b81a,transparent 70%),linear-gradient(#00000080,#0000 30%),var(--walnut);background-size:auto,auto,auto,900px 900px}
+.finjan-table::after{display:none}
+/* prints: real photo paper with a caption strip */
+.hero-table .world-tile{border:0;padding:7px 7px 30px;background:linear-gradient(#fffdf8,#f1ede4);box-shadow:0 1px 1px #0006,0 14px 22px -8px #000c,0 30px 40px -18px #0009}
+.hero-table .world-tile span{background:none;color:#2b2b2b;padding:0 8px;height:30px;display:flex;align-items:center;gap:8px;font-size:12px;letter-spacing:0;white-space:nowrap;overflow:hidden}
+.hero-table .world-tile small{display:inline;font-size:10px;color:#7a746a;opacity:1}
+.hero-table .world-tile.is-picked{background:#c5f77c}
+.work-table{background:radial-gradient(ellipse 70% 60% at 50% 42%,#fff3d93d,transparent 72%),linear-gradient(#0000 70%,#00000030),var(--oak);background-size:auto,auto,900px 900px;box-shadow:inset 0 0 0 1px #6b4a2c55,inset 0 0 90px #3a241455,0 18px 30px -18px #17201966}
+.print{border:0;padding:5px 5px 21px;background:linear-gradient(#fffdf8,#f1ede4);box-shadow:0 1px 1px #0005,0 9px 14px -6px #1b100799,0 20px 26px -16px #1b100780}
+.print span{left:6px;right:6px;bottom:4px;padding:0;background:none;color:#2b2b2b;font:600 10px/1.2 var(--sans);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.print.print-text{background:#c5f77c;padding:5px}
+.print.print-text span{white-space:normal}
+.print.dragging{box-shadow:0 2px 2px #0004,0 30px 40px -10px #1b1007b0}
+.table-saucer{box-shadow:inset 0 0 0 2px #c9a24b,inset 0 0 0 16px #f6f3ec,inset 0 0 0 19px #8e2444,0 18px 30px #1b100780}
+/* the cup is the right size for its saucer */
+.cup-slot-saucer{left:17%;right:auto;top:-12%;width:66%;height:66%}
+/* dive: the next section comes up out of the coffee */
+.cup3d section.finjan-game{padding-top:400px}
+.cup3d .finjan-game>.wrap{scale:calc(1.22 - .22*var(--emerge,1));opacity:var(--emerge,1);transform-origin:50% 20%}
+/* coffee ring beside the cup, in view, then wiped */
+.cup3d .cup-slot .stain{left:-165%;right:auto;width:125%;bottom:-4%;height:46%;opacity:.92;background:radial-gradient(closest-side,transparent 60%,#5a2c10c8 70%,#2b1206f0 80%,#6b3a18b0 89%,transparent 97%),radial-gradient(closest-side at 46% 54%,#5a2c1018 55%,transparent 62%)}
+.cup3d .cup-slot .cloth{left:-345%;bottom:-22%;width:160%;opacity:0}
+.cup3d .cup-slot.cup-left .stain{animation:stain-wipe2 2.6s ease-in-out .5s forwards}
+.cup3d .cup-slot.cup-left .cloth{animation:cloth-wipe2 2.6s ease-in-out .5s forwards}
+@keyframes stain-wipe2{0%,30%{opacity:.92;clip-path:inset(0)}72%{opacity:.92;clip-path:inset(0 0 0 100%)}100%{opacity:0;clip-path:inset(0 0 0 100%)}}
+@keyframes cloth-wipe2{0%{opacity:0;translate:-30% 0;rotate:-18deg}18%{opacity:1;translate:0 0;rotate:-14deg}74%{opacity:1;translate:96% -4%;rotate:6deg}100%{opacity:0;translate:112% -18%;rotate:10deg}}
+@media(max-width:760px){
+  .cup3d section.finjan-game{padding-top:260px}
+  .hero-table .world-tile{padding:5px 5px 22px}
+  .hero-table .world-tile span{height:22px;font-size:10px;padding:0 5px}
+  .hero-table .world-tile small{display:none}
+  .cup-slot-saucer{left:17%;right:auto;top:-12%;width:66%;height:66%}
+}
+
+/* ================= the story: a title card, then the table, then a line and a pour per chapter ================= */
+.hero-table .hero-copy{min-height:calc(100svh - 118px);display:flex;flex-direction:column;justify-content:center;padding-bottom:9vh}
+.hero-table h1{font-size:clamp(58px,11vw,178px);line-height:.98;letter-spacing:-.05em}
+.hero-table .eyebrow{font-size:14px;margin-bottom:28px}
+.hero-prompt{font-size:20px;margin-top:38px;color:#e9dcc6}
+.hero-prompt span{display:inline-block;animation:nudge 1.6s ease-in-out infinite}
+@keyframes nudge{50%{translate:0 7px}}
+.table-prompt{position:relative;z-index:3;margin:0 auto 6px;font-size:19px;color:#e9dcc6;min-height:1.7em;text-align:center}
+.served-title{font:400 clamp(34px,4.6vw,64px)/1.05 var(--serif);letter-spacing:-.04em;margin:0 0 18px;color:#f3f4ef}
+.served-title span{display:block;font:400 24px var(--sans);letter-spacing:0;color:#efa8bd;margin-top:10px}
+.story-beat{padding:110px 0 90px}
+.story-beat .wrap{display:flex;align-items:center;justify-content:space-between;gap:40px}
+.beat-kicker{font-size:13px;letter-spacing:.14em;text-transform:uppercase;color:#8e2444;margin:0 0 16px}
+.beat-line{font:400 clamp(40px,6.2vw,104px)/1 var(--serif);letter-spacing:-.05em;margin:0;color:#172019}
+.beat-line em{font-style:normal;color:#8e2444}
+.beat-scene{position:relative;flex:0 0 380px;height:260px}
+.cup-slot-beat{left:30px;right:auto;top:auto;bottom:24px;width:120px;height:120px}
+.story-beat:has(+ .journey){background:#e6e9e0}
+@media(max-width:760px){
+  .hero-table .hero-copy{min-height:calc(100svh - 118px)}
+  .hero-table h1{font-size:clamp(52px,15vw,84px)}
+  .hero-prompt,.table-prompt{font-size:17px}
+  .story-beat{padding:70px 0 50px}
+  .story-beat .wrap{flex-direction:column;align-items:flex-start;gap:10px}
+  .beat-scene{flex:0 0 auto;width:100%;height:210px}
+  .cup-slot-beat{left:26px;bottom:20px;width:92px;height:92px}
+}
+@media(prefers-reduced-motion:reduce){.hero-prompt span{animation:none}}

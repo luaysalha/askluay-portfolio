@@ -15,14 +15,13 @@
   const heroScene = document.getElementById('coffeeScene');
   const heroEl = document.getElementById('top');
   if (heroScene && heroEl) {
-    const title = document.getElementById('heroTitle'), promptLine = document.getElementById('heroPrompt'), picked = document.getElementById('heroPicked');
+    const promptLine = document.getElementById('tablePrompt'), picked = document.getElementById('heroPicked'), tableTop = heroEl.querySelector('.hero-tabletop');
     const tiles = [...heroEl.querySelectorAll('.world-tile')];
     let started = false, served = false;
     const serve = () => {
       if (served) return; served = true;
       heroEl.classList.add('is-served');
-      title.innerHTML = 'Now we can<br><em>talk.</em>';
-      promptLine.innerHTML = '<span lang="ar" dir="rtl">هلق صار فينا نحكي</span>';
+      promptLine.textContent = '';
     };
     const begin = () => {
       if (started) return; started = true;
@@ -32,11 +31,13 @@
       pour(heroScene);
       setTimeout(serve, reduced.matches ? 0 : 4300);
     };
-    if (scrollY > innerHeight * .5) { started = true; heroScene.classList.remove('is-waiting'); serve(); }
+    if (heroEl.getBoundingClientRect().bottom < innerHeight * .5) { started = true; heroScene.classList.remove('is-waiting'); serve(); }
     else {
       if (!reduced.matches) heroScene.classList.add('is-waiting');
-      addEventListener('scroll', () => { if (scrollY > 24) begin(); }, { passive: true });
-      setTimeout(begin, 6500);
+      // the pour starts once the table has come up the screen
+      const check = () => { if (tableTop.getBoundingClientRect().top < innerHeight * .45) begin(); };
+      addEventListener('scroll', check, { passive: true });
+      check();
     }
     tiles.forEach(tile => tile.addEventListener('click', event => {
       if (tile.classList.contains('is-picked') && served) return; // second click opens the project
@@ -181,7 +182,7 @@
       flowFrame = 0;
       const H = innerHeight;
       const lift = innerWidth < 760 ? 124 : 140; // the cup leaves its station about here
-      stained.forEach(slot => { const r = slot.getBoundingClientRect(); slot.classList.toggle('cup-left', r.top + r.height / 2 < lift && r.bottom > -40); });
+      stained.forEach(slot => { const r = slot.getBoundingClientRect(); if (r.top + r.height / 2 < H * .5 && r.bottom > 0) slot.classList.add('cup-left'); }); // wipe it once, in view
       spills.forEach(el => el.style.setProperty('--spill', clamp((H * .78 - el.getBoundingClientRect().top) / (H * .5)).toFixed(3)));
       if (!irisDone) {
         const r = workWrap.getBoundingClientRect(), s = workSlot.getBoundingClientRect();

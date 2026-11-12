@@ -210,7 +210,9 @@ function start() {
   /* ---------- pour timeline ---------- */
   const ease = (a, b, x) => { const t = Math.min(1, Math.max(0, (x - a) / (b - a))); return t * t * (3 - 2 * t); };
   const POUR_MS = 4600;
-  const pours = { hero: { start: -1, done: false }, contact: { start: -1, done: false } };
+  const pours = new Map(); // one pour per station that has a rakweh
+  const pourOf = el => { if (!pours.has(el)) pours.set(el, { start: -1, done: false, from: 0 }); return pours.get(el); };
+  let fillY = null; // scroll position of the last finished pour; the cup drains from there
   function pourPose(p) { // p < 0: waiting beside an empty cup, 0..1: pouring, >= 1: resting beside a full cup
     if (p < 0) return { x: REST.x, y: REST.y, rot: 0, show: 1, s0: 0, s1: 0, level: 0, ground: 1 };
     if (p >= 1) return { x: REST.x, y: REST.y, rot: 0, show: 1, s0: 0, s1: 0, level: 1, ground: 1 };
@@ -224,11 +226,13 @@ function start() {
       level: ease(.35, .72, p), ground: 1 - over
     };
   }
-  function startPour(which) { pours[which].start = performance.now(); pours[which].done = false; }
-  addEventListener('coffee:pour', event => { if (event.detail === 'coffeeScene') startPour('hero'); });
-  { // the hero decides when to pour (card picked, scroll, or a short wait)
-    const at = Number(document.getElementById('top').dataset.pour || 0);
-    if (at) pours.hero.start = at; else if (scrollY > innerHeight * .5) pours.hero.done = true;
+  const heroEl = document.getElementById('top');
+  const heroPour = pourOf(slotEls[0]);
+  addEventListener('coffee:pour', event => { if (event.detail === 'coffeeScene') { heroPour.start = performance.now(); heroPour.done = false; heroPour.from = 0; } });
+  { // the hero decides when to pour (card picked, or the table scrolling into view)
+    const at = Number(heroEl.dataset.pour || 0);
+    if (at) heroPour.start = at;
+    else if (heroEl.getBoundingClientRect().bottom < innerHeight * .5) { heroPour.done = true; fillY = scrollY; }
   }
 
   /* ---------- slots ---------- */
@@ -242,7 +246,7 @@ function start() {
   document.addEventListener('work:rendered', () => { slots = readSlots(); });
   const game = document.getElementById('game'), heroSlot = slotEls[0];
   const veil = document.createElement('div'); veil.className = 'cup3d-veil'; veil.setAttribute('aria-hidden', 'true'); document.body.append(veil);
-  let wasDiving = false;
+  let wasDiving = false, diveSpin = 0;
   const hero = document.getElementById('top'), contact = document.getElementById('contact');
   const cur = { x: 0, y: 0, size: 0, tilt: .36, dim: 1, rk: 0, lean: 0, ready: false };
   let last = performance.now(), running = true;
@@ -255,12 +259,15 @@ function start() {
 
     // where should the cup be? It rests in the last station that has come up the page,
     // sticks under the nav once that station scrolls away, and glides to the next one as it arrives.
-    const settle = H * .62, arrive = H * .92, stick = W < 760 ? 118 : 132;
+    const settle = H * .72, arrive = H * .98, stick = W < 760 ? 118 : 132;
     const pts = slots.map(s => { const r = s.el.getBoundingClientRect(); const y = r.top + r.height / 2; return { s, x: r.left + r.width / 2, y, oy: y + s.shift, size: r.height * s.k }; });
     let i = 0; for (let n = 0; n < pts.length; n++) if (pts[n].oy <= settle) i = n;
+    // while a pour is running the cup stays where it is being filled (as long as that station is on screen)
+    let holding = false;
+    for (let n = 0; n < pts.length; n++) { const st = pts[n].s.rakweh ? pours.get(pts[n].s.el) : null; if (st && st.start >= 0 && !st.done && pts[n].y > 70 && pts[n].y < H + 60) { i = n; holding = true; } }
     const a = pts[i], b = pts[Math.min(pts.length - 1, i + 1)];
     const raw = b === a ? 0 : (arrive - b.oy) / (arrive - settle);
-    const t = ease(0, 1, raw), mix = (u, v) => u + (v - u) * t;
+    const t = holding ? 0 : ease(0, 1, raw), mix = (u, v) => u + (v - u) * t;
     const stuck = Math.min(1, Math.max(0, (stick - a.y) / 140));
     const ay = Math.max(a.y, stick), asize = a.size * (1 - stuck) + (W < 760 ? 42 : 58) * stuck;
     const ax = a.x + ((W < 760 ? W - 36 : W - 58) - a.x) * stuck;
@@ -268,19 +275,19 @@ function start() {
     const k = cur.ready ? 1 - Math.exp(-dt * 7) : 1; cur.ready = true;
     for (const key in goal) cur[key] += (goal[key] - cur[key]) * k;
 
-    // pours
-    const heroP = pours.hero.done ? 2 : pours.hero.start < 0 ? -1 : (now - pours.hero.start) / POUR_MS;
-    if (heroP >= 1) pours.hero.done = true;
-    const nearContact = b.s.name === 'contact' || a.s.name === 'contact';
-    if (pours.contact.start < 0 && a.s.name === 'contact') startPour('contact');
-    const contactP = pours.contact.start < 0 ? -1 : Math.min(2, (now - pours.contact.start) / POUR_MS);
-    let pose = nearContact ? pourPose(contactP < 0 ? 2 : contactP) : pourPose(heroP);
-    if (nearContact && contactP < 0) pose = { ...pose, level: 0 };
-
-    // level drains with the scroll
-    const from = (game ? game.offsetTop + game.offsetHeight * .5 : hero.offsetHeight * .7), to = contact.offsetTop - H * .6;
-    const drained = 1 - Math.min(1, Math.max(0, (scrollY - from) / Math.max(1, to - from)));
-    const level = nearContact ? Math.max(pose.level, contactP < 0 ? drained : 0) : Math.min(pose.level, drained);
+    // pours: the station in play is the one the cup rests in or is arriving at
+    const ps = a.s.rakweh ? a : b.s.rakweh ? b : null;
+    const drained = fillY === null ? 0 : 1 - Math.min(1, Math.max(0, scrollY - fillY) / (H * 3.6));
+    let pose = pourPose(2), level = drained;
+    if (ps) {
+      const st = pourOf(ps.s.el);
+      if (st.start < 0 && !st.done && ps === a && ps.s.el !== slotEls[0]) { st.start = now; st.from = drained; }
+      const p = st.done ? 2 : st.start < 0 ? -1 : (now - st.start) / POUR_MS;
+      if (p >= 1 && !st.done) { st.done = true; fillY = scrollY; }
+      pose = pourPose(p);
+      if (p >= 0 && p < 1) level = st.from + (1 - st.from) * pose.level;
+      else if (p >= 1) level = Math.max(drained, fillY === scrollY ? 1 : drained);
+    }
     setLevel(main, level);
 
     // main cup
@@ -293,29 +300,31 @@ function start() {
     // dive shot: between the hero and the game the camera pushes into the coffee,
     // the screen goes dark, and the next section comes up out of it
     let dive = 0;
-    if (game && pours.hero.done) {
+    if (game && heroPour.done) {
       const gTop = game.getBoundingClientRect().top;
-      dive = Math.min(1, Math.max(0, (H * .98 - gTop) / (H * .86))); // from the game entering the screen to it reaching the top
+      dive = Math.min(1, Math.max(0, (H * .98 - gTop) / (H * 1.1))); // from the game entering the screen to it reaching the top
       if (dive > 0 && dive < 1) {
-        const push = ease(0, .62, dive), e = push * push * push, big = Math.max(W, H) * 2.4;
+        const push = ease(0, .62, dive), e = Math.pow(push, 2.4), big = Math.max(W, H) * 2.6;
         const hs = size, hx = main.root.position.x, hy = main.root.position.y;
         size = hs + (big - hs) * e;
         const t0 = cur.tilt + lookDown(hy), tilt = t0 + (1.42 - t0) * push;
         main.root.position.set(hx * (1 - push), hy * (1 - push) + (-.94 * size * Math.cos(tilt)) * push, -.94 * size * Math.sin(tilt) * push); // keep the coffee surface on the screen plane
-        main.root.rotation.set(tilt, 0, 0);
+        main.root.rotation.set(tilt, 0, Math.sin(push * Math.PI) * .38); // roll the camera on the way in
+        diveSpin = push * push * 5.5; cremaMap.center.set(.5, .5); cremaMap.rotation = push * 2.6;
         main.root.visible = dive < .7;
         cur.rk = Math.max(0, cur.rk - dive * 4);
         const dark = ease(.3, .5, dive), out = ease(.8, 1, dive), toBg = ease(.62, .8, dive);
         veil.style.opacity = String(dark * (1 - out));
-        veil.style.backgroundColor = `rgb(${Math.round(29 + (20 - 29) * toBg)},${Math.round(14 + (24 - 14) * toBg)},${Math.round(7 + (24 - 7) * toBg)})`;
+        veil.style.backgroundColor = `rgb(${Math.round(29 + (34 - 29) * toBg)},${Math.round(14 + (20 - 14) * toBg)},${Math.round(7 + (11 - 7) * toBg)})`;
+        game.style.setProperty('--emerge', ease(.66, 1, dive).toFixed(3));
         wasDiving = true;
       } else if (wasDiving) {
-        wasDiving = false; cur.ready = false; main.root.visible = true; veil.style.opacity = '0';
+        wasDiving = false; cur.ready = false; main.root.visible = true; veil.style.opacity = '0'; diveSpin = 0; cremaMap.rotation = 0; game.style.setProperty('--emerge', '1');
       }
     }
     const diving = dive > 0 && dive < 1;
     main.root.scale.setScalar(size);
-    main.body.rotation.y = scrollY * .0016;
+    main.body.rotation.y = scrollY * .0016 + diveSpin;
 
     // rakweh
     const show = cur.rk * pose.show;
