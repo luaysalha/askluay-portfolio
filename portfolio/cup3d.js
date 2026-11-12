@@ -160,22 +160,25 @@ function start() {
   const ease = (a, b, x) => { const t = Math.min(1, Math.max(0, (x - a) / (b - a))); return t * t * (3 - 2 * t); };
   const POUR_MS = 4600;
   const pours = { hero: { start: -1, done: false }, contact: { start: -1, done: false } };
-  function pourPose(p) { // p: 0..1, or -1 = waiting, 2 = resting
-    if (p < 0) return { x: POUR.x, y: POUR.y + 1.4, rot: -.12, show: 0, s0: 0, s1: 0, level: 0 };
-    if (p >= 1) return { x: REST.x, y: REST.y, rot: 0, show: 1, s0: 0, s1: 0, level: 1 };
-    const arrive = ease(0, .16, p), back = ease(.84, 1, p);
+  function pourPose(p) { // p < 0: waiting beside an empty cup, 0..1: pouring, >= 1: resting beside a full cup
+    if (p < 0) return { x: REST.x, y: REST.y, rot: 0, show: 1, s0: 0, s1: 0, level: 0, ground: 1 };
+    if (p >= 1) return { x: REST.x, y: REST.y, rot: 0, show: 1, s0: 0, s1: 0, level: 1, ground: 1 };
+    const over = ease(0, .18, p) * (1 - ease(.84, 1, p)); // 0 = on the table, 1 = above the cup
     return {
-      x: POUR.x + (REST.x - POUR.x) * back,
-      y: POUR.y + 1.1 * (1 - arrive) + (REST.y - POUR.y) * back,
-      rot: -.12 * (1 - arrive) + .58 * (ease(.16, .32, p) - ease(.70, .84, p)),
-      show: arrive,
+      x: REST.x + (POUR.x - REST.x) * over,
+      y: REST.y + (POUR.y - REST.y) * over + Math.sin(over * Math.PI) * .22,
+      rot: .58 * (ease(.18, .32, p) - ease(.70, .84, p)),
+      show: 1,
       s0: ease(.68, .74, p), s1: ease(.31, .37, p),   // stream: retract from top, grow to bottom
-      level: ease(.35, .72, p)
+      level: ease(.35, .72, p), ground: 1 - over
     };
   }
   function startPour(which) { pours[which].start = performance.now(); pours[which].done = false; }
   addEventListener('coffee:pour', event => { if (event.detail === 'coffeeScene') startPour('hero'); });
-  if (scrollY < innerHeight * .5) setTimeout(() => startPour('hero'), 500); else pours.hero.done = true;
+  { // the hero decides when to pour (card picked, scroll, or a short wait)
+    const at = Number(document.getElementById('top').dataset.pour || 0);
+    if (at) pours.hero.start = at; else if (scrollY > innerHeight * .5) pours.hero.done = true;
+  }
 
   /* ---------- slots ---------- */
   const readSlots = () => [...document.querySelectorAll('[data-cup]')].map(el => ({
@@ -232,20 +235,21 @@ function start() {
     // main cup
     let size = Math.max(1, cur.size) / 1.2; // the tilted cup looks ~1.2x its height on screen
     main.root.position.set(cur.x - W / 2, H / 2 - cur.y - size * .5, 0);
-    main.root.rotation.set(cur.tilt, 0, cur.lean);
+    // the camera sees things above the middle of the screen from below; lean them back so the view stays the same
+    const camD = camera.position.z, lookDown = y => Math.atan2(y, camD);
+    main.root.rotation.set(cur.tilt + lookDown(main.root.position.y), 0, cur.lean);
 
     // dive shot: between the hero and the game the camera pushes into the coffee,
     // the screen goes dark, and the next section comes up out of it
     let dive = 0;
     if (game && pours.hero.done) {
-      const hr = heroSlot.getBoundingClientRect(), gTop = game.getBoundingClientRect().top;
-      const startTop = H * .46 + (gTop - (hr.top + hr.height / 2)); // game top when the hero cup is mid-screen
-      dive = Math.min(1, Math.max(0, (startTop - gTop) / Math.max(1, startTop - H * .12)));
+      const gTop = game.getBoundingClientRect().top;
+      dive = Math.min(1, Math.max(0, (H * .98 - gTop) / (H * .86))); // from the game entering the screen to it reaching the top
       if (dive > 0 && dive < 1) {
         const push = ease(0, .62, dive), e = push * push * push, big = Math.max(W, H) * 2.4;
-        const hs = hr.height * 1.3 / 1.2, hx = hr.left + hr.width / 2 - W / 2, hy = H / 2 - (hr.top + hr.height / 2) - hs * .5;
+        const hs = size, hx = main.root.position.x, hy = main.root.position.y;
         size = hs + (big - hs) * e;
-        const tilt = .36 + (1.42 - .36) * push;
+        const t0 = cur.tilt + lookDown(hy), tilt = t0 + (1.42 - t0) * push;
         main.root.position.set(hx * (1 - push), hy * (1 - push) + (-.94 * size * Math.cos(tilt)) * push, -.94 * size * Math.sin(tilt) * push); // keep the coffee surface on the screen plane
         main.root.rotation.set(tilt, 0, 0);
         main.root.visible = dive < .7;
@@ -268,7 +272,7 @@ function start() {
     rakweh.position.set(pose.x + (1 - cur.rk) * 1.4, pose.y, 0);
     rakweh.rotation.z = pose.rot;
     rakweh.scale.setScalar(RK * show);
-    potShadow.material.opacity = .55; potShadow.scale.setScalar(1.7 * show * ease(.84, 1, nearContact ? Math.max(0, contactP < 0 ? 1 : contactP) : Math.max(0, heroP)));
+    potShadow.scale.setScalar(Math.max(.001, 1.7 * show * pose.ground));
     const top = POUR.y - .04, bottom = .16 + level * .78, len = top - bottom;
     stream.visible = pose.s1 > .01 && pose.s0 < .99;
     stream.position.set(POUR.x - .03, top - len * pose.s0, 0);
@@ -290,7 +294,7 @@ function start() {
       cup.lean = (cup.lean || 0) + ((up ? -.14 : 0) - (cup.lean || 0)) * (1 - Math.exp(-dt * 10));
       cup.root.position.set(r.left + r.width / 2 - W / 2, H / 2 - r.bottom + s * .16, 0);
       cup.root.scale.setScalar(s);
-      cup.root.rotation.set(.3, 0, cup.lean);
+      cup.root.rotation.set(.3 + lookDown(cup.root.position.y), 0, cup.lean);
       cup.body.rotation.y = n * 1.7;
     });
 

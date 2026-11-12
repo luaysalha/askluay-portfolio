@@ -25,9 +25,9 @@
 .coffee-scene.is-pouring .rakweh{animation:rakweh-pour 4.6s cubic-bezier(.45,.05,.3,1) both}
 .coffee-scene.is-pouring .coffee-stream{animation:stream 4.6s linear both}
 .coffee-scene.is-waiting{--level:0}
-.coffee-scene.is-waiting .rakweh{opacity:0}
+
 @keyframes rakweh-pour{
-  0%{translate:-105px -95px;rotate:7deg;opacity:0}
+  0%{translate:0 0;rotate:0deg;opacity:1}
   16%{translate:-105px -21px;rotate:0deg;opacity:1}
   32%,70%{translate:-105px -21px;rotate:-32deg;opacity:1}
   84%{translate:-105px -21px;rotate:0deg;opacity:1}
@@ -119,7 +119,7 @@ section>.wrap{position:relative}
   .cup-slot-journey{right:0;top:-46px;width:48px;height:48px}
   .cup-slot-about{top:-62px;width:56px;height:56px}
 }
-.cup3d .hero .coffee-scene{margin-top:120px}
+
 .cup3d .coffee-caption{margin-top:48px}
 .cup3d .contact .coffee-scene{margin-top:90px;margin-bottom:54px}
 
@@ -131,7 +131,7 @@ section.journey{padding-bottom:270px;background:linear-gradient(#e6e9e0 calc(100
 section.reel{padding-bottom:270px;background:linear-gradient(#141818 calc(100% - 200px),transparent)}
 section.studio-editions{padding-bottom:270px;background:linear-gradient(#e6e9e0 calc(100% - 200px),#c5f77c)}
 @media(max-width:760px){
-  .cup3d .hero .coffee-scene{margin-top:80px}
+
   section.finjan-game,section.studio-desk,section.featured-film,section.journey,section.reel,section.studio-editions{padding-bottom:190px}
 }
 
@@ -159,4 +159,79 @@ section.studio-editions{padding-bottom:270px;background:linear-gradient(#e6e9e0 
 @media(max-width:760px){
   #grid.saucers{gap:44px}
   #grid.saucers .thumb{width:min(78%,300px);border-width:24px}
+}
+
+/* ---------- hero: prints on a table, rakweh beside an empty cup ---------- */
+.hero.hero-table{display:block;min-height:100svh;padding:118px 0 70px;text-align:center;background:radial-gradient(ellipse 70% 55% at 50% 62%,#262b28,#141818 70%)}
+.hero-table .hello-pill{display:none}
+.hero-table .hero-copy{position:relative;z-index:3}
+.hero-table .eyebrow{color:#c4cebd;font-size:13px;letter-spacing:.15em;margin-bottom:20px}
+.hero-table h1{font-size:clamp(46px,6.2vw,96px);line-height:1.02;margin:0 auto;max-width:none}
+.hero-table h1 em{font-style:normal;color:#c5f77c}
+.hero-prompt{margin:20px auto 0;font-size:19px;color:#e0e5de;min-height:1.7em}
+.hero-prompt [lang=ar]{font-size:24px;color:#efa8bd}
+.hero-tabletop{position:relative;max-width:1440px;margin:26px auto 0;min-height:400px}
+.hero-table .world-stage{position:absolute;inset:0;overflow:visible;pointer-events:none;z-index:2}
+.hero-table .world-shade{display:none}
+.hero-table .world-tile{pointer-events:auto;display:block;position:absolute;overflow:hidden;background:#f6f3ec;border:7px solid #f6f3ec;border-radius:3px;box-shadow:0 22px 40px #0009;transform:rotate(var(--angle,0deg));filter:none;opacity:1;cursor:pointer;transition:transform .35s cubic-bezier(.2,.9,.3,1.2),opacity .35s,box-shadow .35s;color:#141818;text-decoration:none}
+.hero-table .world-tile img,.hero-table .world-tile .hero-video{display:block;position:static;width:100%;height:100%;object-fit:cover;opacity:1;filter:none}
+.hero-table .world-tile span{position:absolute;left:0;right:0;bottom:0;padding:26px 10px 8px;background:linear-gradient(transparent,#000c);color:#fff;font-size:13px;letter-spacing:.02em;text-align:left;font-weight:600}
+.hero-table .world-tile small{display:block;font-weight:400;font-size:11px;letter-spacing:.08em;text-transform:uppercase;opacity:.8}
+.hero-table .world-tile:hover,.hero-table .world-tile:focus-visible{transform:rotate(0deg) translateY(-8px) scale(1.04);z-index:2;box-shadow:0 30px 50px #000b}
+.hero-table .world-tile:focus-visible{outline:3px solid #c5f77c;outline-offset:4px}
+.hero-table .world-tile.is-picked{transform:rotate(0deg) scale(1.07);z-index:3;border-color:#c5f77c;background:#c5f77c}
+.hero-table.has-pick .world-tile:not(.is-picked){opacity:.5}
+.hero-table .world-film{left:2%;top:0;width:24%;height:auto;aspect-ratio:16/10;--angle:-7deg}
+.hero-table .world-feed{left:3%;top:56%;bottom:auto;width:12%;height:auto;aspect-ratio:4/5;--angle:6deg}
+.hero-table .world-brand{left:17%;right:auto;top:52%;width:13%;height:auto;aspect-ratio:4/3;--angle:-4deg}
+.hero-table .world-social{right:3%;top:0;width:11%;height:auto;aspect-ratio:9/16;--angle:6deg}
+.hero-table .world-post{display:block;right:17%;top:20%;bottom:auto;width:11%;height:auto;aspect-ratio:9/16;--angle:-8deg}
+.hero-table .world-motion{display:block;left:auto;right:2%;top:68%;width:20%;height:auto;aspect-ratio:16/9;--angle:4deg;opacity:1}
+.hero-table .coffee-scene,.cup3d .hero-table .coffee-scene{margin:0 auto;position:relative;top:84px}
+.hero-served{position:relative;z-index:3;opacity:0;visibility:hidden;translate:0 14px;transition:opacity .6s,translate .6s,visibility .6s;margin-top:34px}
+.hero.is-served .hero-served{opacity:1;visibility:visible;translate:0 0}
+.hero-table .hero-served p.lead{margin:0 auto;max-width:46ch;color:#e0e5de;font-size:18px}
+.hero-table .hero-actions{justify-content:center;margin-top:24px}
+.hero-table .world-pause{bottom:22px}
+@media(max-width:760px){
+  .hero.hero-table{padding:118px 0 60px}
+  .hero-table h1{font-size:clamp(40px,11vw,60px)}
+  .hero-prompt{font-size:17px}
+  .hero-tabletop{min-height:590px;margin-top:18px}
+  .hero-table .world-tile{border-width:5px}
+  .hero-table .world-tile span{font-size:11px;padding:18px 6px 5px}
+  .hero-table .world-tile small{display:none}
+  .hero-table .world-film{left:3%;top:0;width:44%}
+  .hero-table .world-brand{left:auto;right:28%;top:14px;width:22%}
+  .hero-table .world-feed{left:auto;right:3%;top:2px;width:22%}
+  .hero-table .world-social{right:auto;left:4%;top:auto;bottom:0;width:25%}
+  .hero-table .world-post{right:auto;left:35%;top:auto;bottom:14px;width:25%}
+  .hero-table .world-motion{right:3%;top:auto;bottom:40px;width:32%}
+  .hero-table .coffee-scene,.cup3d .hero-table .coffee-scene{top:205px}
+  .hero-table .hero-served p.lead{font-size:16px;max-width:34ch}
+}
+@media(prefers-reduced-motion:reduce){.hero-table .world-tile,.hero-served{transition:none}}
+
+/* ---------- the cup makes the sections ---------- */
+/* spill: the cup tips over and the dark section spreads out of it */
+section.studio-desk,section.journey{position:relative;padding-bottom:330px}
+section.studio-desk{background:#e6e9e0}
+section.journey{background:#e6e9e0}
+.spill{--spill:1;position:absolute;left:0;right:0;bottom:-1px;height:320px;pointer-events:none;background:
+  radial-gradient(ellipse calc(var(--spill)*135%) calc(var(--spill)*170%) at 68% 100%,var(--c) 98.5%,transparent 100%),
+  radial-gradient(ellipse calc(var(--spill)*var(--spill)*70%) calc(var(--spill)*var(--spill)*150%) at 24% 100%,var(--c) 98%,transparent 100%),
+  radial-gradient(ellipse calc(var(--spill)*18%) calc(var(--spill)*60%) at 50% 100%,var(--c) 97%,transparent 100%)}
+.cup-slot-spill{left:68%;right:auto;top:auto;bottom:96px;margin-left:-55px;width:110px;height:110px}
+/* ring: the cup leaves a ring that opens onto the work */
+#work.iris-on>.wrap{-webkit-mask-image:radial-gradient(circle at var(--ix,90%) var(--iy,60px),#000 calc(var(--iris,1)*var(--ir,3000px) - 26px),transparent calc(var(--iris,1)*var(--ir,3000px)));mask-image:radial-gradient(circle at var(--ix,90%) var(--iy,60px),#000 calc(var(--iris,1)*var(--ir,3000px) - 26px),transparent calc(var(--iris,1)*var(--ir,3000px)))}
+.iris-ring{display:none}
+#work.iris-on .iris-ring{display:block;position:absolute;z-index:2;left:var(--ix);top:var(--iy);width:calc(var(--iris)*var(--ir)*2);height:calc(var(--iris)*var(--ir)*2);translate:-50% -50%;border-radius:50%;border:calc(3px + 12px*(1 - var(--iris))) solid #5a2c10;opacity:calc(.9 - var(--iris)*.9);pointer-events:none;box-sizing:border-box}
+/* trail: the cup slides along the route and leaves coffee behind */
+.coffee-trail{position:absolute;left:0;top:-4px;height:7px;width:calc(var(--trail,1)*100%);border-radius:5px;background:linear-gradient(90deg,#3a1c0a,#6b3a18 55%,#2f1608);opacity:.88;z-index:1}
+.coffee-trail::after{content:'';position:absolute;right:-9px;top:-5px;width:17px;height:17px;border-radius:50%;background:#2f1608}
+@media(max-width:760px){
+  section.studio-desk,section.journey{padding-bottom:250px}
+  .spill{height:240px}
+  .cup-slot-spill{bottom:80px;margin-left:-32px;width:64px;height:64px;left:68%;right:auto;top:auto}
+  .coffee-trail{display:none}
 }

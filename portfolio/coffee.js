@@ -10,10 +10,43 @@
     void scene.offsetWidth; // restart the animation
     scene.classList.add('is-pouring');
   }
+  // Hero: the table waits. A picked card, a scroll or a short pause starts the pour;
+  // when the cup is full the conversation opens.
   const heroScene = document.getElementById('coffeeScene');
-  if (heroScene) {
-    if (!reduced.matches) heroScene.classList.add('is-waiting');
-    setTimeout(() => pour(heroScene), 700);
+  const heroEl = document.getElementById('top');
+  if (heroScene && heroEl) {
+    const title = document.getElementById('heroTitle'), promptLine = document.getElementById('heroPrompt'), picked = document.getElementById('heroPicked');
+    const tiles = [...heroEl.querySelectorAll('.world-tile')];
+    let started = false, served = false;
+    const serve = () => {
+      if (served) return; served = true;
+      heroEl.classList.add('is-served');
+      title.innerHTML = 'Now we can<br><em>talk.</em>';
+      promptLine.innerHTML = '<span lang="ar" dir="rtl">هلق صار فينا نحكي</span>';
+    };
+    const begin = () => {
+      if (started) return; started = true;
+      heroEl.classList.add('is-pouring');
+      heroEl.dataset.pour = String(performance.now());
+      promptLine.textContent = 'Pouring…';
+      pour(heroScene);
+      setTimeout(serve, reduced.matches ? 0 : 4300);
+    };
+    if (scrollY > innerHeight * .5) { started = true; heroScene.classList.remove('is-waiting'); serve(); }
+    else {
+      if (!reduced.matches) heroScene.classList.add('is-waiting');
+      addEventListener('scroll', () => { if (scrollY > 24) begin(); }, { passive: true });
+      setTimeout(begin, 6500);
+    }
+    tiles.forEach(tile => tile.addEventListener('click', event => {
+      if (tile.classList.contains('is-picked') && served) return; // second click opens the project
+      event.preventDefault();
+      tiles.forEach(t => t.classList.toggle('is-picked', t === tile));
+      heroEl.classList.add('has-pick');
+      picked.href = tile.getAttribute('href');
+      picked.textContent = 'Open ' + tile.dataset.title + ' ↗';
+      begin();
+    }));
     const replay = document.getElementById('coffeeReplay');
     if (replay) replay.addEventListener('click', () => pour(heroScene));
   }
@@ -49,6 +82,35 @@
     addEventListener('scroll', schedule, { passive: true });
     addEventListener('resize', schedule);
     draw();
+  }
+
+  /* ---------- the cup makes the sections: spills, a ring that opens the work, a trail for the journey ---------- */
+  if (!reduced.matches) {
+    const spills = [...document.querySelectorAll('.spill')];
+    const work = document.getElementById('work'), workWrap = work && work.querySelector('.wrap'), workSlot = work && work.querySelector('.cup-slot-work');
+    const trail = document.querySelector('.coffee-trail'), timeline = document.getElementById('timeline');
+    const clamp = v => Math.min(1, Math.max(0, v));
+    let irisDone = !work || work.getBoundingClientRect().top < innerHeight * .25, flowFrame = 0;
+    if (!irisDone) work.classList.add('iris-on');
+    const flow = () => {
+      flowFrame = 0;
+      const H = innerHeight;
+      spills.forEach(el => el.style.setProperty('--spill', clamp((H * .78 - el.getBoundingClientRect().top) / (H * .5)).toFixed(3)));
+      if (!irisDone) {
+        const r = workWrap.getBoundingClientRect(), s = workSlot.getBoundingClientRect();
+        const p = clamp((H * .85 - work.getBoundingClientRect().top) / (H * .6));
+        workWrap.style.setProperty('--ix', (s.left + s.width / 2 - r.left) + 'px');
+        workWrap.style.setProperty('--iy', (s.top + s.height / 2 - r.top) + 'px');
+        workWrap.style.setProperty('--ir', Math.hypot(r.width, H * 1.6) + 'px');
+        workWrap.style.setProperty('--iris', (p * p).toFixed(4));
+        if (p >= 1) { irisDone = true; work.classList.remove('iris-on'); }
+      }
+      if (trail) trail.style.setProperty('--trail', clamp(.03 + (H * .62 - timeline.getBoundingClientRect().top) / 380).toFixed(3));
+    };
+    const scheduleFlow = () => { if (!flowFrame) flowFrame = requestAnimationFrame(flow); };
+    addEventListener('scroll', scheduleFlow, { passive: true });
+    addEventListener('resize', scheduleFlow);
+    flow();
   }
 
   /* ---------- finjan game ---------- */

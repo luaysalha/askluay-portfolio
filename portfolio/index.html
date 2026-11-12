@@ -268,7 +268,7 @@
   .lightbox .close{position:absolute;top:22px;right:26px;color:#fff;font-size:30px;background:none;border:0;cursor:pointer;}
 </style>
 <link rel="stylesheet" href="redesign.css?v=workflow-icons-1" />
-<link rel="stylesheet" href="coffee.css?v=8" />
+<link rel="stylesheet" href="coffee.css?v=12" />
 <script type="importmap">{"imports":{"three":"./vendor/three.module.min.js"}}</script>
 </head>
 <body>
@@ -305,25 +305,30 @@
 </header>
 
 <!-- ================= HERO ================= -->
-<section class="hero" id="top">
-  <div class="world-stage" aria-hidden="true">
-    <div class="world-tile world-film" data-depth="0.7"><video class="hero-video" muted loop playsinline preload="none" poster="assets/hero-poster.jpg" tabindex="-1"><source src="assets/Hero.mp4" type="video/mp4"></video><span>FILM / STORIES IN MOTION</span></div>
-    <div class="world-tile world-brand" data-depth="0.4"><img src="assets/HR%20and%20More.jpeg" alt=""><span>IDENTITY / HR&MORE</span></div>
-    <div class="world-tile world-social" data-depth="1"><img src="assets/vue-tiktok-1.jpg" alt=""><span>VUE / SOCIAL</span></div>
-    <div class="world-tile world-feed" data-depth="0.6"><img src="assets/tbsm-feed-1.jpg" alt=""><span>THE BEST SOCIAL MEDIA</span></div>
-    <div class="world-tile world-post" data-depth="1.3"><img src="assets/postnl-tiktok-2.jpg" alt=""><span>POSTNL / PLAY</span></div>
-    <div class="world-tile world-motion" data-depth="0.3"><img src="assets/urda-bird-poster.jpg" alt=""><span>URDA / MOTION</span></div>
+<section class="hero hero-table" id="top">
+  <div class="wrap hero-copy">
+    <div class="hello-pill"><span class="hello-label">SAY HELLO /</span> <span id="helloWord">مرحبا</span></div>
+    <div class="eyebrow">Luay Salha · Visual designer, director &amp; editor</div>
+    <h1 id="heroTitle">Coffee first.<br><em>Then we talk.</em></h1>
+    <p class="hero-prompt" id="heroPrompt" role="status" aria-live="polite">Pick something from the table. I’ll pour.</p>
   </div>
-  <div class="world-shade" aria-hidden="true"></div>
+  <div class="hero-tabletop">
+    <div class="world-stage">
+      <a class="world-tile world-film" data-depth="0.5" href="projects/storytelling-reel.html" data-title="Storytelling reel"><video class="hero-video" muted loop playsinline preload="none" poster="assets/hero-poster.jpg" tabindex="-1"><source src="assets/Hero.mp4" type="video/mp4"></video><span>Storytelling reel<small>Film</small></span></a>
+      <a class="world-tile world-feed" data-depth="0.4" href="projects/the-best-social-media-nl.html" data-title="The Best Social Media"><img src="assets/tbsm-feed-1.jpg" alt=""><span>The Best Social Media<small>Social identity</small></span></a>
+      <a class="world-tile world-brand" data-depth="0.3" href="projects/hr-more-brand-identity.html" data-title="HR&amp;MORE"><img src="assets/HR%20and%20More.jpeg" alt=""><span>HR&amp;MORE<small>Brand identity</small></span></a>
+      <a class="world-tile world-social" data-depth="0.6" href="projects/vue-cinemas-nl.html" data-title="Vue Cinemas"><img src="assets/vue-tiktok-1.jpg" alt=""><span>Vue Cinemas<small>Social video</small></span></a>
+      <a class="world-tile world-post" data-depth="0.7" href="projects/postnl.html" data-title="PostNL"><img src="assets/postnl-tiktok-2.jpg" alt=""><span>PostNL<small>Editing &amp; ideas</small></span></a>
+      <a class="world-tile world-motion" data-depth="0.3" href="projects/urda-logo-animation.html" data-title="URDA"><img src="assets/urda-bird-poster.jpg" alt=""><span>URDA<small>Logo animation</small></span></a>
+    </div>
+    <div class="coffee-scene" id="coffeeScene" aria-hidden="true"><svg class="coffee-steam" viewBox="0 0 72 72"><path d="M18 62c-6-10 6-16 0-28s6-14 2-22"/><path d="M36 64c-6-11 6-18 0-30S42 18 38 6"/><path d="M54 62c-6-10 6-16 0-28s6-14 2-22"/></svg><span class="coffee-stream"></span><svg class="finjan-art" data-cup="hero" data-cup-scale="1.3" data-cup-rakweh="1" viewBox="0 0 120 104"><use href="#finjan"/></svg><svg class="rakweh" viewBox="0 0 240 180"><use href="#rakweh"/></svg></div>
+  </div>
+  <div class="wrap hero-served" id="heroServed">
+    <p class="lead">I’m Luay—a designer, director and editor. From Damascus to Beirut to The Hague, I work across film, identity and digital experiences.</p>
+    <div class="hero-actions"><a class="hero-button" id="openDial" href="#work">Explore my work <span>↗</span></a><a class="text-link" id="heroPicked" href="#game">Or play for it ↓</a></div>
+  </div>
+  <noscript><style>.hero-served{opacity:1!important;visibility:visible!important}</style></noscript>
   <button class="world-pause" type="button" aria-pressed="false">Pause motion</button>
-  <div class="wrap">
-    <div class="hello-pill reveal"><span class="hello-label">SAY HELLO /</span> <span id="helloWord">مرحبا</span></div>
-    <div class="eyebrow reveal">Visual designer, director &amp; editor</div>
-    <h1 class="reveal">Different worlds.<br><em>One curious mind.</em></h1>
-    <p class="lead reveal">I’m Luay—a designer, director and editor. From Damascus to Beirut to The Hague, I work across film, identity and digital experiences.</p>
-    <div class="hero-actions"><a class="hero-button" id="openDial" href="#work">Explore my work <span>↗</span></a><a class="text-link" href="#game">Or play for it ↓</a></div><div class="coffee-scene" id="coffeeScene" aria-hidden="true"><svg class="coffee-steam" viewBox="0 0 72 72"><path d="M18 62c-6-10 6-16 0-28s6-14 2-22"/><path d="M36 64c-6-11 6-18 0-30S42 18 38 6"/><path d="M54 62c-6-10 6-16 0-28s6-14 2-22"/></svg><span class="coffee-stream"></span><svg class="finjan-art" data-cup="hero" data-cup-scale="1.3" data-cup-rakweh="1" viewBox="0 0 120 104"><use href="#finjan"/></svg><svg class="rakweh" viewBox="0 0 240 180"><use href="#rakweh"/></svg></div><p class="coffee-caption"><span>Fresh from the rakweh. Scroll while it’s hot.</span><button class="coffee-replay" id="coffeeReplay" type="button">Pour again</button></p>
-  </div>
-  <div class="scroll-cue" aria-hidden="true"><span>Scroll</span><span class="line"></span></div>
 </section>
 
 <section class="finjan-game" id="game" aria-labelledby="finjanTitle">
@@ -348,6 +353,7 @@
   <a href="projects/postnl.html"><img src="assets/postnl-tiktok-2.jpg" alt="PostNL" loading="lazy"><span>PostNL<small>Editing & creative ideas</small></span></a><a href="projects/urda-logo-animation.html"><img src="assets/urda-bird-poster.jpg" alt="URDA" loading="lazy"><span>URDA<small>Logo animation</small></span></a><a href="projects/storytelling-reel.html"><img src="assets/reel-poster.jpg" alt="Storytelling reel" loading="lazy"><span>Storytelling reel<small>Documentary & campaigns</small></span></a></div><div class="desk-film-controls"><button id="filmPrevious" type="button" aria-label="Previous film">←</button><span><span aria-hidden="true">↔</span> Swipe to explore <span id="filmPosition">01 / 06</span></span><button id="filmNext" type="button" aria-label="Next film">→</button></div></div>
   <div class="desk-design"><div class="desk-label">02 / IDEAS IN HAND</div><div class="desk-stack" id="deskStack"><article class="desk-paper" id="deskPaper"><img id="deskCardImage" src="assets/HR%20and%20More.jpeg" alt="HR&MORE brand identity" loading="lazy" draggable="false"><div><span id="deskCardNumber">01 / 06</span><h3 id="deskCardTitle">HR&MORE</h3><p id="deskCardRole">Brand identity & visual system</p><a id="deskCardLink" href="projects/hr-more-brand-identity.html">Explore this project ↗</a></div></article></div><button id="deskNext" class="desk-next" type="button">Next card ↗</button><p class="desk-hint"><span aria-hidden="true">↔</span> Swipe the card · or tap Next card</p><p id="deskCardStatus" class="sr-only" role="status"></p></div>
  </div></div>
+  <div class="spill" style="--c:#1b201c" aria-hidden="true"><span class="cup-slot cup-slot-spill" data-cup="spill" data-cup-lean="-1.2" data-cup-tilt=".3"></span></div>
 </section>
 
 <!-- ================= FEATURED FILM ================= -->
@@ -365,7 +371,7 @@
 
 <!-- ================= WORK GRID ================= -->
 <section id="work">
-  <div class="wrap"><span class="cup-slot cup-slot-work" data-cup="work" data-cup-tilt=".5"></span>
+  <div class="wrap"><span class="cup-slot cup-slot-work" data-cup="work" data-cup-tilt=".5"></span><span class="iris-ring" aria-hidden="true"></span>
     <div class="section-head reveal">
       <div class="kicker">Selected work</div>
       <h2>Different mediums.<br><em>One point of view.</em></h2>
@@ -421,7 +427,7 @@
       <span><span class="count" id="stampCount">0</span> / 3 stamps collected as you scroll</span>
     </div>
 
-    <div class="timeline" id="timeline">
+    <div class="timeline" id="timeline"><span class="coffee-trail" aria-hidden="true"></span>
       <div class="route" aria-hidden="true"><div class="fill" id="routeFill"></div></div>
 
       <!-- CHAPTER 1 -->
@@ -468,6 +474,7 @@
       </article>
     </div>
   </div>
+  <div class="spill" style="--c:#141818" aria-hidden="true"><span class="cup-slot cup-slot-spill" data-cup="spill" data-cup-lean="-1.2" data-cup-tilt=".3"></span></div>
 </section>
 
 <!-- ================= REEL ================= -->
@@ -769,7 +776,7 @@ document.getElementById('year').textContent=new Date().getFullYear();
 <script src="studio-dial.js?v=visual-20260911"></script>
 <script src="studio-desk.js?v=swipe-3"></script>
 <script src="navigation.js?v=studio-2"></script>
-<script src="coffee.js?v=3"></script>
-<script type="module" src="cup3d.js?v=8"></script>
+<script src="coffee.js?v=6"></script>
+<script type="module" src="cup3d.js?v=10"></script>
 </body>
 </html>
