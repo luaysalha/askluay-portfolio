@@ -343,3 +343,17 @@ section.finjan-game{background:linear-gradient(#0000 calc(100% - 190px),#e6e9e0)
   .cup-slot-beat{left:26px;bottom:20px;width:92px;height:92px}
 }
 @media(prefers-reduced-motion:reduce){.hero-prompt span{animation:none}}
+
+/* ---------- mobile: a shorter, punchier story ---------- */
+@media(max-width:760px){
+  .hero-table .hero-copy{min-height:78svh;padding-bottom:4vh}
+  .cup3d section.finjan-game{padding-top:200px}
+  section.finjan-game,section.featured-film,section.reel,section.studio-editions{padding-bottom:160px}
+  section.studio-desk,section.journey{padding-bottom:200px}
+  .spill{height:190px}
+  .cup-slot-spill{bottom:60px}
+  .story-beat{padding:40px 0 14px}
+  .beat-line{font-size:clamp(44px,13.5vw,60px)}
+  .beat-scene{height:176px}
+  .work-table-block{margin-bottom:36px}
+}
