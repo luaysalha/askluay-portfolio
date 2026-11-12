@@ -143,7 +143,7 @@ function start() {
   const potShadow = new THREE.Mesh(shadowGeo, shadowMat); potShadow.scale.set(1.7, 1, 1.7); potShadow.renderOrder = -1;
   const stream = new THREE.Mesh(new THREE.CylinderGeometry(.03, .022, 1, 14).translate(0, -.5, 0), liquid);
   main.root.add(rakweh, potShadow, stream);
-  const REST = new THREE.Vector2(1.32 - .47 * RK, 1.24 * RK), POUR = new THREE.Vector2(.05, 1.66);
+  const REST = new THREE.Vector2(1.32 - .47 * RK, 1.24 * RK), POUR = new THREE.Vector2(.14, 1.95);
   potShadow.position.set(1.32, .002, 0);
 
   /* ---------- steam ---------- */
@@ -219,7 +219,7 @@ function start() {
     const over = ease(0, .18, p) * (1 - ease(.84, 1, p)); // 0 = on the table, 1 = above the cup
     return {
       x: REST.x + (POUR.x - REST.x) * over,
-      y: REST.y + (POUR.y - REST.y) * over + Math.sin(over * Math.PI) * .22,
+      y: REST.y + (POUR.y - REST.y) * over + Math.sin(over * Math.PI) * .75, // lift well clear of the cup on the way over and back
       rot: .58 * (ease(.18, .32, p) - ease(.70, .84, p)),
       show: 1,
       s0: ease(.68, .74, p), s1: ease(.31, .37, p),   // stream: retract from top, grow to bottom

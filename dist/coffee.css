@@ -357,3 +357,29 @@ section.finjan-game{background:linear-gradient(#0000 calc(100% - 190px),#e6e9e0)
   .beat-scene{height:176px}
   .work-table-block{margin-bottom:36px}
 }
+
+/* ---------- narration: words light up as you read down ---------- */
+.say .w{display:inline-block;opacity:.13;translate:0 .22em;transition:opacity .4s,translate .5s cubic-bezier(.2,.8,.2,1)}
+.say .w.lit{opacity:1;translate:0 0}
+.beat-line{font-size:clamp(54px,8vw,132px);line-height:.96}
+.story-beat .wrap{align-items:flex-end}
+@media(prefers-reduced-motion:reduce){.say .w{opacity:1;translate:0 0;transition:none}}
+
+/* ---------- phones: prints big enough to read, running off the screen ---------- */
+@media(max-width:760px){
+  .beat-line{font-size:clamp(58px,17vw,84px)}
+  .section-head h2,.desk-heading h2{font-size:clamp(46px,13vw,60px)!important;line-height:1}
+  .hero-tabletop{min-height:960px;margin-top:0}
+  .table-prompt{margin-bottom:14px}
+  .hero-table .world-stage{top:52px}
+  .hero-table .world-tile span{height:26px;font-size:12px;padding:0 7px}
+  .hero-table .world-tile{padding:6px 6px 26px}
+  .hero-table .world-film{left:-9%;top:0;width:84%}
+  .hero-table .world-feed{left:auto;right:-9%;top:150px;width:50%}
+  .hero-table .world-brand{left:5%;right:auto;top:236px;width:46%}
+  .hero-table .coffee-scene,.cup3d .hero-table .coffee-scene{top:455px}
+  .hero-table .world-social{left:-7%;right:auto;top:auto;bottom:-10px;width:48%}
+  .hero-table .world-post{left:37%;right:auto;top:auto;bottom:54px;width:44%}
+  .hero-table .world-motion{left:auto;right:-14%;top:auto;bottom:-6px;width:58%}
+  .work-table{height:760px}
+}

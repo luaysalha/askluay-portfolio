@@ -116,7 +116,7 @@
     }
     function layout() {
       const W = tableEl.clientWidth, small = W < 620;
-      const cw = small ? 104 : 158, ch = small ? 74 : 108, sz = small ? 150 : 230;
+      const cw = small ? 172 : 158, ch = small ? 120 : 108, sz = small ? 190 : 230;
       tableEl.style.setProperty('--cw', cw + 'px'); tableEl.style.setProperty('--ch', ch + 'px'); tableEl.style.setProperty('--sz', sz + 'px');
       if (spread) {
         const gap = small ? 10 : 16, cols = Math.max(2, Math.floor((W - gap) / (cw + gap))), rows = Math.ceil(items.length / cols);
@@ -125,9 +125,9 @@
         items.forEach((el, i) => place(el, left + (i % cols) * (cw + gap), 20 + Math.floor(i / cols) * (ch + gap), 0));
         place(saucer, (W - sz) / 2, rows * (ch + gap) + 34);
       } else {
-        const H = small ? 560 : 640;
+        const H = small ? 760 : 640;
         tableEl.style.height = H + 'px';
-        const cx = W / 2, cy = H / 2, rx = W / 2 - cw / 2 - 12, ry = H / 2 - ch / 2 - 12;
+        const cx = W / 2, cy = H / 2, rx = W / 2 - cw / 2 + (small ? 46 : -12), ry = H / 2 - ch / 2 - 12; // on phones the prints run off the edges
         items.forEach((el, i) => {
           const k = (i + turn * 5) % items.length, d = Math.sqrt((k + .35) / items.length), a = k * 2.39996 + turn;
           place(el, cx + Math.cos(a) * d * rx - cw / 2, cy + Math.sin(a) * d * ry - ch / 2, ((k * 37 + turn * 11) % 27) - 13);
@@ -199,6 +199,39 @@
     addEventListener('scroll', scheduleFlow, { passive: true });
     addEventListener('resize', scheduleFlow);
     flow();
+  }
+
+  /* ---------- narration: big lines light up word by word as you scroll through them ---------- */
+  if (!reduced.matches) {
+    const lines = [...document.querySelectorAll('.beat-line, .section-head h2, .finjan-game h2, .desk-heading h2, .film-heading h2, .served-title')];
+    const split = node => {
+      [...node.childNodes].forEach(child => {
+        if (child.nodeType === 3) {
+          const frag = document.createDocumentFragment();
+          child.textContent.split(/(\s+)/).forEach(part => {
+            if (!part.trim()) { frag.append(part); return; }
+            const w = document.createElement('span'); w.className = 'w'; w.textContent = part; frag.append(w);
+          });
+          child.replaceWith(frag);
+        } else if (child.nodeType === 1 && child.tagName === 'EM') split(child);
+      });
+    };
+    lines.forEach(line => { split(line); line.classList.add('say'); line._words = [...line.querySelectorAll('.w')]; });
+    let sayFrame = 0;
+    const say = () => {
+      sayFrame = 0;
+      const H = innerHeight;
+      lines.forEach(line => {
+        const r = line.getBoundingClientRect();
+        if (r.bottom < -200 || r.top > H + 200) return;
+        const p = Math.min(1, Math.max(0, (H * .9 - r.top) / (H * .42)));
+        line._words.forEach((w, i) => w.classList.toggle('lit', p > (i + .5) / (line._words.length + .5)));
+      });
+    };
+    const scheduleSay = () => { if (!sayFrame) sayFrame = requestAnimationFrame(say); };
+    addEventListener('scroll', scheduleSay, { passive: true });
+    addEventListener('resize', scheduleSay);
+    say();
   }
 
   /* ---------- finjan game ---------- */
